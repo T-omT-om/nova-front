@@ -1,9 +1,10 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "notes": [
-    "Drei neue Karten: Archipel (Inseln mit Landbrücken), Inselreich (reine Inseln, Luftkrieg) und Schlucht (drei Wege)",
-    "Kartenauswahl mit Vorschau im Hauptmenü und in der Mehrspieler-Lobby",
-    "Die KI erkennt Inselkarten und setzt dann auf ihre Luftflotte",
-    "Feinschliff am Balancing der Lufteinheiten"
+    "Grafik-Update: neue Landschaften je Karte, Brandung, Wolken, Licht, Rauch, Trümmer, brennende Gebäude, Kamera-Wackeln",
+    "Veteranen: Einheiten steigen mit Abschüssen im Rang auf (+10 % je Rang)",
+    "Karriere mit Rängen, 16 Erfolgen und täglichem Auftrag",
+    "Live-KI-Gefecht im Hauptmenü, Ansagen im Spiel, dynamische Musik, Zeitlupen-Finale und neuer Endbildschirm",
+    "Grafikstufe, Musik und Kamera-Wackeln einstellbar"
   ]
 }
