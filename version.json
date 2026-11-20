@@ -1,10 +1,10 @@
 {
-  "version": "1.5.0",
+  "version": "1.6.0",
   "notes": [
-    "Grafik-Update: neue Landschaften je Karte, Brandung, Wolken, Licht, Rauch, Trümmer, brennende Gebäude, Kamera-Wackeln",
-    "Veteranen: Einheiten steigen mit Abschüssen im Rang auf (+10 % je Rang)",
-    "Karriere mit Rängen, 16 Erfolgen und täglichem Auftrag",
-    "Live-KI-Gefecht im Hauptmenü, Ansagen im Spiel, dynamische Musik, Zeitlupen-Finale und neuer Endbildschirm",
-    "Grafikstufe, Musik und Kamera-Wackeln einstellbar"
+    "NEU: Kampagne „Die Kepler-Chroniken“ – 8 Missionen in 3 Akten mit Prolog, Epilog und Abspann",
+    "Spiele Allianz, Kollektiv und Myzel – mit Heldinnen und Helden, Funksprüchen und Zwischensequenzen",
+    "Neue Missionsarten: Rettung, Evakuierung, Geleitschutz, Datenraub, Orbitalschläge und ein Endgegner",
+    "Vier neue Landschaften: Frost, Asche, Sporenwald und Glutkrater",
+    "Sterne je Mission, eigene Schwierigkeit, 4 neue Erfolge, Speichern mitten in der Mission"
   ]
 }

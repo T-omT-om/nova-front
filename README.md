@@ -4,9 +4,10 @@ Ein Echtzeit-Strategiespiel für Handy und Browser – eine einzige HTML-Datei, 
 
 **Jetzt spielen:** https://t-omt-om.github.io/nova-front/
 
-Aktuelle Version: **1.5.0**
+Aktuelle Version: **1.6.0**
 
 ## Features
+- **Kampagne „Die Kepler-Chroniken“**: 8 Missionen in 3 Akten – Helden, Funksprüche, Zwischensequenzen, Sterne und ein großes Finale
 - Drei Fraktionen: **Allianz** (menschliche Kolonisten), **Kollektiv** (Maschinenintelligenz) und **Myzel** (pilzartiger Schwarm mit Selbstheilung)
 - Boden- und Lufteinheiten, Bunker, Verteidigungstürme
 - Vier Karten: Kepler-Ebene, Archipel, Inselreich, Schlucht
@@ -46,6 +47,7 @@ Aktuelle Version: **1.5.0**
 Die Datei `version.json` enthält die aktuelle Versionsnummer und die Neuerungen. Im Hauptmenü und im Pausenmenü prüft **Nach Updates suchen** auf eine neue Version, zeigt die Neuerungen und installiert sie per Knopfdruck. Zusätzlich erscheint automatisch ein Hinweis, sobald eine neue Version online ist. Der laufende Spielstand wird vor dem Update gesichert.
 
 ## Änderungen
+- **1.6.0** – Kampagne „Die Kepler-Chroniken“: 8 Missionen (Allianz, Kollektiv, Myzel) mit Prolog, Einsatzbesprechungen, Funksprüchen, Kinosequenzen, Helden, Orbitalschlägen, Konvoi, Endgegner, Epilog und Abspann; neue Landschaften Frost, Asche, Sporenwald und Glutkrater; Sterne, 4 neue Erfolge, Speichern in Missionen
 - **1.5.0** – Großes Grafik-Update (Biome je Karte, Brandung, Wolken, Licht, Rauch, Trümmer, brennende Gebäude, Kamera-Wackeln, Grafikstufen), Veteranen-Ränge, Karriere mit Rängen/Erfolgen/Tagesauftrag, Live-Gefecht im Hauptmenü, Ansagen, dynamische Musik, Zeitlupen-Finale, neuer Endbildschirm mit Verlaufsgrafik
 - **1.4.0** – Neue Karten Archipel, Inselreich und Schlucht mit Wasser und Felswänden, Kartenauswahl (auch im Mehrspieler), KI für Inselkarten
 - **1.3.1** – Mehrspieler-Server (Cloudflare) angebunden

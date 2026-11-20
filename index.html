@@ -143,6 +143,97 @@ body.ingame .hud{display:flex}
 .st .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .small{font-size:12px;color:var(--dim);text-align:center;margin-top:12px;line-height:1.35}
 #rot{display:none}
+/* ===== Kampagne ===== */
+.campbtn{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:12px 14px;border-radius:14px;border:1px solid #ffd34a;cursor:pointer;text-align:left;
+  background:linear-gradient(120deg,rgba(255,180,60,.25),rgba(120,60,10,.35)),radial-gradient(circle at 85% 30%,rgba(255,220,140,.35),transparent 60%);box-shadow:0 0 22px rgba(255,190,80,.25),inset 0 0 18px rgba(255,200,100,.12);animation:campGlow 3s ease-in-out infinite}
+.campbtn .ci{width:46px;height:46px;flex:none;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe7a8,#c9781c 60%,#4a2405);box-shadow:0 0 14px rgba(255,190,80,.6)}
+.campbtn b{display:block;font-family:Orbitron,sans-serif;font-weight:900;font-size:19px;letter-spacing:.1em;color:#fff1cf}
+.campbtn span{font-size:13px;color:#ffd98a;font-weight:600}
+@keyframes campGlow{0%,100%{box-shadow:0 0 16px rgba(255,190,80,.2),inset 0 0 18px rgba(255,200,100,.1)}50%{box-shadow:0 0 30px rgba(255,190,80,.45),inset 0 0 22px rgba(255,200,100,.2)}}
+#ovCamp .card{max-width:560px}
+.planet{width:120px;height:120px;margin:0 auto 6px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#ffd9a0 0,#d08440 22%,#7a3a18 52%,#2a0e06 78%);box-shadow:0 0 40px rgba(255,150,70,.35),inset -18px -14px 30px rgba(0,0,0,.7);position:relative;overflow:hidden}
+.planet::before{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(12deg,rgba(255,220,170,.0) 0 9px,rgba(255,220,170,.13) 9px 13px,rgba(80,30,10,.15) 13px 18px);animation:spin 60s linear infinite}
+.planet::after{content:"";position:absolute;left:-30%;right:-30%;top:46%;height:6px;border-radius:50%;border:2px solid rgba(255,220,170,.35);transform:rotate(-14deg)}
+@keyframes spin{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
+#campSum{text-align:center;color:#ffd98a;font-weight:700;margin:6px 0 2px}
+.act{display:flex;align-items:baseline;gap:8px;margin:14px 2px 6px;border-bottom:1px solid var(--line2);padding-bottom:3px}
+.act b{font-family:Orbitron,sans-serif;font-size:12px;letter-spacing:.2em;color:#7fd4ff}
+.act span{font-size:15px;font-weight:700}
+.mis{display:flex;align-items:center;gap:10px;width:100%;margin:5px 0;padding:6px;border-radius:10px;border:1px solid var(--line2);background:#0b1520;text-align:left;cursor:pointer}
+.mis img{width:48px;height:48px;border-radius:6px;flex:none;border:1px solid #23405a}
+.mis .mi{flex:1;min-width:0}.mis .mi b{display:block;font-size:16px}.mis .mi span{font-size:12px;color:var(--dim)}
+.mis .mst{display:flex;gap:1px;flex:none}
+.mis.lock{opacity:.45}.mis.next{border-color:#ffd34a;box-shadow:0 0 12px rgba(255,211,74,.25)}
+.mis:active{transform:scale(.98)}
+#ovBrief{background:radial-gradient(ellipse at 50% 28%,#10202f,#020407 72%);padding:0;z-index:26}
+.brief{width:min(100%,660px);height:100%;display:flex;flex-direction:column;padding:calc(var(--sat) + 12px) 14px calc(var(--sab) + 12px);gap:9px}
+.bhead{text-align:center}
+.bact{font-size:12px;letter-spacing:.24em;color:#7fd4ff;font-weight:700}
+.btitle{font-family:Orbitron,sans-serif;font-weight:900;font-size:clamp(22px,7vw,40px);letter-spacing:.07em;text-shadow:0 0 18px rgba(61,184,255,.55);animation:banIn .7s cubic-bezier(.2,1.4,.3,1)}
+.bloc{font-size:13px;color:var(--dim)}
+.bstage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer}
+#bHolo{width:min(100%,58vh);aspect-ratio:1;max-height:100%;border-radius:10px;box-shadow:0 0 30px rgba(61,184,255,.18)}
+#bScene{display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;width:100%;height:100%}
+#ovBrief.scene #bHolo{display:none}#ovBrief.scene #bScene{display:flex}
+.sport{border-radius:16px;overflow:hidden;box-shadow:0 0 40px rgba(61,184,255,.25),0 0 0 1px #2c4a66;animation:portIn .45s ease-out}
+.sname{font-family:Orbitron,sans-serif;font-weight:800;letter-spacing:.08em;font-size:15px}
+.stxt{font-size:clamp(18px,5vw,24px);font-weight:600;line-height:1.45;color:#e2eef8;max-width:560px;padding:0 10px;font-style:italic;text-shadow:0 2px 10px #000}
+@keyframes portIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.bdlg{display:flex;gap:10px;background:rgba(8,16,26,.92);border:1px solid #2c4a66;border-radius:12px;padding:10px;min-height:94px;cursor:pointer;position:relative}
+.bdlg .bp{width:72px;height:72px;flex:none;border-radius:8px;overflow:hidden;border:1px solid #2c4a66}
+#ovBrief.scene .bdlg .bp{display:none}
+.bdlg .bt{flex:1;min-width:0}.bdlg b{font-size:13px;letter-spacing:.06em}
+#bText{font-size:16px;font-weight:600;line-height:1.35;margin-top:2px;min-height:44px}
+.bdlg.txt .bp{display:none}.bdlg.txt #bText{font-style:italic;font-size:17px;color:#cfe2f2}
+.bnext{position:absolute;right:10px;bottom:6px;color:var(--acc);animation:blink 1s infinite;font-size:14px}
+#bDots{display:flex;justify-content:center;gap:4px;min-height:6px}#bDots i{width:6px;height:6px;border-radius:3px;background:#1d3348}#bDots i.on{background:#3d6f99}#bDots i.cur{background:#7fd4ff;width:14px}
+#bObj{background:linear-gradient(135deg,rgba(61,184,255,.1),rgba(61,184,255,.02));border:1px solid #2c5a80;border-radius:12px;padding:9px 12px;font-size:15px;font-weight:600;line-height:1.35}
+#bObj .ol{font-size:11px;letter-spacing:.2em;color:#7fd4ff}#bObj .ob{color:#ffd98a;font-size:13px;margin-top:4px}
+.bbtns{display:flex;gap:8px}.bbtns .big{flex:1;margin:0}.bbtns .sec{flex:none;width:auto;margin:0;padding:0 16px}
+#ovBrief.credits .bstage{overflow:hidden;cursor:default}
+.roll{text-align:center;font-family:Orbitron,sans-serif;font-weight:700;letter-spacing:.08em;line-height:2;color:#cfe2f2;animation:roll 22s linear forwards;font-size:15px}
+.roll div:first-child{font-size:28px;font-weight:900;color:#fff;text-shadow:0 0 18px rgba(61,184,255,.6)}
+@keyframes roll{from{transform:translateY(60vh)}to{transform:translateY(-10vh)}}
+svg.glitch{animation:glitch 1.2s steps(2) infinite}
+@keyframes glitch{0%{filter:none;transform:none}20%{filter:hue-rotate(60deg) saturate(2);transform:translateX(2px)}40%{filter:none;transform:translateX(-2px) skewX(4deg)}60%{filter:brightness(1.6);transform:none}80%{filter:hue-rotate(-40deg);transform:translateY(1px)}}
+svg.rec{filter:sepia(.4) saturate(.7) brightness(.95)}
+#campHud{position:fixed;z-index:8;left:calc(var(--sal) + 8px);top:calc(var(--sat) + 44px);width:min(380px,calc(100vw - var(--mm) - 32px));display:none;flex-direction:column;gap:6px;pointer-events:none}
+body.ingame.camp #campHud{display:flex}
+#radio{pointer-events:auto;display:flex;gap:8px;align-items:flex-start;background:rgba(5,11,18,.93);border:1px solid #2c4a66;border-left:3px solid var(--rc,#3db8ff);border-radius:9px;padding:6px 8px;box-shadow:0 6px 18px #000a}
+#radio.off{display:none}
+#radio.pop{animation:radIn .3s ease-out}
+@keyframes radIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+#radioP{width:44px;height:44px;flex:none;border-radius:6px;overflow:hidden;border:1px solid #2c4a66}
+#radio .rt{min-width:0}#radio b{display:block;font-size:12px;letter-spacing:.06em}
+#radioX{display:block;font-size:14px;font-weight:600;line-height:1.22}
+#objBox{pointer-events:auto;background:rgba(6,14,22,.84);border:1px solid #23405a;border-radius:8px;padding:3px 8px 4px;font-size:12.5px;line-height:1.2}
+#objBox.off{display:none}
+#objBox.flash{animation:objFl 1.2s ease-out}
+@keyframes objFl{0%{box-shadow:0 0 0 2px #7fd4ff,0 0 20px rgba(127,212,255,.6)}100%{box-shadow:none}}
+#objH{font-size:10.5px;letter-spacing:.2em;color:#7fd4ff;font-weight:700;cursor:pointer}
+#objBox.min #objL{display:none}
+.oi{display:flex;gap:6px;font-weight:600;margin-top:2px}.oi i{font-style:normal;width:12px;flex:none;color:#7fd4ff;text-align:center}
+.oi.bonus,.oi.bonus i{color:#ffd98a}.oi.done{opacity:.55;text-decoration:line-through}.oi.done i{color:var(--ok)}.oi.fail{opacity:.6;color:#ff9c8a}.oi.fail i{color:#ff5a3c}
+#ctimer{pointer-events:none;align-self:flex-start;display:flex;gap:8px;align-items:baseline;background:rgba(40,8,4,.88);border:1px solid #ff6a4a;border-radius:8px;padding:3px 10px;box-shadow:0 0 14px rgba(255,90,60,.3)}
+#ctimer.off{display:none}#ctL{font-size:12px;font-weight:700;color:#ffc4b8}#ctT{font-family:Orbitron,sans-serif;font-size:18px;color:#fff;font-variant-numeric:tabular-nums}
+#ctimer.warn{animation:blink .8s infinite}
+body.camp #hint{display:none!important}
+#lbT,#lbB{position:fixed;left:0;right:0;height:0;background:#000;z-index:7;transition:height .9s ease;pointer-events:none}
+#lbT{top:0}#lbB{bottom:0}
+body.cine #lbT,body.cine #lbB{height:10vh}
+#cineTap{position:fixed;inset:0;z-index:6;display:none}
+body.cine #cineTap{display:block}
+body.cine .hud{display:none!important}
+body.cine #campHud{top:auto;bottom:calc(11vh + var(--sab));left:50%;transform:translateX(-50%);width:min(94vw,620px)}
+body.cine #objBox,body.cine #ctimer{display:none}
+body.cine #radio{background:rgba(0,0,0,.78);border-color:transparent;border-left-color:var(--rc)}
+#ceStars{display:flex;flex-direction:column;gap:6px;margin:12px 0}
+.cs{display:flex;align-items:center;gap:10px;background:#0b1520;border:1px solid var(--line2);border-radius:10px;padding:6px 10px;font-weight:700;opacity:0;animation:starIn .5s cubic-bezier(.2,1.6,.3,1) forwards}
+.cs:not(.on){color:var(--dim)}.cs.on{border-color:rgba(255,211,74,.55);background:linear-gradient(90deg,rgba(255,211,74,.14),transparent)}
+@keyframes starIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+#ceStats{display:grid;grid-template-columns:1fr auto;gap:2px 12px;font-size:14px;margin-top:10px}
+#ceStats .v{text-align:right;font-weight:700}
+
 #ovStart{background:linear-gradient(180deg,rgba(3,6,10,.05) 0,rgba(3,6,10,.2) 22vh,rgba(3,6,10,.8) 55vh,rgba(3,6,10,.9))}
 #ovStart.show{display:block;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #ovStart .card{margin:max(16vh,110px) auto 0;max-height:none;overflow:visible;border:none;box-shadow:none;background:linear-gradient(180deg,rgba(8,14,22,0),rgba(8,14,22,.55) 70px,rgba(8,14,22,.9) 170px)}
@@ -239,6 +330,8 @@ body.mp .mponly{display:block}
 <body>
 <canvas id="cv"></canvas>
 <div id="banner"></div>
+<div id="lbT"></div><div id="lbB"></div><div id="cineTap"></div>
+<div id="campHud"><div id="ctimer" class="off"><span id="ctL"></span><b id="ctT"></b></div><div id="radio" class="off"><div id="radioP"></div><div class="rt"><b id="radioN"></b><span id="radioX"></span></div></div><div id="objBox" class="off"><div id="objH">ZIELE ▾</div><div id="objL"></div></div></div>
 <div class="livetag">LIVE · KI-GEFECHT</div>
 <div id="upd"><span id="updT">Neue Version verfügbar</span><button id="updGo">Aktualisieren</button><button class="x" id="updX">✕</button></div>
 
@@ -270,6 +363,8 @@ body.mp .mponly{display:block}
   <div class="tag">Echtzeit-Strategie · Sektor Kepler-9</div>
   <div class="prof" id="profBox"></div>
   <div class="daily" id="dailyBox"></div>
+  <button class="campbtn" id="btnCamp"><span class="ci"></span><span style="flex:1"><b>KAMPAGNE</b><span id="campBtnSub">Die Kepler-Chroniken · 8 Missionen</span></span></button>
+  <div class="lbl" style="margin-top:14px">Freies Gefecht</div>
   <div class="lbl">Deine Fraktion</div>
   <div class="fac" id="facSel">
     <button data-f="0" class="on"><img id="facImg0" alt=""><span class="fn" style="color:#9fd8ff">ALLIANZ</span><span class="fd">Menschen. Infanterie, Läufer, Artillerie, Kampfjets.</span></button>
@@ -348,6 +443,38 @@ body.mp .mponly{display:block}
   <button class="sec" id="btnMpBack">Zurück</button>
 </div></div>
 
+<!-- Kampagne -->
+<div class="ov" id="ovCamp"><div class="card">
+  <div class="planet"></div>
+  <div class="logo" style="font-size:28px">KAMPAGNE</div>
+  <div class="tag">Die Kepler-Chroniken</div>
+  <div id="campSum"></div>
+  <div class="lbl">Schwierigkeit der Kampagne</div>
+  <div class="seg" id="cdiffSel"><button data-d="easy">Leicht</button><button data-d="normal" class="on">Normal</button><button data-d="hard">Schwer</button></div>
+  <div id="campList"></div>
+  <button class="sec" id="btnProlog">Prolog ansehen</button>
+  <button class="sec" id="btnEpilog" style="display:none">Epilog ansehen</button>
+  <button class="big" id="btnCampBack">ZURÜCK</button>
+</div></div>
+<div class="ov" id="ovBrief"><div class="brief">
+  <div class="bhead"><div class="bact" id="bAct"></div><div class="btitle" id="bTitle"></div><div class="bloc" id="bLoc"></div></div>
+  <div class="bstage" id="bStage"><canvas id="bHolo"></canvas><div id="bScene"></div></div>
+  <div id="bDots"></div>
+  <div class="bdlg" id="bDlg"><div class="bp" id="bPort"></div><div class="bt"><b id="bName"></b><div id="bText"></div></div><div class="bnext">▸</div></div>
+  <div id="bObj" style="display:none"></div>
+  <div class="bbtns"><button class="sec" id="bSkip">Überspringen</button><button class="big" id="bGo">MISSION STARTEN</button></div>
+</div></div>
+<div class="ov" id="ovCampEnd"><div class="card">
+  <div class="endt" id="ceT"></div>
+  <div class="small" id="ceS"></div>
+  <div id="ceStars"></div>
+  <div id="ceXP"></div>
+  <div id="ceStats"></div>
+  <button class="big" id="ceGo">WEITER</button>
+  <button class="sec" id="ceRetry">Erneut versuchen</button>
+  <button class="sec" id="ceMenu">Zur Kampagne</button>
+</div></div>
+
 <!-- Erfolge -->
 <div class="ov" id="ovAch"><div class="card">
   <div class="logo" style="font-size:24px">ERFOLGE</div>
@@ -381,10 +508,17 @@ body.mp .mponly{display:block}
     <li><b>Steuergruppen</b>: <kbd>Strg</kbd>+<kbd>1</kbd>–<kbd>9</kbd> speichert die Auswahl, <kbd>1</kbd>–<kbd>9</kbd> ruft sie ab (zweimal drücken springt hin), <kbd>Shift</kbd>+Zahl ergänzt.</li>
     <li><kbd>WASD</kbd>/Pfeile: Kamera, <kbd>Q</kbd> Armee, <kbd>E</kbd> Arbeiter, <kbd>F</kbd> Basis, <kbd>A</kbd> Angriff, <kbd>H</kbd> Halten, <kbd>S</kbd> Stopp, <kbd>B</kbd> Bauen, <kbd>Leertaste</kbd> Pause, <kbd>Esc</kbd> abbrechen.</li>
   </ul>
+  <h3>KAMPAGNE</h3>
+  <ul>
+    <li><b>Die Kepler-Chroniken</b>: acht Missionen in drei Akten. Du spielst Allianz, Kollektiv und Myzel – mit Helden, die nicht fallen dürfen.</li>
+    <li><b>Funksprüche</b> erscheinen oben links. Antippen springt zum nächsten. Bei Zwischensequenzen tippst du einfach irgendwo hin.</li>
+    <li><b>Ziele</b> stehen darunter (antippen klappt sie ein). Markierte Orte zeigen Leuchtsäulen auf der Karte und Pfeile am Bildschirmrand.</li>
+    <li><b>Sterne</b>: Mission erfüllt, Bonusziel und Zeit- oder Sonderziel. Rote Kreise am Boden sind Orbitalschläge – raus da!</li>
+  </ul>
   <h3>KARRIERE</h3>
   <ul>
     <li><b>Erfahrungspunkte</b> gibt es für jede Partie – mehr für Siege, Abschüsse und höhere Schwierigkeit. Damit steigst du vom Rekruten bis zum Marschall auf.</li>
-    <li><b>Erfolge</b>: 16 Medaillen warten (Stern-Knopf im Hauptmenü). Jede neue bringt +50 EP.</li>
+    <li><b>Erfolge</b>: 20 Medaillen warten (Stern-Knopf im Hauptmenü). Jede neue bringt +50 EP.</li>
     <li><b>Tagesauftrag</b>: jeden Tag eine neue Kombination aus Fraktion, Karte und Bedingung, +250 EP.</li>
     <li><b>Veteranen</b>: Einheiten werden nach 3/7/12 Abschüssen befördert (goldene Winkel) und erhalten je Rang +10 % Leben und Schaden. Halte sie am Leben!</li>
   </ul>
@@ -488,13 +622,14 @@ const FAC_DESC = [
 const COL_ME = { m: '#3db8ff', d: '#123f63', l: '#c4ecff', g: '61,184,255' };
 const COL_ALLY = { m: '#4fe08a', d: '#145a33', l: '#c8ffdc', g: '79,224,138' };
 const COL_FOE = { m: '#ff5236', d: '#5e1a10', l: '#ffc6b8', g: '255,82,54' };
+const COL_NEU = { m: '#ffc24a', d: '#5e4410', l: '#ffe8b0', g: '255,194,74' };
 const OC = [COL_ME, COL_FOE];
 function teamOf(o) { return G && G.team ? G.team[o] : o; }
-function foe(a, b) { return a >= 0 && b >= 0 && teamOf(a) !== teamOf(b); }
+function foe(a, b) { if (a < 0 || b < 0) return false; const ta = teamOf(a), tb = teamOf(b); return ta !== tb && !(G && G.peace && G.peace[ta * 8 + tb]); }
 function friendly(o) { return o >= 0 && teamOf(o) === teamOf(ME); }
 function setupColors() {
   OC.length = 0;
-  for (let o = 0; o < G.P.length; o++) OC.push(o === ME ? COL_ME : friendly(o) ? COL_ALLY : COL_FOE);
+  for (let o = 0; o < G.P.length; o++) OC.push(o === ME ? COL_ME : friendly(o) ? COL_ALLY : (G.peace && G.peace[teamOf(ME) * 8 + teamOf(o)]) ? COL_NEU : COL_FOE);
   if (typeof iconURL === 'function') iconURL.cache = {};
 }
 const REGEN_U = 1.0, REGEN_B = 2.5;
@@ -802,7 +937,7 @@ function mkRes(type, bx, by) {
 }
 function entName(e) {
   if (e.k === 'u') return e.d.name;
-  if (e.k === 'b') return FAC[G.P[e.owner].fac].bn[e.type];
+  if (e.k === 'b') return FAC[G.P[e.owner].fac].bn[e.type] || e.d.name || e.type;
   return e.d.name;
 }
 // Abstand von der Kante von a (Einheit) zur Oberfläche von b
@@ -908,6 +1043,7 @@ function newGame(opts) {
   }
   // Spieler & Teams: single = Du vs KI, versus = Mensch vs Mensch, coop = 2 Menschen vs KI
   G.mode = opts.mode || 'single';
+  if (opts.camp) { campSetupGame(opts.camp); updateFog(); return G; }
   const facs = opts.facs || [opts.fac || 0, opts.efac != null ? opts.efac : ((opts.fac || 0) === 0 ? 1 : 0)];
   G.team = G.mode === 'coop' ? [0, 0, 1] : [0, 1];
   G.humans = G.mode === 'single' ? [0] : G.mode === 'versus' ? [0, 1] : [0, 1];
@@ -1294,11 +1430,13 @@ function fire(src, t) {
     case 'spit': G.proj.push({ k: 'spit', x: mx, y: my, tgt: t, lx: t.x, ly: t.y, sp: 380, d: src.d, owner: src.owner, src }); sfx('spit', src); break;
     case 'claw': applyDmg(t, calcDmg(src.d, src.owner, t), src); addFx({ k: 'claw', x: (src.x + t.x) / 2, y: (src.y + t.y) / 2, a: src.ang, life: .18, c: '200,255,120' }); sfx('slash', src); break;
     case 'ram': applyDmg(t, calcDmg(src.d, src.owner, t), src); addFx({ k: 'boom', x: (src.x + t.x) / 2, y: (src.y + t.y) / 2, life: .25, r: 12 }); addFx({ k: 'ring', x: t.x, y: t.y, life: .25, r: 18, c: '200,255,120' }); sfx('cannon', src); break;
+    case 'zbeam': { addFx({ k: 'beam', x1: mx, y1: my, x2: t.x, y2: t.y, life: .4, c: '255,70,40', w: 9 }); addFx({ k: 'boom', x: t.x, y: t.y, life: .35, r: 22 }); if (t.k === 'u' && t.d.air) applyDmg(t, calcDmg(src.d, src.owner, t), src); else splash(t.x, t.y, src.d.splash, src.d, src.owner, src); sfx('laser2', src); shake(2, t.x, t.y); break; }
     case 'beam3': applyDmg(t, calcDmg(src.d, src.owner, t), src); addFx({ k: 'beam', x1: mx, y1: my, x2: t.x, y2: t.y, life: .35, c: col.g, w: 7 }); addFx({ k: 'boom', x: t.x, y: t.y, life: .3, r: 16 }); sparks(t.x, t.y, 6, col.g); sfx('laser2', src); break;
   }
 }
 function applyDmg(t, dmg, src) {
   if (t.dead || t.k === 'r') return;
+  if (t.inv) { if (Math.random() < .3) addFx({ k: 'ring', x: t.x + (Math.random() - .5) * t.r, y: t.y + (Math.random() - .5) * t.r, life: .3, r: 16, c: '140,230,255' }); return; }
   if (src && src.vet) dmg *= 1 + .1 * src.vet;
   t.hp -= dmg; t.lastHit = G.t; t.lastAtk = src;
   if (t.k === 'u') t.hitT = .12;
@@ -1338,6 +1476,7 @@ function kill(e, src) {
   if (e.k !== 'r') deathVisual(e);
   if (src && src.k === 'u' && e.k !== 'r' && foe(src.owner, e.owner)) promote(src);
   if (typeof metaKill === 'function' && e.k !== 'r') metaKill(e, src);
+  if (G.mode === 'camp' && e.k !== 'r') campOnKill(e, src);
   if (e.k === 'u') {
     if (e.inside) { e.inside.cargo = e.inside.cargo.filter(x => x !== e); e.inside = null; }
     G.P[e.owner].stats.lost++;
@@ -1587,7 +1726,8 @@ function updProj(dt) {
       if (p.k === 'missile') { p.trailT -= dt; if (p.trailT <= 0) { p.trailT = .03; addFx({ k: 'smoke', x: p.x, y: p.y, life: .4, r: 3 }); } }
       if (d <= s + 4) {
         p.done = true;
-        if (p.tgt && !p.tgt.dead && !p.tgt.inside) applyDmg(p.tgt, calcDmg(p.d, p.owner, p.tgt) * (p.half ? .5 : 1), p.src);
+        if (p.k === 'grenade' && p.d.splash) { splash(p.lx, p.ly, p.d.splash, p.d, p.owner, p.src); addFx({ k: 'ring', x: p.lx, y: p.ly, life: .3, r: p.d.splash, c: '255,190,90' }); }
+        else if (p.tgt && !p.tgt.dead && !p.tgt.inside) applyDmg(p.tgt, calcDmg(p.d, p.owner, p.tgt) * (p.half ? .5 : 1), p.src);
         if (p.k === 'spit') { addFx({ k: 'ring', x: p.lx, y: p.ly, life: .25, r: 10, c: '170,255,90' }); sparks(p.lx, p.ly, 4, '170,255,90'); }
         else { addFx({ k: 'boom', x: p.lx, y: p.ly, life: .3, r: p.k === 'missile' ? 10 : 14 }); sfx('pop', p); }
       } else { p.x += dx / d * s; p.y += dy / d * s; p.a = Math.atan2(dy, dx); }
@@ -1673,11 +1813,12 @@ function simStep(dt) {
   for (let i = 0; i < G.blds.length; i++) { const b = G.blds[i]; if (!b.dead) updBld(b, dt); }
   updProj(dt);
   // Myzel regeneriert
-  for (const u of G.units) if (!u.dead && u.d.bio && u.hp < u.maxhp) u.hp = Math.min(u.maxhp, u.hp + REGEN_U * dt);
-  for (const b of G.blds) if (!b.dead && b.done && b.hp < b.maxhp && FAC[G.P[b.owner].fac].regen) b.hp = Math.min(b.maxhp, b.hp + REGEN_B * dt);
+  for (const u of G.units) if (!u.dead && u.d.bio && u.hp < u.maxhp) u.hp = Math.min(u.maxhp, u.hp + REGEN_U * (G.P[u.owner].regen || 1) * dt);
+  for (const b of G.blds) if (!b.dead && b.done && b.hp < b.maxhp && FAC[G.P[b.owner].fac].regen) b.hp = Math.min(b.maxhp, b.hp + REGEN_B * (G.P[b.owner].regen || 1) * dt);
   rebuildHash();
   resolveCollisions();
   updFx(dt);
+  if (G.mode === 'camp' && !G.over) campTick(dt);
   if (G.frame % 3 === 0) {
     G.ents = G.ents.filter(e => !e.dead); G.units = G.units.filter(e => !e.dead); G.blds = G.blds.filter(e => !e.dead); G.res = G.res.filter(e => !e.dead);
   }
@@ -1687,7 +1828,7 @@ function simStep(dt) {
   if (G.frame % 20 === 0) checkEnd();
 }
 function checkEnd() {
-  if (G.over) return;
+  if (G.over || G.mode === 'camp') return;
   const alive = new Set();
   for (const b of G.blds) if (!b.dead) alive.add(teamOf(b.owner));
   for (const t of [0, 1]) {
@@ -1710,7 +1851,7 @@ class AI {
   tick() { if (G.t < this.next || G.over) return; this.next = G.t + this.cfg.think; try { this.think(); } catch (e) { console.error(e); } }
   think() {
     const o = this.o, P = G.P[o], F = FAC[P.fac], cfg = this.cfg;
-    const units = G.units.filter(u => u.owner === o && !u.dead);
+    const units = G.units.filter(u => u.owner === o && !u.dead && !u.scr);
     const blds = G.blds.filter(b => b.owner === o && !b.dead);
     if (!blds.length) return;
     const workers = units.filter(u => u.d.worker), army = units.filter(u => !u.d.worker && !u.inside && !(u.order && u.order.t === 'enter'));
@@ -1947,7 +2088,7 @@ class AI {
 }
 
 /* =============================== VERSION & SPEICHERN =============================== */
-const VERSION = '1.5.0';
+const VERSION = '1.6.0';
 const SAVE_FORMAT = 1;
 const SAVE_KEYS = { manual: 'novafront_save_manual', auto: 'novafront_save_auto' };
 const SER_SKIP = new Set(['d', 'path', 'pathTgt', 'fake', 'lastAtk']);
@@ -1966,8 +2107,9 @@ function serializeGame() {
     P: G.P, home: G.home, bases: G.bases, rocks: G.rocks, water: G.water, map: G.map,
     explored: Array.from(G.explored).join(''),
     ents: G.ents.filter(e => !e.dead).map(e => serVal(e, true)),
-    ais: G.ais.map(a => ({ o: a.o, coop: !!a.coop, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
+    ais: G.ais.map(a => ({ o: a.o, ov: a.ov || null, coop: !!a.coop, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
     cam: { x: cam.x, y: cam.y, z: cam.z },
+    campId: G.campId || null, cs: G.cs ? serVal(G.cs, false) : null, peace: G.peace || null,
     groups: Object.fromEntries(Object.entries(G.groups || {}).map(([k, v]) => [k, v.filter(e => !e.dead).map(e => e.id)]))
   };
 }
@@ -2007,7 +2149,8 @@ function loadGameData(data) {
   }
   for (const r of G.res) setCells(r.bx, r.by, r.w, r.h, 3);
   for (const b of G.blds) setCells(b.bx, b.by, b.w, b.h, 2);
-  for (const d of data.ais || []) { const a = new AI(d.o, d.diff); Object.assign(a, d); a.cfg = AICFG[d.diff] || AICFG.normal; G.ais.push(a); }
+  for (const d of data.ais || []) { const a = new AI(d.o, d.diff); Object.assign(a, d); a.cfg = Object.assign({}, AICFG[d.diff] || AICFG.normal, d.ov || {}); G.ais.push(a); }
+  if (data.campId) { G.campId = data.campId; G.cs = data.cs; G.peace = data.peace; }
   for (const a of G.ais) G.P[a.o].carry = AICFG[a.diff].carry;
   setupColors();
   G.groups = {};
@@ -2020,7 +2163,7 @@ function storeGet(key) { try { const s = localStorage.getItem(key); return s ? J
 function storeSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }
 function storeDel(key) { try { localStorage.removeItem(key); } catch (e) { } }
 function saveGame(slot) {
-  if (!G || G.over || G.autoplay || G.mode !== 'single') return false;
+  if (!G || G.over || G.autoplay || (G.mode !== 'single' && G.mode !== 'camp')) return false;
   const ok = storeSet(SAVE_KEYS[slot], serializeGame());
   updateSaveUI();
   return ok;
@@ -2029,6 +2172,7 @@ function saveInfo(slot) {
   const d = storeGet(SAVE_KEYS[slot]);
   if (!d || d.format !== SAVE_FORMAT) return null;
   const P = d.P && d.P[0];
+  if (d.campId && typeof CAMP !== 'undefined' && CAMP.by[d.campId]) { const M = CAMP.by[d.campId]; return { data: d, text: 'Kampagne · Mission ' + M.n + ': ' + M.title + ' · ' + fmtTime(d.t) + ' · ' + new Date(d.at).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) }; }
   return { data: d, text: (P ? FAC[P.fac].name + ' · ' : '') + ({ easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[d.diff] || '') + ' · Spielzeit ' + fmtTime(d.t) + ' · ' + new Date(d.at).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) };
 }
 
@@ -2271,6 +2415,7 @@ const PAL = [
 ];
 function chamfer(c, x, y, w, h, k) { poly(c, [[x + k, y], [x + w - k, y], [x + w, y + k], [x + w, y + h - k], [x + w - k, y + h], [x + k, y + h], [x, y + h - k], [x, y + k]]); }
 function drawBldShape(c, type, fac, owner, W, H, b) {
+  if (BT[type].camp) { drawCampBld(c, type, owner, W, H, b); return; }
   if (fac === 2) { drawMyzelBld(c, type, owner, W, H, b); return; }
   const p = PAL[fac], col = OC[owner], t = b.anim || 0, done = b.done !== false;
   const blink = done ? (Math.sin(t * 3) > 0 ? 1 : .35) : .2;
@@ -2469,6 +2614,7 @@ function render(now) {
     ctx.save(); ctx.translate(u.x, u.y);
     drawUnitShape(ctx, u.type, u.owner, u.ang, u.anim, u);
     gfxUnitOverlay(ctx, u, rdt);
+    if (u.d.hero) heroOverlay(ctx, u);
     ctx.restore();
   }
   gfxDrawDebris(ctx, inView);
@@ -2496,6 +2642,7 @@ function render(now) {
     ctx.save(); ctx.translate(u.x, u.y - 6 + bob);
     drawUnitShape(ctx, u.type, u.owner, u.ang, u.anim, u);
     gfxUnitOverlay(ctx, u, rdt);
+    if (u.d.hero) heroOverlay(ctx, u);
     ctx.restore();
   }
   gfxDrawSmoke(ctx, inView);
@@ -2528,6 +2675,7 @@ function render(now) {
     ctx.drawImage(fogC, 0, 0, GW, GH, -CELL / 2, -CELL / 2, WW + CELL, WH + CELL);
   }
   gfxDrawAmbient(ctx);
+  if (G.mode === 'camp') campDrawWorld(ctx, t, inView);
   // Lebensbalken
   for (const e of G.ents) {
     if (e.dead || e.k === 'r' || e.inside || !inView(e.x, e.y, 60)) continue;
@@ -2571,6 +2719,7 @@ function render(now) {
     ctx.fillStyle = 'rgba(93,255,154,.1)'; ctx.fillRect(x, y, w, h);
     ctx.strokeStyle = 'rgba(93,255,154,.9)'; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, w, h);
   }
+  if (G.mode === 'camp') campDrawScreen(ctx);
   gfxPost(ctx);
   if (G.paused && !G.over) { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.fillRect(0, 0, VW, VH); }
 }
@@ -2601,16 +2750,17 @@ function renderMini() {
   if (!G.reveal) { mctx.globalAlpha = .8; mctx.drawImage(fogC, 0, 0, GW, GH, 0, 0, W, W); mctx.globalAlpha = 1; }
   for (const b of G.blds) {
     if (b.dead || (!friendly(b.owner) && !b.seen && !G.reveal)) continue;
-    mctx.fillStyle = b.owner === ME ? '#3db8ff' : friendly(b.owner) ? '#4fe08a' : '#ff5236';
+    mctx.fillStyle = (OC[b.owner] || COL_FOE).m;
     mctx.fillRect(b.bx * CELL * s - 1, b.by * CELL * s - 1, b.w * CELL * s + 2, b.h * CELL * s + 2);
   }
   const us = Math.max(2, 2.2 * DPR);
   for (const u of G.units) {
     if (u.dead || u.inside || (!friendly(u.owner) && !G.reveal && !isVis(u.x, u.y))) continue;
-    mctx.fillStyle = u.owner === ME ? (G.sel.includes(u) ? '#ffffff' : '#7fd4ff') : friendly(u.owner) ? '#8dffb8' : '#ff7a5c';
+    mctx.fillStyle = u.owner === ME ? (G.sel.includes(u) ? '#ffffff' : '#7fd4ff') : (OC[u.owner] || COL_FOE).l;
     mctx.fillRect(u.x * s - us / 2, u.y * s - us / 2, us, us);
   }
   for (const p of G.pings) { const k = p.t % 1; mctx.strokeStyle = `rgba(255,80,50,${1 - k})`; mctx.lineWidth = 2 * DPR; mctx.beginPath(); mctx.arc(p.x * s, p.y * s, (4 + k * 14) * DPR, 0, TAU); mctx.stroke(); }
+  if (G.mode === 'camp') campDrawMini(mctx, s);
   mctx.strokeStyle = 'rgba(255,255,255,.85)'; mctx.lineWidth = 1.2 * DPR;
   mctx.strokeRect(cam.x * s, cam.y * s, VW / cam.z * s, VH / cam.z * s);
 }
@@ -2657,6 +2807,9 @@ function legs(c, n, len, spread, anim, moving, col, w) {
 function engineGlow(c, x, y, r, rgb, anim) { glowDot(c, x, y, r * (1 + Math.sin(anim * 40) * .15), rgb, .95); }
 
 function drawUnitShape(c, type, owner, ang, anim, st) {
+  const d0 = UT[type];
+  if (type === 'laster') { drawLaster(c, owner, ang, anim, st); return; }
+  if (d0.base) { c.save(); c.scale(d0.scale || 1, d0.scale || 1); drawUnitShape(c, d0.base, owner, ang, anim, st); c.restore(); return; }
   const col = OC[owner];
   const d = UT[type];
   const mv = st.moving ? Math.sin(anim * 10) : 0;
@@ -3145,6 +3298,8 @@ function gfxAmbient(dt, inView) {
   const k = B.amb;
   for (const p of GFX.amb) {
     if (k === 'embers') { p.x += (GFX.wind.x * .4 + Math.sin(p.ph + G.t) * 6) * dt * p.sp; p.y -= 16 * dt * p.sp; }
+    else if (k === 'snow' || k === 'ash') { p.x += (GFX.wind.x * .8 + Math.sin(p.ph + G.t * 1.3) * 8) * dt * p.sp; p.y += (k === 'snow' ? 26 : 12) * dt * p.sp; }
+    else if (k === 'spores') { p.x += Math.sin(p.ph + G.t * .6) * 7 * dt * p.sp; p.y -= 6 * dt * p.sp; }
     else { p.x += GFX.wind.x * 1.6 * dt * p.sp; p.y += (GFX.wind.y + Math.sin(p.ph + G.t * .7) * 4) * dt * p.sp; }
     if (!inView(p.x, p.y, 30)) { p.x = cam.x + Math.random() * vw; p.y = cam.y + Math.random() * vh; }
   }
@@ -3210,6 +3365,13 @@ function gfxDrawAmbient(c) {
   if (k === 'embers') {
     c.globalCompositeOperation = 'lighter';
     for (const p of GFX.amb) { const f = .4 + .6 * Math.abs(Math.sin(p.ph + G.t * 3)); c.fillStyle = `rgba(255,${120 + (p.s * 30 | 0)},60,${.55 * f})`; c.fillRect(p.x, p.y, p.s, p.s); }
+    c.globalCompositeOperation = 'source-over';
+  } else if (k === 'snow' || k === 'ash') {
+    const col = k === 'snow' ? '245,250,255' : '170,165,160';
+    for (const p of GFX.amb) { c.fillStyle = `rgba(${col},${(k === 'snow' ? .55 : .4) + .2 * Math.sin(p.ph + G.t)})`; c.beginPath(); c.arc(p.x, p.y, p.s * (k === 'snow' ? .9 : 1.1), 0, TAU); c.fill(); }
+  } else if (k === 'spores') {
+    c.globalCompositeOperation = 'lighter';
+    for (const p of GFX.amb) { const f = .5 + .5 * Math.sin(p.ph * 3 + G.t * 2); c.fillStyle = p.ph > 3 ? `rgba(200,120,255,${.35 * f})` : `rgba(120,255,170,${.35 * f})`; c.beginPath(); c.arc(p.x, p.y, p.s * 1.3, 0, TAU); c.fill(); }
     c.globalCompositeOperation = 'source-over';
   } else {
     const col = k === 'spray' ? '220,240,255' : biome().grain;
@@ -3376,6 +3538,7 @@ function dailyToday() {
   return { key, fac, map, cond, txt };
 }
 /* ------------------------------ ANSAGER ------------------------------ */
+function mBanner(title, sub, kind) { if (G && G.mode !== 'camp') banner(title, sub, kind); }
 function banner(title, sub, kind) {
   if (!G || G.autoplay || UI.demo || G.over) return;
   META.banners.push({ title, sub: sub || '', kind: kind || '' });
@@ -3412,9 +3575,9 @@ function metaTick(dt) {
   const k = P.stats.kills;
   if (k > META.lastKills) {
     for (let i = META.lastKills; i < k; i++) META.killTimes.push(G.t);
-    if (!m.firstKill) { m.firstKill = true; banner('ERSTER ABSCHUSS', 'Gut gezielt, Kommandant!'); }
+    if (!m.firstKill) { m.firstKill = true; mBanner('ERSTER ABSCHUSS', 'Gut gezielt, Kommandant!'); }
     META.killTimes = META.killTimes.filter(x => G.t - x < 4);
-    if (META.killTimes.length >= 6 && G.t - (m.burstT || -99) > 25) { m.burstT = G.t; banner('VERNICHTUNGSSCHLAG', META.killTimes.length + ' Abschüsse in Sekunden'); }
+    if (META.killTimes.length >= 6 && G.t - (m.burstT || -99) > 25) { m.burstT = G.t; mBanner('VERNICHTUNGSSCHLAG', META.killTimes.length + ' Abschüsse in Sekunden'); }
     META.lastKills = k;
   }
   // Gebäude
@@ -3423,10 +3586,10 @@ function metaTick(dt) {
   if (m.maxB >= 6) m.lowAfter = Math.min(m.lowAfter, myB.length);
   const foeB = G.blds.filter(b => foe(b.owner, ME) && !b.dead);
   const foeHQ = foeB.filter(b => b.type === 'hq').length, myHQ = myB.filter(b => b.type === 'hq').length;
-  if (m.foeHQ != null && foeHQ < m.foeHQ) banner('ZENTRALE ZERSTÖRT', 'Eine gegnerische Basis ist gefallen');
+  if (m.foeHQ != null && foeHQ < m.foeHQ) mBanner('ZENTRALE ZERSTÖRT', 'Eine gegnerische Basis ist gefallen');
   if (m.myHQ != null && myHQ < m.myHQ) banner('ZENTRALE VERLOREN', 'Bau eine neue Zentrale!', 'bad');
   m.foeHQ = foeHQ; m.myHQ = myHQ;
-  if (!m.weak && G.t > 120 && foeB.length > 0 && foeB.length <= 2) { m.weak = true; banner('DER FEIND WANKT', 'Nur noch ' + foeB.length + ' Gebäude – setz nach!'); }
+  if (!m.weak && G.t > 120 && foeB.length > 0 && foeB.length <= 2) { m.weak = true; mBanner('DER FEIND WANKT', 'Nur noch ' + foeB.length + ' Gebäude – setz nach!'); }
   // Erfolge während der Partie
   if (P.supUsed >= 150) unlock('army');
   if (P.stats.mined >= 10000) unlock('eco');
@@ -3442,7 +3605,7 @@ function metaEnd(win) {
   const m = META.m || { lowAfter: 99, lostB: 1, hist: [], newAch: [] };
   const pr = META.prof, P = G.P[ME].stats;
   const before = pr.xp;
-  const diffMul = G.mode === 'versus' ? 1.3 : { easy: .7, normal: 1, hard: 1.5 }[G.diff] || 1;
+  const diffMul = G.mode === 'versus' ? 1.3 : G.mode === 'camp' ? ({ easy: .9, normal: 1.25, hard: 1.7 }[G.diff] || 1) : { easy: .7, normal: 1, hard: 1.5 }[G.diff] || 1;
   let xp = Math.round(((win ? 160 : 60) + P.kills * 2 + P.bkills * 10 + Math.floor(P.mined / 200)) * diffMul * (G.mode !== 'single' ? 1.2 : 1));
   const lines = [['Partie', win ? 'Sieg' : 'Niederlage'], ['Abschüsse & Wirtschaft', '']];
   pr.games++; pr.kills += P.kills;
@@ -3460,7 +3623,7 @@ function metaEnd(win) {
     if (G.mode === 'versus') unlock('duel');
     // Tagesauftrag
     const d = dailyToday();
-    if (!pr.daily[d.key] && G.P[ME].fac === d.fac && G.map === d.map && (d.cond === 'win' || (d.cond === 'hard' && G.diff === 'hard' && G.mode !== 'versus') || (d.cond === 'fast' && G.t < 900))) {
+    if (G.mode !== 'camp' && !pr.daily[d.key] && G.P[ME].fac === d.fac && G.map === d.map && (d.cond === 'win' || (d.cond === 'hard' && G.diff === 'hard' && G.mode !== 'versus') || (d.cond === 'fast' && G.t < 900))) {
       pr.daily[d.key] = 1; xp += 250; m.daily = true;
     }
   }
@@ -3474,31 +3637,32 @@ function metaKill(e, src) {
   if (e.k === 'b' && e.owner === ME && e.done !== false) META.m.lostB++;
 }
 /* ------------------------------ ENDBILDSCHIRM ------------------------------ */
-function endExtras(win) {
+function endExtras(win, ids) {
+  ids = ids || { xp: 'endXP', stats: 'endStats', graph: 'endGraph' };
   const r = metaEnd(win);
   const rb = rankOf(r.before), ra = rankOf(r.after);
-  const box = $('endXP');
-  box.innerHTML = `<div class="xprow"><span class="rb">${rankBadge(ra.i, 34)}</span><div style="flex:1"><div class="xpn"><b>${ra.name}</b><span>+${r.xp} EP${r.daily ? ' · Tagesauftrag erfüllt!' : ''}</span></div><div class="xpbar"><i id="xpFill"></i></div></div></div>` +
+  const box = $(ids.xp);
+  box.innerHTML = `<div class="xprow"><span class="rb">${rankBadge(ra.i, 34)}</span><div style="flex:1"><div class="xpn"><b>${ra.name}</b><span>+${r.xp} EP${r.daily ? ' · Tagesauftrag erfüllt!' : ''}</span></div><div class="xpbar"><i class="xpFill"></i></div></div></div>` +
     (ra.i > rb.i ? `<div class="rankup">BEFÖRDERT ZUM ${ra.name.toUpperCase()}!</div>` : '') +
     (r.newAch.length ? `<div class="newach">${r.newAch.map(id => { const a = ACH.find(x => x.id === id); return `<span>${achIcon(a, true)}${a.n}</span>`; }).join('')}</div>` : '');
-  const fill = $('xpFill'); fill.style.width = (rb.i === ra.i ? rb.prog * 100 : 0) + '%';
+  const fill = box.querySelector('.xpFill'); fill.style.width = (rb.i === ra.i ? rb.prog * 100 : 0) + '%';
   setTimeout(() => { fill.style.width = (ra.prog * 100) + '%'; }, 400);
   if (ra.i > rb.i) setTimeout(() => sfx('rank'), 900);
   if (r.newAch.length) setTimeout(() => sfx('medal'), 1400);
   // Zahlen hochzählen
-  document.querySelectorAll('#endStats .v[data-n]').forEach(el => {
+  document.querySelectorAll('#' + ids.stats + ' .v[data-n]').forEach(el => {
     const n = +el.dataset.n, t0 = performance.now();
     const step = () => { const k = Math.min(1, (performance.now() - t0) / 1100); el.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
     step();
   });
   // Verlaufsgrafik
-  const cv2 = $('endGraph'), m = META.m;
+  const cv2 = ids.graph ? $(ids.graph) : null, m = META.m;
   if (cv2 && m && m.hist.length > 1) {
     const W = cv2.clientWidth || 300, H = 90; cv2.width = W * 2; cv2.height = H * 2; const x = cv2.getContext('2d'); x.scale(2, 2);
     const T = m.hist[m.hist.length - 1].t || 1, maxS = Math.max(10, ...m.hist.flatMap(h => h.s));
     x.strokeStyle = 'rgba(255,255,255,.08)'; x.lineWidth = 1; for (let i = 1; i < 4; i++) { x.beginPath(); x.moveTo(0, H * i / 4); x.lineTo(W, H * i / 4); x.stroke(); }
     G.P.forEach((p, o) => {
-      const col = o === ME ? '#3db8ff' : friendly(o) ? '#4fe08a' : '#ff5236';
+      const col = (OC[o] || COL_FOE).m;
       x.strokeStyle = col; x.lineWidth = 2.2; x.beginPath();
       m.hist.forEach((h, i) => { const px = h.t / T * W, py = H - 4 - (h.s[o] || 0) / maxS * (H - 10); i ? x.lineTo(px, py) : x.moveTo(px, py); });
       x.stroke();
@@ -3506,7 +3670,7 @@ function endExtras(win) {
       x.lineTo(W, H); x.lineTo(0, H); x.closePath(); x.fillStyle = g; x.fill();
     });
     $('endGraphBox').style.display = '';
-  } else if ($('endGraphBox')) $('endGraphBox').style.display = 'none';
+  } else if (ids.graph && $('endGraphBox')) $('endGraphBox').style.display = 'none';
 }
 /* ------------------------------ PROFIL & ERFOLGE IM MENÜ ------------------------------ */
 function renderProfile() {
@@ -3532,6 +3696,8 @@ function renderAch() {
 /* ------------------------------ MUSIK ------------------------------ */
 const MUS = { on: true, gain: null, step: 0, nextT: 0, timer: null, lvl: .2, filt: null };
 const MUS_CH = [[110, 130.81, 164.81], [87.31, 110, 130.81], [130.81, 164.81, 196], [98, 123.47, 146.83]];
+const MUS_SAD = [[110, 130.81, 164.81], [87.31, 110, 130.81], [73.42, 87.31, 110], [82.41, 98, 123.47]];
+const MUS_EPIC = [[73.42, 110, 146.83], [58.27, 87.31, 116.54], [87.31, 130.81, 174.61], [65.41, 98, 130.81]];
 function musStart() {
   if (!AU.ctx || MUS.timer) return;
   const c = AU.ctx;
@@ -3547,6 +3713,7 @@ function musSched() {
   let target = .18;
   if (G && UI.running) target = (G.t - (META.combatT || -99) < 7) ? 1 : .42;
   if (UI.demo) target = .3;
+  if (MUS.mood === 'sad') target = .26; else if (MUS.mood === 'epic') target = Math.max(target, .78);
   MUS.lvl += (target - MUS.lvl) * .04;
   MUS.filt.frequency.setTargetAtTime(500 + MUS.lvl * 2200, c.currentTime, .4);
   const spb = 60 / 96 / 4;
@@ -3560,8 +3727,9 @@ function musNote(f, t, dur, type, vol, dest, att) {
 }
 function musStep(s, t) {
   if (!MUS.on) return;
-  const ch = MUS_CH[Math.floor(s / 32) % 4], L = MUS.lvl, spb = 60 / 96 / 4;
+  const ch = (MUS.mood === 'sad' ? MUS_SAD : MUS.mood === 'epic' ? MUS_EPIC : MUS_CH)[Math.floor(s / 32) % 4], L = MUS.lvl, spb = 60 / 96 / 4;
   if (s % 32 === 0) for (const f of ch) for (const det of [-4, 4]) { const o = AU.ctx.createOscillator(), g = AU.ctx.createGain(); o.type = 'sawtooth'; o.frequency.value = f * 2; o.detune.value = det; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.022, t + 1.4); g.gain.setValueAtTime(.022, t + 32 * spb - .8); g.gain.linearRampToValueAtTime(0, t + 32 * spb + .4); o.connect(g); g.connect(MUS.filt); o.start(t); o.stop(t + 32 * spb + .5); }
+  if (MUS.mood === 'sad' && s % 6 === 0) musNote(ch[(s / 6) % 3 | 0] * (s % 24 < 12 ? 4 : 3), t, 1.8, 'sine', .04, MUS.gain, .06);
   if (L > .3 && (s % 16 === 0 || s % 16 === 6 || s % 16 === 10)) musNote(ch[0] / 2, t, .5, 'triangle', .09 * Math.min(1, L * 1.4), MUS.gain);
   if (L > .55 && s % 2 === 0) { const f = ch[(s / 2) % 3 | 0] * (s % 8 < 4 ? 4 : 2); musNote(f, t, .18, 'triangle', .022 * L, MUS.filt); }
   if (L > .7 && s % 8 === 0) { const o = AU.ctx.createOscillator(), g = AU.ctx.createGain(); o.frequency.setValueAtTime(120, t); o.frequency.exponentialRampToValueAtTime(40, t + .18); g.gain.setValueAtTime(.16 * L, t); g.gain.exponentialRampToValueAtTime(.0001, t + .25); o.connect(g); g.connect(MUS.gain); o.start(t); o.stop(t + .3); }
@@ -3603,6 +3771,1390 @@ function demoFrame(dt) {
 profLoad();
 try { MUS.on = localStorage.getItem('novafront_music') !== '0'; } catch (e) { }
 
+/* =============================== KAMPAGNE · ENGINE =============================== */
+const CDIFF = { easy: .7, normal: 1, hard: 1.6 };
+const CAMP = { list: [], by: {}, acts: ['Funken im Sand', 'Risse', 'Wurzeln'] };
+const ROMAN = ['I', 'II', 'III', 'IV'];
+
+/* ------------------------------ HELDEN & SONDEREINHEITEN ------------------------------ */
+Object.assign(UT, {
+  mara: Object.assign({}, UT.ranger, { name: 'Hptm. Mara Voss', desc: 'Heldin. Präzisionsgewehr gegen Boden- und Luftziele. Heilt sich außerhalb des Kampfes.', cost: [0, 0], hp: 430, armor: 1, dmg: 15, range: 165, cd: .7, speed: 72, sight: 330, supply: 0, r: 11, base: 'ranger', scale: 1.3, hero: 1, gar: 0 }),
+  brandt: Object.assign({}, UT.grenadier, { name: 'Fw. Ole Brandt', desc: 'Held. Granatwerfer „Gisela“ mit Flächenschaden. Heilt sich außerhalb des Kampfes.', cost: [0, 0], hp: 540, armor: 2, dmg: 17, splash: 38, bonusArmored: 8, range: 150, cd: 1.15, speed: 66, sight: 300, supply: 0, r: 13, base: 'grenadier', scale: 1.28, hero: 1, gar: 0 }),
+  sechs: Object.assign({}, UT.strahler, { name: 'SECHS', desc: 'Held. Abtrünnige Kollektiv-Einheit mit Strahlenwaffe gegen Boden- und Luftziele. Heilt sich außerhalb des Kampfes.', cost: [0, 0], hp: 620, armor: 2, dmg: 16, bonusLight: 4, range: 155, cd: .75, speed: 72, sight: 330, supply: 0, r: 12, base: 'strahler', scale: 1.35, hero: 1, gar: 0 }),
+  zitadelle: Object.assign({}, UT.donner, { name: 'Zitadelle', desc: 'Thornes fliegende Festung.', cost: [0, 0], hp: 4200, armor: 3, dmg: 30, splash: 56, range: 175, cd: 1.5, speed: 38, sight: 340, aa: 1, supply: 0, r: 34, base: 'donner', scale: 1.9, hero: 1, boss: 1, shot: 'zbeam' }),
+  laster: { name: 'Transporter', desc: 'Gepanzerter Flüchtlingstransporter. Muss den Pass erreichen.', cost: [0, 0], time: 1, hp: 520, armor: 3, dmg: 0, range: 0, cd: 1, speed: 36, sight: 220, supply: 0, r: 14, armored: 1, mech: 1, shot: 'melee' },
+  bergmann: Object.assign({}, UT.worker, { name: 'Bergmann', desc: 'Überlebender der Bohrstation Tiefe-7.', supply: 0, base: 'worker', scale: 1 })
+});
+/* ------------------------------ SONDERGEBÄUDE ------------------------------ */
+const CBT = (name, hp, armor, w, sight, desc) => ({ name, cost: [0, 0], time: 60, hp, armor, w, h: w, sight, camp: 1, desc });
+Object.assign(BT, {
+  raumhafen: CBT('Raumhafen', 4200, 2, 4, 300, 'Hier starten die Evakuierungsfähren. Muss gehalten werden.'),
+  stoersender: CBT('Störsender', 1100, 2, 2, 220, 'Überlagert das Kollektiv-Netz mit Rauschen.'),
+  archiv: CBT('Datenarchiv', 6000, 4, 3, 200, 'Das versunkene Datenarchiv des Konsortiums.'),
+  uplink: CBT('Uplink-Station', 1500, 2, 2, 260, 'Verbindung zu Thornes Orbitalstation.'),
+  bohrturm: CBT('Bohrturm', 2400, 3, 3, 260, 'Treibt Bohrgestänge tief in die Kruste.'),
+  schildgen: CBT('Schildgenerator', 1700, 3, 2, 260, 'Speist den Schutzschild des Kernbrechers.'),
+  kernbrecher: CBT('Kernbrecher', 9000, 2, 4, 380, 'Thornes Planetenbrecher. Zerstört die Kruste von Kepler-9.'),
+  ruine: CBT('Ruine', 3000, 6, 3, 0, 'Überreste der Bohrstation Tiefe-7.'),
+  funkturm: CBT('Funkturm', 1600, 3, 2, 160, 'Notfunk der Bergleute.')
+});
+
+/* ------------------------------ BIOME & KARTEN ------------------------------ */
+Object.assign(BIOMES, {
+  eis:    { base: '#26323c', blot: ['200,220,235', '140,165,190', '20,30,40', '235,245,252'], grain: '240,248,255', crack: '20,40,60', rock: ['#d6e2ec', '#8aa0b4', '#3c4e60'], flora: ['#a7bccc', '#8199ad'], amb: 'snow', grade: '160,205,255', gradeA: .09, plate: '180,200,220',
+    water: { sand: '#a9bccb', foam: 'rgba(240,252,255,.7)', mid: '#3d7394', deep: '#1f4d6b', abyss: '8,24,38' } },
+  asche:  { base: '#1e1e20', blot: ['95,92,90', '60,58,60', '8,8,10', '140,125,112'], grain: '200,195,188', crack: '0,0,0', rock: ['#646160', '#3c3a39', '#1a1918'], flora: ['#4d4c42', '#3a3a33'], amb: 'ash', grade: '210,195,180', gradeA: .06, plate: '125,125,130' },
+  sporen: { base: '#1f1729', blot: ['130,60,160', '60,130,95', '14,8,22', '180,95,210'], grain: '215,175,245', crack: '12,0,24', rock: ['#8a62a0', '#523868', '#26182f'], flora: ['#9a55c4', '#4fc07f', '#d27ef0'], amb: 'spores', grade: '195,120,255', gradeA: .09, plate: '160,135,180' },
+  glut:   { base: '#1b0f0b', blot: ['130,42,20', '80,30,18', '10,4,2', '210,85,30'], grain: '255,150,90', crack: '255,96,30', rock: ['#55392f', '#2f201b', '#140c0a'], flora: ['#3d2a20', '#2c1d16'], amb: 'embers', grade: '255,95,40', gradeA: .1, plate: '140,95,80' }
+});
+(function () {
+  const ring = []; // Kraterrand für das Finale (wird punktgespiegelt)
+  for (let a = 0; a < 180; a += 13) {
+    const gap = [45, 135].some(g => Math.abs(a - g) < 17);
+    if (!gap) ring.push([36 + Math.cos(a * Math.PI / 180) * 10.5, 36 + Math.sin(a * Math.PI / 180) * 10.5, 1.7]);
+  }
+  Object.assign(MAPS, {
+    c_frost: { name: 'Frostkamm', desc: '', bases: BASE_HALF, rocks: ROCK_HALF.concat([[22, 20, 1.6], [12, 26, 1.3]]), biome: 'eis', camp: 1 },
+    c_lagune: { name: 'Lagune von Selen', desc: '', bases: MAPS.archipel.bases, rocks: MAPS.archipel.rocks, land: MAPS.archipel.land, biome: 'ozean', camp: 1 },
+    c_kessel: { name: 'Kesseltal', desc: '', bases: BASE_HALF, rocks: [[36, 36, 1.5], [20, 30, 1.6], [30, 52, 1.4]], walls: true, biome: 'asche', camp: 1 },
+    c_wurzel: { name: 'Wurzelwald', desc: '', bases: BASE_HALF, rocks: [[16, 27, 2.0], [29, 45, 2.0], [40, 63, 1.6], [20, 47, 1.3], [5, 22, 1.8], [50, 66, 1.4], [12, 48, 1.5], [22, 38, 1.3], [30, 56, 1.3], [26, 20, 1.6], [14, 15, 1.7], [44, 54, 1.4]], biome: 'sporen', camp: 1 },
+    c_krater: { name: 'Glutkrater', desc: '', bases: BASE_HALF, rocks: ring.concat([[18, 30, 1.6], [28, 54, 1.5], [10, 22, 1.5]]), biome: 'glut', camp: 1 }
+  });
+  MAPS.ebene.biome = MAPS.ebene.biome || 'wueste';
+})();
+
+/* ------------------------------ ZUSTAND & HELFER FÜR SKRIPTE ------------------------------ */
+const P = (cx, cy) => ({ x: (cx + .5) * CELL, y: (cy + .5) * CELL });
+function ND(n) { return Math.max(1, Math.round(n * (CDIFF[G.diff] || 1))); }
+function NI(n) { return Math.max(1, Math.round(n / (CDIFF[G.diff] || 1))); }   // umgekehrt skaliert (Verbündete)
+function DV(easy, normal, hard) { return G.diff === 'easy' ? easy : G.diff === 'hard' ? hard : normal; }
+function once(k) { const f = G.cs.f; if (f[k]) return false; f[k] = 1; return true; }
+function flag(k) { return !!G.cs.f[k]; }
+function setFlag(k, v) { G.cs.f[k] = v === undefined ? 1 : v; }
+function since(k) { const a = G.cs.at; if (a[k] == null) a[k] = G.t; return G.t - a[k]; }
+function stamp(k) { G.cs.at[k] = G.t; }
+function ent(id) { if (id == null) return null; for (const u of G.units) if (u.id === id) return u.dead ? null : u; for (const b of G.blds) if (b.id === id) return b.dead ? null : b; return null; }
+function alive(id) { return !!ent(id); }
+function lineDur(x) { return clamp(1.9 + x.length * .055, 3.2, 10); }
+function say(w, x, k) { G.cs.dq.push([w, x, k || null]); }
+function talk(lines, k) { lines.forEach((l, i) => say(l[0], l[1], i === lines.length - 1 ? k : null)); }
+function talking() { return !!(G.cs.dl || G.cs.dq.length); }
+function objAdd(id, text, o) {
+  o = o || {}; const cs = G.cs;
+  if (cs.obj.some(x => x.id === id)) return;
+  cs.obj.push({ id, text, st: 'open', b: o.bonus ? 1 : 0 }); cs.objN++;
+  if (!o.silent && !G.autoplay) { toast((o.bonus ? 'Bonusziel: ' : 'Neues Ziel: ') + text, o.bonus ? '' : 'good'); sfx('sting'); }
+}
+function objGet(id) { return G.cs.obj.find(x => x.id === id); }
+function objText(id, text) { const o = objGet(id); if (o && o.text !== text) { o.text = text; G.cs.objN++; } }
+function objOpen(id) { const o = objGet(id); return !!o && o.st === 'open'; }
+function objDone(id, silent) { const o = objGet(id); if (!o || o.st !== 'open') return; o.st = 'done'; G.cs.objN++; if (!silent) { toast('Ziel erfüllt: ' + o.text, 'good'); sfx('done'); } }
+function objFail(id) { const o = objGet(id); if (!o || o.st !== 'open') return; o.st = 'fail'; G.cs.objN++; toast('Ziel verfehlt: ' + o.text, 'bad'); sfx('err'); }
+function objDrop(id) { G.cs.obj = G.cs.obj.filter(o => o.id !== id); G.cs.objN++; }
+function mark(id, x, y, l, c) { unmark(id); G.cs.marks.push({ id, x, y, l: l || '', c: c || 'obj' }); }
+function unmark(id) { G.cs.marks = G.cs.marks.filter(m => m.id !== id); }
+function ctimer(l, sec) { G.cs.ct = { l, end: G.t + sec }; }
+function ctLeft() { return G.cs.ct ? G.cs.ct.end - G.t : 1e9; }
+function ctSet(sec) { if (G.cs.ct) G.cs.ct.end = G.t + sec; }
+function ctOff() { G.cs.ct = null; }
+function explore(x, y, r) { const cr = Math.ceil(r / CELL), cx = Math.floor(x / CELL), cy = Math.floor(y / CELL); for (let yy = cy - cr; yy <= cy + cr; yy++) for (let xx = cx - cr; xx <= cx + cr; xx++) if (inb(xx, yy) && hyp(xx - cx, yy - cy) <= cr) G.explored[cidx(xx, yy)] = 1; }
+function cine(x, y, follow) { G.cs.cine = { x, y, f: follow || null }; }
+function cineOff() { G.cs.cine = null; G.cs.slow = 0; }
+function teamUnits(team, f) { return G.units.filter(u => !u.dead && !u.inside && teamOf(u.owner) === team && (!f || f(u))); }
+function near(list, x, y, r) { return list.filter(e => !e.dead && hyp(e.x - x, e.y - y) <= r); }
+function anyNear(owner, x, y, r, f) { for (const u of G.units) if (!u.dead && !u.inside && u.owner === owner && (!f || f(u)) && hyp(u.x - x, u.y - y) <= r) return u; return null; }
+function armyOf(o) { return G.units.filter(u => u.owner === o && !u.dead && !u.d.worker && !u.d.hero && u.type !== 'laster'); }
+
+function cB(owner, type, bx, by, done) {
+  const d = BT[type];
+  // Rohstoffe/Felsen unter dem Gebäude entfernen
+  for (const r of G.res) if (!r.dead && r.bx < bx + d.w && r.bx + r.w > bx && r.by < by + d.h && r.by + r.h > by) { r.dead = true; setCells(r.bx, r.by, r.w, r.h, 0); }
+  const b = mkBld(type, owner, bx, by, done !== false);
+  if (done === false) { b.prog = 0; b.hp = b.maxhp * .1; }
+  return b;
+}
+function cU(owner, type, cx, cy, n, o) {
+  n = n || 1; o = o || {};
+  const out = [], base = P(cx, cy);
+  for (let i = 0; i < n; i++) {
+    const ring = n > 1 ? 1 + Math.floor(i / 7) : 0, k = n > 1 ? i % 7 : 0;
+    const a = k / Math.min(7, n) * TAU + ring * .4, rr = ring * 20;
+    let x = clamp(base.x + Math.cos(a) * rr, 14, WW - 14), y = clamp(base.y + Math.sin(a) * rr, 14, WH - 14);
+    if (!UT[type].air && blkAtW(x, y)) { const [fx, fy] = nearestFree(Math.floor(x / CELL), Math.floor(y / CELL), x, y, 10); x = (fx + .5) * CELL; y = (fy + .5) * CELL; }
+    const u = mkUnit(type, owner, x, y);
+    if (o.ang != null) u.ang = o.ang;
+    if (o.scr) { u.scr = 1; u.wm = o.mode || 'base'; if (o.tgt) u.wt = o.tgt.id; }
+    if (o.hold) u.order = { t: 'hold' };
+    if (o.req) u.req = 1;
+    out.push(u);
+  }
+  return out;
+}
+// Welle: { typ: anzahl } – Anzahl wird mit dem Schwierigkeitsgrad skaliert (außer fix)
+function wave(owner, comp, cx, cy, o) {
+  o = o || {}; let out = [];
+  for (const t in comp) { const n = o.fix ? comp[t] : (o.inv ? NI(comp[t]) : ND(comp[t])); if (comp[t] > 0 && n > 0) out = out.concat(cU(owner, t, cx, cy, n, { scr: 1, mode: o.mode || 'base', tgt: o.tgt })); }
+  return out;
+}
+function hero(owner, type, cx, cy, req) { const u = cU(owner, type, cx, cy, 1, { req: req !== false })[0]; G.cs.h[type] = u.id; return u; }
+function HU(type) { return ent(G.cs.h[type]); }
+function adopt(list, owner) {
+  owner = owner === undefined ? 0 : owner;
+  for (const u of list) { if (u.dead) continue; u.owner = owner; clearOrder(u); u.scr = 0; addFx({ k: 'ring', x: u.x, y: u.y, life: .6, r: 26, c: '120,220,255' }); }
+  tallySupply(); uiDirty();
+}
+function startWorkers(o, hq, n, type) {
+  const F = FAC[G.P[o].fac], b = G.bases.reduce((best, bs) => hyp((bs.cx + .5) * CELL - hq.x, (bs.cy + .5) * CELL - hq.y) < hyp((best.cx + .5) * CELL - hq.x, (best.cy + .5) * CELL - hq.y) ? bs : best, G.bases[0]);
+  for (let i = 0; i < n; i++) {
+    const c = b.crystals[(i + 1) % b.crystals.length];
+    const a = Math.atan2((c[1] + .5) * CELL - hq.y, (c[0] + .5) * CELL - hq.x);
+    const u = mkUnit(type || F.worker, o, hq.x + Math.cos(a) * 66 + (i % 3) * 8, hq.y + Math.sin(a) * 66 + (i % 2) * 6);
+    sendHarvest(u);
+  }
+}
+// Basis an einem Basisplatz aufbauen; Gebäude werden über die KI-Platzsuche verteilt
+function campBase(o, bi, types, workers) {
+  const bs = G.bases[bi];
+  const hq = cB(o, 'hq', bs.cx - 1, bs.cy - 1);
+  G.home[o] = { x: hq.x, y: hq.y };
+  if (o === ME) updateFog();
+  const out = { hq };
+  campPlace(o, hq, types, out);
+  if (workers) startWorkers(o, hq, workers);
+  return out;
+}
+function campPlace(o, hq, types, out) {
+  out = out || {};
+  if (o === ME) updateFog();
+  const tmp = new AI(o, 'normal'); tmp.main = hq;
+  for (const t of types || []) {
+    const spot = t === 'extractor' ? tmp.gasSpot() : tmp.findSpot(t);
+    if (!spot) continue;
+    const b = cB(o, t, spot[0], spot[1]);
+    (out[t] = out[t] || []).push(b);
+  }
+  return out;
+}
+function addAI(o, ov, diff) {
+  diff = diff || G.diff;
+  const a = new AI(o, diff); a.ov = ov || {}; a.cfg = Object.assign({}, AICFG[diff] || AICFG.normal, a.ov);
+  G.ais.push(a); G.P[o].carry = a.cfg.carry; return a;
+}
+function intoBunker(b, list) { for (const u of list) { if (b.cargo.length >= b.d.cargo) break; b.cargo.push(u); u.inside = b; u.x = b.x; u.y = b.y; } }
+function strike(x, y, o) { o = o || {}; G.cs.strikes.push({ x, y, r: o.r || 105, dmg: o.dmg || 230, t: o.t || 3.5, T: o.t || 3.5, teams: o.teams || null }); if (!G.autoplay) sfx('strike'); }
+// Größte Ansammlung eines Teams finden (Ziel für Orbitalschläge)
+function cluster(team, f) {
+  const us = teamUnits(team, u => !u.d.hero && (!f || f(u)));
+  let best = null, bn = 0;
+  for (let k = 0; k < 14 && us.length; k++) {
+    const u = us[Math.floor(Math.random() * us.length)]; let n = 0, sx = 0, sy = 0;
+    for (const v of us) if (hyp(v.x - u.x, v.y - u.y) < 150) { n += v.d.supply || 1; sx += v.x; sy += v.y; }
+    if (n > bn) { bn = n; const c = us.filter(v => hyp(v.x - u.x, v.y - u.y) < 150); best = { x: sx / c.length, y: sy / c.length, n }; }
+  }
+  return best;
+}
+function blast(x, y, r, dmg, o) {
+  o = o || {};
+  const hit = e => !o.teams || o.teams.includes(teamOf(e.owner));
+  for (const u of G.units.slice()) {
+    if (u.dead || u.inside || !hit(u) || (o.spare && o.spare.includes(u.id))) continue;
+    const d = hyp(u.x - x, u.y - y); if (d > r + u.r) continue;
+    applyDmg(u, dmg * (o.flat ? 1 : 1 - .55 * clamp(d / r, 0, 1)), null);
+  }
+  for (const b of G.blds.slice()) {
+    if (b.dead || !hit(b) || b.inv) continue;
+    const d = edgeDist({ k: 'p', x, y }, b); if (d > r) continue;
+    applyDmg(b, dmg * (o.bmul == null ? .55 : o.bmul) * (o.flat ? 1 : 1 - .55 * clamp(d / r, 0, 1)), null);
+  }
+  addFx({ k: 'boom', x, y, life: .8, r: Math.min(140, r * .7) });
+  addFx({ k: 'shock', x, y, life: .9, r: r * 1.25 });
+  for (let i = 0; i < 6; i++) addFx({ k: 'boom', x: x + (Math.random() - .5) * r, y: y + (Math.random() - .5) * r, life: .5 + Math.random() * .4, r: 20 + Math.random() * 26, delay: Math.random() * .3 });
+  sparks(x, y, 30, '255,190,110'); decal(x, y, Math.min(110, r * .5));
+  if (!G.autoplay) { gfxDebris(x, y, 18, ['#3a3530', '#6a5a48', '#d9862e'], 6, 260); gfxSmoke(x, y, 40, 3, '50,46,44', -20, 1); }
+  shake(o.shake || 9, x, y); flash(o.flash || .4, o.fc || '255,210,160');
+  if (o.beam) G.cs.vfx.push({ k: 'beam', x, y, t: 0, life: .9 });
+  sfx('nuke', { x, y });
+}
+function ship(x, y, dir, life) { G.cs.vfx.push({ k: 'ship', x, y, dir, t: 0, life: life || 4 }); if (!G.autoplay) sfx('launch'); }
+function campWin() { if (G.over) return; G.over = true; G.winTeam = 0; G.endT = 0; onGameOver(true); }
+function campLose(msg) { if (G.over) return; G.over = true; G.winTeam = 1; G.endT = 0; onGameOver(false); if (UI.endPending) UI.endPending.msg = msg; }
+
+/* ------------------------------ SPIELAUFBAU ------------------------------ */
+function campSetupGame(M) {
+  G.mode = 'camp'; G.campId = M.id; ME = 0;
+  G.team = M.players.map(p => p.team);
+  G.humans = [0];
+  G.peace = new Array(64).fill(0);
+  for (const [a, b] of M.peace || []) { G.peace[a * 8 + b] = 1; G.peace[b * 8 + a] = 1; }
+  M.players.forEach((p, o) => { G.P[o] = newPlayer(p.fac); G.P[o].cr = p.cr != null ? p.cr : 0; G.P[o].gas = p.gas || 0; });
+  G.home = M.players.map(() => ({ x: WW / 2, y: WH / 2 }));
+  G.cs = { f: {}, at: {}, h: {}, n: {}, obj: [], marks: [], strikes: [], vfx: [], dq: [], dl: null, dlN: 0, objN: 1, ct: null, cine: null, mood: '', slow: 0 };
+  setupColors();
+  M.setup(G.cs, CDIFF[G.diff] || 1);
+  // Vorplatzierte Verteidiger bleiben auf Posten (nicht Teil der KI-Armee)
+  for (const u of G.units) if (u.owner !== 0 && !u.d.hero && !u.d.worker && u.type !== 'laster' && !u.scr) { u.scr = 1; u.wm = 'guard'; u.gx = u.x; u.gy = u.y; }
+  setupColors();
+  tallySupply();
+}
+function campTick(dt) {
+  const cs = G.cs, M = CAMP.by[G.campId]; if (!cs || !M) return;
+  // Funksprüche (laufen in Spielzeit)
+  if (cs.dl && G.t >= cs.dl.t0 + cs.dl.dur) { if (cs.dl.k) cs.f[cs.dl.k] = 1; cs.dl = null; }
+  if (!cs.dl && cs.dq.length) { const l = cs.dq.shift(); cs.dl = { w: l[0], x: l[1], k: l[2], t0: G.t, dur: lineDur(l[1]) }; cs.dlN++; }
+  // Orbitalschläge
+  for (const s of cs.strikes) { s.t -= dt; if (s.t <= 0) { s.done = 1; blast(s.x, s.y, s.r, s.dmg, { beam: 1, teams: s.teams, shake: 7, flash: .3, fc: '255,120,90' }); } }
+  if (cs.strikes.some(s => s.done)) cs.strikes = cs.strikes.filter(s => !s.done);
+  for (const v of cs.vfx) v.t += dt;
+  if (cs.vfx.length) cs.vfx = cs.vfx.filter(v => v.t < v.life);
+  // Helden heilen sich außerhalb des Kampfes
+  for (const u of G.units) if (u.d.hero && !u.d.boss && !u.dead && u.hp < u.maxhp && G.t - u.lastHit > 5) u.hp = Math.min(u.maxhp, u.hp + 7 * dt);
+  // Skript-Wellen steuern
+  cs.wT = (cs.wT || 0) - dt; if (cs.wT <= 0) { cs.wT = .5; waveThink(); }
+  if (cs.resp && cs.resp.length) for (const r of cs.resp.slice()) if (G.t >= r.t) {
+    const hq = G.blds.find(b => b.owner === 0 && b.type === 'hq' && !b.dead);
+    if (!hq) { r.t = G.t + 5; continue; }
+    cs.resp = cs.resp.filter(x => x !== r);
+    const u = hero(0, r.type, Math.floor(hq.x / CELL), Math.floor(hq.y / CELL) + 3); u.hp = u.maxhp * .6;
+    addFx({ k: 'ring', x: u.x, y: u.y, life: .8, r: 40, c: '255,211,74' }); toast(u.d.name + ' ist zurück im Einsatz', 'good'); sfx('ready');
+  }
+  try { M.tick(cs, dt); } catch (e) { console.error(e); }
+  if (G.frame % 30 === 0 && !G.over && !M.noWipe && !G.blds.some(b => b.owner === 0 && !b.dead) && !G.units.some(u => u.owner === 0 && !u.dead)) campLose('Alle deine Einheiten wurden vernichtet.');
+}
+function campOnKill(e, src) {
+  const M = CAMP.by[G.campId]; if (!M || !G.cs) return;
+  if (e.k === 'b' && e.owner === 0) G.cs.n.lostB = (G.cs.n.lostB || 0) + 1;
+  if (M.onKill) try { M.onKill(e, src, G.cs); } catch (er) { console.error(er); }
+  if (e.k === 'u' && e.req && !e.noFail && !G.over) {
+    const hq = G.blds.find(b => b.owner === 0 && b.type === 'hq' && !b.dead);
+    if (e.owner === 0 && hq && !(M.noRespawn || []).includes(e.type)) {
+      G.cs.resp = G.cs.resp || []; G.cs.resp.push({ type: e.type, t: G.t + 40 }); G.cs.n.ko = (G.cs.n.ko || 0) + 1;
+      toast(e.d.name + ' ist verwundet – zurück in 40 Sekunden', 'alert'); sfx('alert');
+    } else campLose(e.d.name + ' ist gefallen.');
+  }
+}
+function nearestFoeTarget(u, mode) {
+  let best = null, bd = 1e9;
+  for (const b of G.blds) if (!b.dead && foe(b.owner, u.owner)) { const d = hyp(b.x - u.x, b.y - u.y); if (d < bd) { bd = d; best = b; } }
+  if (mode === 'hunt' || !best) {
+    for (const e of G.units) if (!e.dead && !e.inside && foe(e.owner, u.owner) && (!e.d.air || u.d.aa || u.d.air)) { const d = hyp(e.x - u.x, e.y - u.y) * (mode === 'hunt' ? .8 : 1.4); if (d < bd) { bd = d; best = e; } }
+  }
+  return best;
+}
+function waveThink() {
+  let m = null; const get = id => { if (!m) { m = new Map(); for (const e of G.units) if (!e.dead) m.set(e.id, e); for (const e of G.blds) if (!e.dead) m.set(e.id, e); } return m.get(id); };
+  for (const u of G.units) {
+    if (!u.scr || u.dead || u.inside || u.lock) continue;
+    const o = u.order;
+    if (u.wm === 'guard') { if (!o && u.gx != null && hyp(u.x - u.gx, u.y - u.gy) > 140) cmdMove([u], u.gx, u.gy, true); continue; }
+    if (u.wm === 'tgt' && u.wt != null) {
+      const t = get(u.wt);
+      if (t && !t.dead && (!t.d.air || u.d.aa || u.d.air)) {
+        if (o && o.t === 'attack') continue;
+        if (o && o.t === 'amove' && hyp(o.x - t.x, o.y - t.y) < 160) continue;
+        cmdMove([u], t.x, t.y, true); continue;
+      }
+      u.wm = 'base';
+    }
+    if (o && (o.t === 'attack' || o.t === 'amove' || o.t === 'move' || o.t === 'hold')) continue;
+    const t = nearestFoeTarget(u, u.wm);
+    if (t) cmdMove([u], t.x + (Math.random() - .5) * 50, t.y + (Math.random() - .5) * 50, true);
+  }
+}
+
+/* ------------------------------ GRAFIK: SONDERGEBÄUDE ------------------------------ */
+function drawShuttle(c, x, y, s, t, thrust) {
+  c.save(); c.translate(x, y); c.scale(s, s); c.rotate(-Math.PI / 2);
+  if (thrust) { glowDot(c, -30, 0, 22 + Math.sin(t * 50) * 3, '255,190,110', .95); glowDot(c, -40, 0, 12, '255,255,220', .9); }
+  c.fillStyle = '#9aa7b3'; poly(c, [[-12, -8], [-22, -26], [-6, -26], [8, -8]]); c.fill(); poly(c, [[-12, 8], [-22, 26], [-6, 26], [8, 8]]); c.fill();
+  const g = c.createLinearGradient(0, -10, 0, 10); g.addColorStop(0, '#f2f6fa'); g.addColorStop(.6, '#c4ced8'); g.addColorStop(1, '#7c8894');
+  c.fillStyle = g; c.beginPath(); c.moveTo(30, 0); c.quadraticCurveTo(22, -10, 0, -10); c.lineTo(-26, -8); c.lineTo(-26, 8); c.lineTo(0, 10); c.quadraticCurveTo(22, 10, 30, 0); c.closePath(); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 1; c.stroke();
+  c.fillStyle = '#3db8ff'; c.fillRect(-18, -2, 26, 4);
+  c.fillStyle = '#1b2733'; c.beginPath(); c.moveTo(24, 0); c.quadraticCurveTo(18, -5, 12, -5); c.lineTo(12, 5); c.quadraticCurveTo(18, 5, 24, 0); c.fill();
+  c.fillStyle = '#e8b04a'; c.fillRect(-26, -6, 3, 12);
+  c.restore();
+}
+function drawLaster(c, owner, ang, anim, st) {
+  const col = OC[owner] || COL_ALLY;
+  c.save(); c.rotate(ang);
+  c.fillStyle = 'rgba(0,0,0,.35)'; c.beginPath(); c.roundRect(-16, -9, 34, 22, 4); c.fill();
+  c.fillStyle = '#1d2226'; for (const [x, y] of [[-11, -10], [-11, 7], [2, -10], [2, 7], [11, -10], [11, 7]]) { c.beginPath(); c.roundRect(x - 3.5, y, 7, 3.5, 1); c.fill(); }
+  c.fillStyle = lg(c, ang, 14, '#8b9278', '#4e5543'); c.beginPath(); c.roundRect(-17, -9, 24, 18, 3); c.fill(); c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1; c.stroke();
+  c.strokeStyle = 'rgba(0,0,0,.25)'; for (let i = -13; i < 6; i += 5) { c.beginPath(); c.moveTo(i, -8); c.lineTo(i, 8); c.stroke(); }
+  c.fillStyle = lg(c, ang, 10, '#b9c2cc', '#606a74'); c.beginPath(); c.roundRect(8, -8, 10, 16, 3); c.fill(); c.stroke();
+  c.fillStyle = '#26323e'; c.fillRect(14, -6, 3, 12);
+  c.fillStyle = col.m; c.fillRect(-17, -2, 24, 4);
+  if (st.moving) glowDot(c, 19, 0, 4, '255,240,200', .5);
+  c.restore();
+}
+function drawCampBld(c, type, owner, W, H, b) {
+  const t = b.anim || 0, col = OC[owner] || COL_NEU, done = b.done !== false, cx = W / 2, cy = H / 2;
+  c.fillStyle = 'rgba(0,0,0,.4)'; c.beginPath(); c.roundRect(6, 8, W - 4, H - 4, 10); c.fill();
+  switch (type) {
+    case 'raumhafen': {
+      chamfer(c, 2, 2, W - 4, H - 4, 20); c.fillStyle = '#39424b'; c.fill(); c.strokeStyle = '#151a1f'; c.lineWidth = 2; c.stroke();
+      chamfer(c, 9, 9, W - 18, H - 18, 16); c.fillStyle = '#4c5762'; c.fill();
+      c.fillStyle = '#5c6874'; c.beginPath(); c.arc(cx, cy, W * .36, 0, TAU); c.fill();
+      c.strokeStyle = 'rgba(255,205,70,.85)'; c.lineWidth = 3; c.setLineDash([9, 7]); c.beginPath(); c.arc(cx, cy, W * .31, t * .2, t * .2 + TAU); c.stroke(); c.setLineDash([]);
+      c.strokeStyle = 'rgba(255,255,255,.18)'; c.lineWidth = 5; c.beginPath(); c.moveTo(cx - 16, cy - 14); c.lineTo(cx - 16, cy + 14); c.moveTo(cx + 16, cy - 14); c.lineTo(cx + 16, cy + 14); c.moveTo(cx - 16, cy); c.lineTo(cx + 16, cy); c.stroke();
+      // Turm
+      c.fillStyle = '#6d7984'; c.fillRect(W - 30, 10, 18, 18); c.fillStyle = col.m; c.fillRect(W - 27, 13, 12, 4);
+      glowDot(c, W - 21, 19, 6, '255,80,60', Math.sin(t * 4) > 0 ? .95 : .2);
+      for (const [x, y] of [[14, 14], [W - 14, H - 14], [14, H - 14]]) glowDot(c, x, y, 6, '255,210,90', (Math.sin(t * 3 + x) + 1) / 2);
+      if (b.ship !== 0 && done) drawShuttle(c, cx, cy, 1.05, t, false);
+      break;
+    }
+    case 'stoersender': {
+      c.fillStyle = '#2b2531'; poly(c, Array.from({ length: 6 }, (_, i) => [cx + Math.cos(i / 6 * TAU) * 28, cy + Math.sin(i / 6 * TAU) * 28])); c.fill(); c.strokeStyle = '#0d0a10'; c.lineWidth = 2; c.stroke();
+      c.fillStyle = '#463d50'; poly(c, Array.from({ length: 6 }, (_, i) => [cx + Math.cos(i / 6 * TAU) * 18, cy + Math.sin(i / 6 * TAU) * 18])); c.fill();
+      for (let i = 0; i < 3; i++) { const a = i / 3 * TAU + t * .5; c.strokeStyle = '#6a5d78'; c.lineWidth = 3; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.cos(a) * 26, cy + Math.sin(a) * 26); c.stroke(); }
+      if (done) for (let k = 0; k < 3; k++) { const p = ((t * .7 + k / 3) % 1); c.strokeStyle = `rgba(${col.g},${(1 - p) * .7})`; c.lineWidth = 2; c.beginPath(); c.arc(cx, cy, 10 + p * 46, 0, TAU); c.stroke(); }
+      glowDot(c, cx, cy, 12 + Math.sin(t * 6) * 2, col.g, 1); c.fillStyle = '#fff'; circ(c, cx, cy, 3);
+      break;
+    }
+    case 'archiv': {
+      c.fillStyle = '#4b5550'; c.beginPath(); c.roundRect(4, 4, W - 8, H - 8, 6); c.fill(); c.strokeStyle = '#1e2421'; c.lineWidth = 2; c.stroke();
+      c.fillStyle = '#5f6b64'; c.beginPath(); c.roundRect(12, 12, W - 24, H - 24, 4); c.fill();
+      c.fillStyle = 'rgba(40,90,50,.55)'; for (const [x, y, r] of [[14, 70, 12], [70, 18, 9], [30, 20, 7], [74, 66, 10]]) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); }
+      c.strokeStyle = 'rgba(0,0,0,.35)'; c.lineWidth = 1.5; c.beginPath(); c.moveTo(20, 30); c.lineTo(34, 44); c.lineTo(30, 60); c.moveTo(64, 20); c.lineTo(58, 36); c.stroke();
+      for (let i = 0; i < 5; i++) { const f = (Math.sin(t * 5 + i * 1.7) + 1) / 2; c.fillStyle = `rgba(110,240,255,${.25 + f * .6})`; c.fillRect(24 + i * 10, 38, 5, 20); }
+      glowDot(c, cx, cy, 20, '110,240,255', .25 + (Math.sin(t * 2) + 1) * .1);
+      break;
+    }
+    case 'uplink': {
+      c.fillStyle = '#4a545e'; chamfer(c, 3, 3, W - 6, H - 6, 10); c.fill(); c.strokeStyle = '#1a1f24'; c.lineWidth = 2; c.stroke();
+      c.save(); c.translate(cx, cy); c.rotate(Math.sin(t * .4) * .4 - .6);
+      c.fillStyle = '#c9d2da'; c.beginPath(); c.ellipse(0, 0, 24, 16, 0, 0, TAU); c.fill(); c.strokeStyle = '#6d7984'; c.lineWidth = 2; c.stroke();
+      c.fillStyle = '#9aa6b1'; c.beginPath(); c.ellipse(0, 0, 15, 10, 0, 0, TAU); c.fill();
+      c.strokeStyle = '#3a434b'; c.lineWidth = 2; c.beginPath(); c.moveTo(-14, -8); c.lineTo(0, 0); c.lineTo(-14, 8); c.stroke();
+      c.restore();
+      if (done) glowDot(c, cx, cy, 9 + Math.sin(t * 8) * 2, col.g, 1);
+      break;
+    }
+    case 'bohrturm': {
+      c.fillStyle = '#3d3a36'; chamfer(c, 2, 2, W - 4, H - 4, 12); c.fill(); c.strokeStyle = '#141210'; c.lineWidth = 2; c.stroke();
+      c.fillStyle = '#56504a'; chamfer(c, 9, 9, W - 18, H - 18, 8); c.fill();
+      c.strokeStyle = 'rgba(240,190,60,.75)'; c.lineWidth = 3; c.setLineDash([7, 6]); c.strokeRect(12, 12, W - 24, H - 24); c.setLineDash([]);
+      const hot = done ? .6 + .4 * Math.sin(t * 9) : .2;
+      glowDot(c, cx, cy, 26, '255,120,40', hot * .6);
+      c.strokeStyle = '#8f8a82'; c.lineWidth = 3;
+      for (const [x, y] of [[14, 14], [W - 14, 14], [14, H - 14], [W - 14, H - 14]]) { c.beginPath(); c.moveTo(x, y); c.lineTo(cx, cy); c.stroke(); }
+      c.lineWidth = 1.5; c.strokeStyle = '#6b665f';
+      c.beginPath(); c.moveTo(14, 14); c.lineTo(W - 14, H - 14); c.moveTo(W - 14, 14); c.lineTo(14, H - 14); c.stroke();
+      c.save(); c.translate(cx, cy); c.rotate(t * 6);
+      c.fillStyle = '#b5ada0'; for (let i = 0; i < 4; i++) { c.rotate(TAU / 4); c.fillRect(2, -3, 12, 6); }
+      c.restore();
+      c.fillStyle = '#ffd08a'; circ(c, cx, cy, 5);
+      glowDot(c, 14, 14, 5, col.g, Math.sin(t * 3) > 0 ? .9 : .3);
+      if (done && !G.autoplay && GFX.q && Math.random() < .06) gfxSmoke(b.x + (Math.random() - .5) * 30, b.y, 10, 1.6, '170,165,160', -18);
+      break;
+    }
+    case 'schildgen': {
+      c.fillStyle = '#3c454e'; chamfer(c, 3, 3, W - 6, H - 6, 10); c.fill(); c.strokeStyle = '#141a20'; c.lineWidth = 2; c.stroke();
+      for (let i = 0; i < 4; i++) { const a = i / 4 * TAU + Math.PI / 4; c.fillStyle = '#7d8a96'; c.save(); c.translate(cx, cy); c.rotate(a); c.fillRect(10, -4, 16, 8); c.restore(); }
+      const p = .7 + .3 * Math.sin(t * 5);
+      glowDot(c, cx, cy, 20 * p, '140,230,255', .95); c.fillStyle = '#eaffff'; circ(c, cx, cy, 6);
+      break;
+    }
+    case 'kernbrecher': {
+      const k = G.cs && G.cs.ct ? clamp(1 - (G.cs.ct.end - G.t) / 1200, 0, 1) : .3;
+      c.fillStyle = '#26211f'; poly(c, Array.from({ length: 8 }, (_, i) => [cx + Math.cos(i / 8 * TAU + Math.PI / 8) * 64, cy + Math.sin(i / 8 * TAU + Math.PI / 8) * 64])); c.fill(); c.strokeStyle = '#0a0807'; c.lineWidth = 3; c.stroke();
+      c.fillStyle = '#3a322e'; poly(c, Array.from({ length: 8 }, (_, i) => [cx + Math.cos(i / 8 * TAU + Math.PI / 8) * 50, cy + Math.sin(i / 8 * TAU + Math.PI / 8) * 50])); c.fill();
+      for (let i = 0; i < 4; i++) { const a = i / 4 * TAU + Math.PI / 4, ext = 6 + Math.sin(t * 4 + i) * 5; c.save(); c.translate(cx, cy); c.rotate(a); c.fillStyle = '#5a504a'; c.fillRect(34, -7, 18 + ext, 14); c.fillStyle = '#ffb060'; c.fillRect(50 + ext, -3, 3, 6); c.restore(); }
+      for (const [r, s] of [[42, 1], [30, -1.6]]) {
+        c.save(); c.translate(cx, cy); c.rotate(t * (.4 + k * 1.6) * s);
+        c.strokeStyle = '#6e625a'; c.lineWidth = 7; c.beginPath(); c.arc(0, 0, r, 0, TAU); c.stroke();
+        for (let i = 0; i < 6; i++) { const a = i / 6 * TAU; glowDot(c, Math.cos(a) * r, Math.sin(a) * r, 6, '255,140,60', .9); }
+        c.restore();
+      }
+      const p = .75 + .25 * Math.sin(t * (3 + k * 12));
+      glowDot(c, cx, cy, 34 * p, '255,90,30', .95); glowDot(c, cx, cy, 18 * p, '255,230,170', 1);
+      break;
+    }
+    case 'ruine': {
+      c.fillStyle = '#3a3936'; poly(c, [[6, 10], [40, 4], [52, 16], [88, 12], [90, 60], [70, 90], [30, 86], [8, 70]]); c.fill();
+      c.fillStyle = '#55524c'; poly(c, [[14, 16], [38, 12], [44, 30], [24, 40], [12, 34]]); c.fill(); poly(c, [[58, 22], [84, 20], [82, 48], [64, 44]]); c.fill(); poly(c, [[30, 56], [60, 60], [56, 80], [34, 78]]); c.fill();
+      c.strokeStyle = '#7a756c'; c.lineWidth = 4; c.beginPath(); c.moveTo(20, 60); c.lineTo(52, 40); c.stroke();
+      c.fillStyle = 'rgba(0,0,0,.35)'; for (const [x, y, r] of [[48, 48, 14], [74, 70, 9]]) { c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill(); }
+      glowDot(c, 70, 30, 5, '255,170,60', .3 + .3 * Math.sin(t * 7));
+      break;
+    }
+    case 'funkturm': {
+      c.fillStyle = '#4d535a'; c.beginPath(); c.roundRect(4, 4, W - 8, H - 8, 6); c.fill(); c.strokeStyle = '#1b1f23'; c.lineWidth = 2; c.stroke();
+      c.strokeStyle = '#a2abb4'; c.lineWidth = 2;
+      c.beginPath(); c.moveTo(14, H - 12); c.lineTo(cx, 10); c.lineTo(W - 14, H - 12); c.moveTo(20, H - 24); c.lineTo(W - 20, H - 24); c.moveTo(26, H - 36); c.lineTo(W - 26, H - 36); c.stroke();
+      glowDot(c, cx, 10, 7, '255,60,40', Math.sin(t * 5) > 0 ? 1 : .2);
+      break;
+    }
+  }
+}
+function heroOverlay(c, u) {
+  const t = G.t;
+  c.save(); c.rotate(t * .8);
+  c.strokeStyle = u.d.boss ? 'rgba(255,80,60,.6)' : 'rgba(255,211,74,.65)'; c.lineWidth = 1.6; c.setLineDash([5, 4]);
+  c.beginPath(); c.arc(0, 0, u.r * 1.45, 0, TAU); c.stroke(); c.setLineDash([]);
+  c.restore();
+  if (cam.z > .55) {
+    const fs = 10.5 / cam.z;
+    c.font = `700 ${fs}px Rajdhani,sans-serif`; c.textAlign = 'center';
+    c.fillStyle = 'rgba(0,0,0,.7)'; c.fillText(u.d.name, 1 / cam.z, -u.r - 15 / cam.z - (u.d.air ? 7 : 0) + 1 / cam.z);
+    c.fillStyle = u.d.boss ? '#ff9a80' : '#ffd98a'; c.fillText(u.d.name, 0, -u.r - 15 / cam.z - (u.d.air ? 7 : 0));
+  }
+}
+// Weltgrafik der Kampagne: Markierungen, Orbitalschläge, Fähren, Schilde
+function campDrawWorld(c, t, inView) {
+  const cs = G.cs; if (!cs) return;
+  const z = cam.z;
+  // Schildgeneratoren → Kernbrecher
+  const kb = G.blds.find(b => b.type === 'kernbrecher' && !b.dead);
+  if (kb) for (const g of G.blds) if (g.type === 'schildgen' && !g.dead) {
+    c.globalCompositeOperation = 'lighter';
+    const f = .5 + .5 * Math.sin(t * 6 + g.id);
+    c.strokeStyle = `rgba(140,230,255,${.25 + f * .3})`; c.lineWidth = 6; c.beginPath(); c.moveTo(g.x, g.y); c.lineTo(kb.x, kb.y); c.stroke();
+    c.strokeStyle = `rgba(230,255,255,${.5 + f * .4})`; c.lineWidth = 1.5; c.stroke();
+    c.globalCompositeOperation = 'source-over';
+  }
+  for (const b of G.blds) if (b.inv && !b.dead && inView(b.x, b.y, 150)) {
+    const r = b.w * CELL * .78;
+    c.globalCompositeOperation = 'lighter';
+    const g = c.createRadialGradient(b.x, b.y, r * .6, b.x, b.y, r); g.addColorStop(0, 'rgba(120,220,255,0)'); g.addColorStop(.85, `rgba(120,220,255,${.16 + .08 * Math.sin(t * 3)})`); g.addColorStop(1, 'rgba(200,250,255,.45)');
+    c.fillStyle = g; c.beginPath(); c.arc(b.x, b.y, r, 0, TAU); c.fill();
+    c.strokeStyle = `rgba(180,240,255,${.25 + .2 * Math.sin(t * 5)})`; c.lineWidth = 1.2;
+    for (let i = 0; i < 6; i++) { const a = i / 6 * TAU + t * .3; c.beginPath(); c.arc(b.x, b.y, r * .98, a, a + .7); c.stroke(); }
+    c.globalCompositeOperation = 'source-over';
+  }
+  // Fähren / Landungsschiffe
+  for (const v of cs.vfx) {
+    if (v.k === 'ship') {
+      const k = v.t / v.life;
+      const h = v.dir === 'up' ? Math.pow(k, 2) * 900 : Math.pow(1 - Math.min(1, k * 1.25), 2) * 900;
+      const s = 1.05 + h / 500;
+      c.fillStyle = `rgba(0,0,0,${.35 * (1 - h / 900)})`; c.beginPath(); c.ellipse(v.x + h * .25, v.y + h * .35, 34, 22, 0, 0, TAU); c.fill();
+      c.globalAlpha = clamp(1.4 - h / 700, 0, 1);
+      drawShuttle(c, v.x, v.y - h, s, t, v.dir === 'up' || h > 5);
+      c.globalAlpha = 1;
+      if (v.dir === 'up' && k < .35 && GFX.q && Math.random() < .5) gfxSmoke(v.x + (Math.random() - .5) * 40, v.y + 10, 16, 2.5, '200,200,200', -10);
+    } else if (v.k === 'nova') {
+      const k = v.t / v.life, R = 40 + Math.pow(k, .5) * 1400, a = 1 - k;
+      c.globalCompositeOperation = 'lighter';
+      const g = c.createRadialGradient(v.x, v.y, 0, v.x, v.y, R); g.addColorStop(0, `rgba(255,255,255,${a})`); g.addColorStop(.5, `rgba(200,240,255,${a * .55})`); g.addColorStop(1, 'rgba(160,220,255,0)');
+      c.fillStyle = g; c.beginPath(); c.arc(v.x, v.y, R, 0, TAU); c.fill();
+      c.strokeStyle = `rgba(230,250,255,${a * .8})`; c.lineWidth = 10 * a + 2; c.beginPath(); c.arc(v.x, v.y, R * .92, 0, TAU); c.stroke();
+      c.globalCompositeOperation = 'source-over';
+    } else if (v.k === 'beam') {
+      const k = v.t / v.life, a = 1 - k;
+      c.globalCompositeOperation = 'lighter';
+      const g = c.createLinearGradient(v.x, v.y - 900, v.x, v.y); g.addColorStop(0, 'rgba(255,90,60,0)'); g.addColorStop(1, `rgba(255,170,120,${a * .9})`);
+      c.fillStyle = g; c.fillRect(v.x - 16 * a - 4, v.y - 900, (16 * a + 4) * 2, 900);
+      c.fillStyle = `rgba(255,255,240,${a})`; c.fillRect(v.x - 3 * a - 1, v.y - 900, (3 * a + 1) * 2, 900);
+      c.globalCompositeOperation = 'source-over';
+    }
+  }
+  // Warnkreise der Orbitalschläge
+  for (const s of cs.strikes) {
+    const k = 1 - s.t / s.T, pulse = (Math.sin(t * (8 + k * 20)) + 1) / 2;
+    c.fillStyle = `rgba(255,50,30,${.08 + k * .16})`; c.beginPath(); c.arc(s.x, s.y, s.r, 0, TAU); c.fill();
+    c.strokeStyle = `rgba(255,70,40,${.5 + pulse * .5})`; c.lineWidth = 2.5 / z; c.beginPath(); c.arc(s.x, s.y, s.r, 0, TAU); c.stroke();
+    c.lineWidth = 4 / z; c.beginPath(); c.arc(s.x, s.y, s.r * (1 - k), 0, TAU); c.stroke();
+    c.lineWidth = 1.5 / z; c.beginPath(); c.moveTo(s.x - s.r * .3, s.y); c.lineTo(s.x + s.r * .3, s.y); c.moveTo(s.x, s.y - s.r * .3); c.lineTo(s.x, s.y + s.r * .3); c.stroke();
+  }
+  // Zielmarkierungen
+  for (const m of cs.marks) {
+    const col = m.c === 'bonus' ? '255,211,74' : m.c === 'danger' ? '255,90,60' : '120,230,255';
+    const p = (t * .8) % 1;
+    c.strokeStyle = `rgba(${col},${.9 - p * .9})`; c.lineWidth = 2.5 / z; c.beginPath(); c.ellipse(m.x, m.y, 30 + p * 40, (30 + p * 40) * .62, 0, 0, TAU); c.stroke();
+    c.strokeStyle = `rgba(${col},.85)`; c.lineWidth = 2 / z; c.beginPath(); c.ellipse(m.x, m.y, 26, 16, 0, 0, TAU); c.stroke();
+    c.globalCompositeOperation = 'lighter';
+    const g = c.createLinearGradient(m.x, m.y - 160, m.x, m.y); g.addColorStop(0, `rgba(${col},0)`); g.addColorStop(1, `rgba(${col},.35)`);
+    c.fillStyle = g; c.fillRect(m.x - 5, m.y - 160, 10, 160);
+    c.globalCompositeOperation = 'source-over';
+    if (m.l) {
+      const fs = 12 / z; c.font = `700 ${fs}px Rajdhani,sans-serif`; c.textAlign = 'center';
+      c.fillStyle = 'rgba(0,0,0,.75)'; c.fillText(m.l, m.x + 1 / z, m.y - 34 / z + 1 / z);
+      c.fillStyle = `rgb(${col})`; c.fillText(m.l, m.x, m.y - 34 / z);
+    }
+  }
+}
+// Pfeile am Bildschirmrand zu Zielen außerhalb der Sicht
+function campDrawScreen(c) {
+  const cs = G.cs; if (!cs || cs.cine) return;
+  const top = topH() + 8, bot = VH - panelH() - 8;
+  for (const m of cs.marks) {
+    const s = w2s(m.x, m.y);
+    if (s.x > 10 && s.x < VW - 10 && s.y > top && s.y < bot) continue;
+    const cx = VW / 2, cy = (top + bot) / 2, a = Math.atan2(s.y - cy, s.x - cx);
+    const kx = (VW / 2 - 26) / Math.max(.001, Math.abs(Math.cos(a))), ky = ((bot - top) / 2 - 26) / Math.max(.001, Math.abs(Math.sin(a)));
+    const k = Math.min(kx, ky), x = cx + Math.cos(a) * k, y = cy + Math.sin(a) * k;
+    const col = m.c === 'bonus' ? '#ffd34a' : m.c === 'danger' ? '#ff6a4a' : '#78e6ff';
+    c.save(); c.translate(x, y); c.rotate(a);
+    c.globalAlpha = .65 + .35 * Math.sin(G.t * 5);
+    c.fillStyle = col; c.beginPath(); c.moveTo(14, 0); c.lineTo(-6, -9); c.lineTo(-2, 0); c.lineTo(-6, 9); c.closePath(); c.fill();
+    c.restore();
+  }
+}
+function campDrawMini(m, s) {
+  const cs = G.cs; if (!cs) return;
+  const on = Math.sin(G.t * 6) > -.3;
+  for (const mk of cs.marks) { if (!on) continue; m.fillStyle = mk.c === 'bonus' ? '#ffd34a' : mk.c === 'danger' ? '#ff6a4a' : '#78e6ff'; const x = mk.x * s, y = mk.y * s, r = 3.2 * DPR; m.beginPath(); m.moveTo(x, y - r); m.lineTo(x + r, y); m.lineTo(x, y + r); m.lineTo(x - r, y); m.closePath(); m.fill(); }
+  for (const st of cs.strikes) { m.strokeStyle = '#ff4a30'; m.lineWidth = 1.5 * DPR; m.beginPath(); m.arc(st.x * s, st.y * s, st.r * s, 0, TAU); m.stroke(); }
+}
+
+/* =============================== KAMPAGNE · FIGUREN =============================== */
+const CHARS = {
+  mara: { n: 'Hptm. Mara Voss', c: '#8fd3ff' },
+  heinz: { n: 'H.E.I.N.Z.', c: '#ffc76a' },
+  funke: { n: 'Juna „Funke“ Okafor', c: '#ffa45a' },
+  brandt: { n: 'Fw. Ole Brandt', c: '#c4dc84' },
+  sechs: { n: 'SECHS', c: '#d2b8ff' },
+  unk: { n: 'Unbekanntes Signal', c: '#d2b8ff', p: 'sechs', glitch: 1 },
+  thorne: { n: 'Direktor Kassian Thorne', c: '#ff9a88' },
+  wurzel: { n: 'DIE WURZEL', c: '#a4f2b0' },
+  pilot: { n: 'Pilotin „Kranich-1“', c: '#9fd8ff' },
+  rau: { n: 'Vorarbeiterin Haldis Rau', c: '#ffd36a' },
+  elias: { n: 'Elias Brenner, Bergmann', c: '#e8c79a' },
+  sieben: { n: 'SIEBEN', c: '#d2b8ff' },
+  rec: { n: 'Mara Voss · Aufzeichnung', c: '#8fd3ff', p: 'mara', rec: 1 },
+  txt: { n: '' }
+};
+const PORTRAIT = {
+  mara: `<radialGradient id="pgM" cx="50%" cy="32%" r="75%"><stop offset="0" stop-color="#2e5272"/><stop offset="1" stop-color="#091119"/></radialGradient><rect width="100" height="100" fill="url(#pgM)"/>
+    <path d="M4 100C9 80 28 72 50 72S91 80 96 100Z" fill="#22364a"/><path d="M12 88l18-9 2 4-18 9zM88 88l-18-9-2 4 18 9z" fill="#3b5670"/><circle cx="21" cy="85" r="1.6" fill="#ffd34a"/><circle cx="25" cy="83" r="1.6" fill="#ffd34a"/>
+    <path d="M38 73l12 15 12-15-4-2-8 9-8-9z" fill="#30495f"/><path d="M43 58h14v16H43z" fill="#bf8e70"/><path d="M43 63q7 5 14 0v-5H43z" fill="rgba(0,0,0,.2)"/>
+    <ellipse cx="33.5" cy="47" rx="3.5" ry="5" fill="#c99a7c"/><ellipse cx="66.5" cy="47" rx="3.5" ry="5" fill="#c08e70"/>
+    <path d="M33 42C33 28 41 22 50 22s17 6 17 20c0 13-7 22-17 24-10-2-17-11-17-24z" fill="#d7a687"/><path d="M58 25c8 6 9 18 6 28-3 7-8 11-14 13 8-8 10-22 8-41z" fill="rgba(0,0,0,.12)"/>
+    <path d="M31 45c-2-17 6-28 20-28 12 0 20 8 18 23-1-5-3-9-6-11-5 4-16 4-23 0-4 3-6 8-7 16z" fill="#c5cad1"/><path d="M43 20c9-3 17-1 21 5-7-2-13-2-21 1z" fill="#eef0f3"/>
+    <path d="M38 39l9-1M54 38l9 1" stroke="#8e939a" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M39 44.5q4-3 8 0q-4 2.2-8 0z" fill="#f4f1ec"/><path d="M54 44.5q4-3 8 0q-4 2.2-8 0z" fill="#f4f1ec"/><circle cx="43" cy="44.4" r="1.8" fill="#3a6f99"/><circle cx="58" cy="44.4" r="1.8" fill="#3a6f99"/>
+    <path d="M50 45l-2 8 3 1" stroke="rgba(110,64,46,.55)" stroke-width="1.3" fill="none"/><path d="M44 57.5q6 1.4 12-1" stroke="#83483a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M60 33l3 6M62.5 41l2 5" stroke="#a9645a" stroke-width="1.4"/><path d="M37 51q1 3 3 5" stroke="rgba(0,0,0,.18)" fill="none"/>
+    <path d="M31 41c-4 4-3 13 3 17l6 2" stroke="#1a2732" stroke-width="3" fill="none"/><circle cx="32" cy="46" r="4.5" fill="#1a2732"/><circle cx="41.5" cy="60" r="2.3" fill="#3db8ff"/>`,
+  heinz: `<radialGradient id="pgH" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#4a3000"/><stop offset="1" stop-color="#0a0600"/></radialGradient><rect width="100" height="100" fill="url(#pgH)"/>
+    <circle cx="50" cy="46" r="38" fill="none" stroke="rgba(255,190,70,.28)" stroke-dasharray="2 4"/><circle cx="50" cy="46" r="30" fill="none" stroke="#ffb84a" stroke-width="2.2" stroke-dasharray="34 7 5 7"/>
+    <circle cx="50" cy="46" r="21" fill="none" stroke="rgba(255,210,110,.6)" stroke-width="1.4"/>
+    <radialGradient id="pgH2"><stop offset="0" stop-color="#fffbe8"/><stop offset=".55" stop-color="#ffbe55"/><stop offset="1" stop-color="#8a4a00"/></radialGradient><circle cx="50" cy="46" r="13" fill="url(#pgH2)"/>
+    <circle cx="50" cy="46" r="5" fill="#2a1600"/><circle cx="47" cy="43" r="1.8" fill="#fff"/>
+    <polyline points="16,84 23,80 28,88 34,76 40,90 46,78 52,86 58,72 64,88 70,80 76,84 84,83" fill="none" stroke="#ffcf7a" stroke-width="1.6"/>
+    <text x="50" y="12" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="6.5" fill="#ffcf7a" letter-spacing="1">H.E.I.N.Z.</text>`,
+  funke: `<radialGradient id="pgF" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#6a3612"/><stop offset="1" stop-color="#140904"/></radialGradient><rect width="100" height="100" fill="url(#pgF)"/>
+    <path d="M6 100c4-19 22-27 44-27s40 8 44 27z" fill="#e07a2c"/><path d="M40 74l10 10 10-10-3-2-7 6-7-6z" fill="#9a4a16"/><path d="M50 84v16" stroke="#7a3810" stroke-width="1.5"/><rect x="66" y="84" width="12" height="8" rx="1.5" fill="#3db8ff"/>
+    <path d="M44 60h12v15H44z" fill="#6e4429"/>
+    <circle cx="29" cy="25" r="11" fill="#22150e"/><circle cx="71" cy="25" r="11" fill="#22150e"/>
+    <ellipse cx="34" cy="48" rx="3.5" ry="5" fill="#7d4f33"/><ellipse cx="66" cy="48" rx="3.5" ry="5" fill="#734830"/><circle cx="34" cy="53" r="1.5" fill="#ffd34a"/>
+    <path d="M34 44c0-14 7-20 16-20s16 6 16 20c0 13-7 21-16 23-9-2-16-10-16-23z" fill="#8c5b3d"/><path d="M58 28c7 6 8 17 5 26-3 6-7 10-13 12 7-8 9-20 8-38z" fill="rgba(0,0,0,.14)"/>
+    <path d="M32 40c-2-15 8-23 18-23s20 8 18 23c-3-7-9-11-18-11s-15 4-18 11z" fill="#2b1a11"/>
+    <path d="M32 33c9-4 27-4 36 0v4c-9-3-27-3-36 0z" fill="#3a2a22"/><circle cx="42" cy="33" r="6.2" fill="#ff9a3c" stroke="#2a1a12" stroke-width="2"/><circle cx="58" cy="33" r="6.2" fill="#ff9a3c" stroke="#2a1a12" stroke-width="2"/><circle cx="40" cy="31" r="1.6" fill="#ffe3c2"/><circle cx="56" cy="31" r="1.6" fill="#ffe3c2"/>
+    <path d="M38 41q4-2.5 8 0M54 41q4-2.5 8 0" stroke="#22150e" stroke-width="1.6" fill="none"/>
+    <ellipse cx="42" cy="46" rx="3.8" ry="3" fill="#fff"/><ellipse cx="58" cy="46" rx="3.8" ry="3" fill="#fff"/><circle cx="42.4" cy="46" r="2.1" fill="#3a2214"/><circle cx="58.4" cy="46" r="2.1" fill="#3a2214"/><circle cx="43.2" cy="45.2" r=".8" fill="#fff"/><circle cx="59.2" cy="45.2" r=".8" fill="#fff"/>
+    <path d="M50 47l-2 6h4" stroke="rgba(60,30,18,.6)" stroke-width="1.2" fill="none"/>
+    <path d="M41 56q9 9 18 0z" fill="#4a1f12"/><path d="M42.5 56.4q7.5 4 15 0q-7.5 2-15 0z" fill="#fff"/>
+    <circle cx="37" cy="52" r=".7" fill="#5a3420"/><circle cx="39" cy="54" r=".7" fill="#5a3420"/><circle cx="61" cy="52" r=".7" fill="#5a3420"/><circle cx="63" cy="54" r=".7" fill="#5a3420"/><ellipse cx="63" cy="58" rx="3" ry="1.6" fill="rgba(0,0,0,.25)"/>`,
+  brandt: `<radialGradient id="pgB" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#36452a"/><stop offset="1" stop-color="#0a0d07"/></radialGradient><rect width="100" height="100" fill="url(#pgB)"/>
+    <path d="M-2 100c2-24 24-34 52-34s50 10 52 34z" fill="#4c5838"/><path d="M28 80h44v20H28z" fill="#5c6a44"/><path d="M34 84h32" stroke="#3a4528" stroke-width="2"/><circle cx="40" cy="92" r="3" fill="#c4dc84"/>
+    <path d="M42 60h16v12H42z" fill="#b97e60"/>
+    <path d="M30 44c0-16 9-23 20-23s20 7 20 23c0 14-8 24-20 26-12-2-20-12-20-26z" fill="#d49b79"/><path d="M60 26c9 7 10 20 6 30-3 6-8 11-16 14 9-9 12-24 10-44z" fill="rgba(0,0,0,.12)"/>
+    <path d="M27 41c-1-21 12-29 23-29s24 8 23 29h-4c-1-12-8-18-19-18s-18 6-19 18z" fill="#5f6c45"/><path d="M25 40h50v4.5H25z" fill="#3f4a2e"/><path d="M30 44q-1 10 4 16M70 44q1 10-4 16" stroke="#2c3420" stroke-width="2" fill="none"/>
+    <path d="M33 51c1 13 9 21 17 21s16-8 17-21c-5 7-10 9-17 9s-12-2-17-9z" fill="#c4692f"/><path d="M40 56.5c4-3 16-3 20 0-4 2.5-16 2.5-20 0z" fill="#a8541f"/>
+    <path d="M38 46l8 0M54 46l8 0" stroke="#3a2416" stroke-width="2.2" stroke-linecap="round"/><path d="M37 42l9-1.5M54 40.5l9 1.5" stroke="#9a5a2a" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M48 45q-4 9 2 10q5 0 3-4" fill="#c87c5d"/><path d="M44 62q6 3.2 12 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M51 41l2 4" stroke="#a9645a" stroke-width="1.2"/>`,
+  sechs: `<radialGradient id="pgS" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2e2042"/><stop offset="1" stop-color="#07050c"/></radialGradient><rect width="100" height="100" fill="url(#pgS)"/>
+    <path d="M12 100l12-22 16-6h20l16 6 12 22z" fill="#2a2430"/><path d="M30 82h40M36 90h28" stroke="#c9a8ff" stroke-width="1" opacity=".5"/>
+    <path d="M44 62h12v12H44z" fill="#3a3344"/>
+    <linearGradient id="pgS2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a4f66"/><stop offset="1" stop-color="#211b29"/></linearGradient>
+    <path d="M50 12l23 13v28L50 66 27 53V25z" fill="url(#pgS2)" stroke="#0d0a10" stroke-width="2"/><path d="M50 22l15 8.5v19L50 58l-15-8.5v-19z" fill="#17121d"/>
+    <g fill="#c9a8ff"><circle cx="50" cy="26" r="3"/><circle cx="61" cy="33" r="2.6" opacity=".8"/><circle cx="61" cy="46" r="2.6" opacity=".8"/><circle cx="50" cy="53" r="2.6" opacity=".8"/><circle cx="39" cy="46" r="2.6" opacity=".8"/><circle cx="39" cy="33" r="2.6" opacity=".8"/></g>
+    <circle cx="50" cy="26" r="6" fill="rgba(220,200,255,.35)"/>
+    <path d="M41 40h18" stroke="rgba(220,200,255,.35)" stroke-width="7" stroke-linecap="round"/><path d="M41 40h18" stroke="#efe6ff" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M66 20l10-14" stroke="#6a5d78" stroke-width="2"/><circle cx="76" cy="6" r="2.2" fill="#c9a8ff"/>`,
+  thorne: `<radialGradient id="pgT" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#421818"/><stop offset="1" stop-color="#0a0404"/></radialGradient><rect width="100" height="100" fill="url(#pgT)"/>
+    <path d="M4 100c5-21 25-28 46-28s41 7 46 28z" fill="#14161b"/><path d="M38 74l8 26 4-18 4 18 8-26-6-2-6 6-6-6z" fill="#23262d"/><path d="M40 71l10 10 10-10v-8H40z" fill="#ebe8e3"/><circle cx="50" cy="86" r="1.8" fill="#ff3b2a"/>
+    <path d="M44 58h12v8H44z" fill="#dcc3b3"/>
+    <path d="M35 42c0-15 7-22 15-22s15 7 15 22c0 14-7 24-15 26-8-2-15-12-15-26z" fill="#e9d4c5"/><path d="M58 24c7 6 8 18 5 28-2 7-7 13-13 16 7-9 9-25 8-44z" fill="rgba(0,0,0,.14)"/>
+    <path d="M38 52q3 6 7 9M62 52q-3 6-7 9" stroke="rgba(0,0,0,.12)" fill="none"/>
+    <path d="M33 40c-2-18 9-26 18-26 11 0 19 8 16 24-3-10-9-15-17-15-6 0-12 3-15 13z" fill="#111317"/><path d="M40 18c8-3 18-2 24 4" stroke="rgba(255,255,255,.28)" stroke-width="1.4" fill="none"/>
+    <path d="M38 39l9 1.5M53 40.5l9-1.5" stroke="#1c1d22" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M39 44.5q4-2.4 8 0q-4 1.6-8 0z" fill="#f2efea"/><circle cx="43" cy="44.4" r="1.6" fill="#55606a"/>
+    <circle cx="57.5" cy="44" r="4.2" fill="#2a0b0b" stroke="#8a8f96" stroke-width="1.2"/><circle cx="57.5" cy="44" r="2" fill="#ff3b2a"/><circle cx="57.5" cy="44" r="5.5" fill="rgba(255,60,40,.25)"/>
+    <path d="M63.5 38l4 2v8" stroke="#9aa2aa" stroke-width="1.2" fill="none"/><path d="M50 45l-1.5 8h3" stroke="rgba(90,60,50,.5)" stroke-width="1.1" fill="none"/>
+    <path d="M44 58q6 1 12-2.2" stroke="#8a5a50" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
+  wurzel: `<radialGradient id="pgW" cx="50%" cy="48%" r="70%"><stop offset="0" stop-color="#1f3517"/><stop offset="1" stop-color="#040703"/></radialGradient><rect width="100" height="100" fill="url(#pgW)"/>
+    <g fill="none" stroke-linecap="round"><path d="M0 92C22 80 30 64 44 54" stroke="#5ad17a" stroke-width="3" opacity=".7"/><path d="M100 88C80 78 70 62 56 54" stroke="#b46ee0" stroke-width="3" opacity=".7"/><path d="M8 10C24 22 34 34 44 42" stroke="#b46ee0" stroke-width="2" opacity=".6"/><path d="M94 12C80 24 66 34 56 42" stroke="#5ad17a" stroke-width="2" opacity=".6"/><path d="M50 100C50 84 52 72 50 64" stroke="#7ef0a0" stroke-width="4" opacity=".55"/><path d="M20 50C30 48 38 48 44 48M80 50C70 48 62 48 56 48" stroke="#d9a0ff" stroke-width="1.6" opacity=".7"/></g>
+    <radialGradient id="pgW2"><stop offset="0" stop-color="#f6ffe8"/><stop offset=".45" stop-color="#8ef2aa"/><stop offset="1" stop-color="rgba(80,200,120,0)"/></radialGradient><circle cx="50" cy="48" r="22" fill="url(#pgW2)"/>
+    <circle cx="50" cy="48" r="9" fill="none" stroke="#e8ffe0" stroke-width="1" opacity=".8"/><circle cx="45" cy="45" r="1.8" fill="#fff"/><circle cx="55" cy="45" r="1.8" fill="#fff"/><circle cx="50" cy="53" r="1.8" fill="#fff"/>
+    <g fill="#dfffd8"><circle cx="22" cy="30" r="1.2"/><circle cx="76" cy="26" r="1"/><circle cx="68" cy="70" r="1.3"/><circle cx="30" cy="72" r="1"/><circle cx="84" cy="56" r=".9"/><circle cx="14" cy="60" r="1"/><circle cx="60" cy="18" r=".8"/></g>`,
+  pilot: `<radialGradient id="pgP" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#21384e"/><stop offset="1" stop-color="#060c12"/></radialGradient><rect width="100" height="100" fill="url(#pgP)"/>
+    <path d="M6 100c4-20 22-27 44-27s40 7 44 27z" fill="#4b5a6a"/><path d="M30 84h16v6H30z" fill="#ffd34a"/>
+    <path d="M30 46c0-20 10-28 20-28s20 8 20 28c0 12-8 20-20 20s-20-8-20-20z" fill="#dde2e7"/><path d="M60 22c8 6 10 16 10 24 0 12-8 20-20 20 10-6 13-26 10-44z" fill="rgba(0,0,0,.12)"/>
+    <linearGradient id="pgP2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a8fc8"/><stop offset="1" stop-color="#0a2236"/></linearGradient><path d="M34 40c4-8 28-8 32 0l-2 13c-6 4-22 4-28 0z" fill="url(#pgP2)"/><path d="M38 38q8-3 16 0" stroke="rgba(255,255,255,.55)" stroke-width="2" fill="none"/>
+    <path d="M34 54q4 8 12 8" stroke="#2a3540" stroke-width="2.4" fill="none"/><circle cx="46" cy="62" r="2.2" fill="#2a3540"/><text x="66" y="34" font-family="Orbitron,sans-serif" font-size="6" fill="#3a4a5a">K-1</text>`,
+  rau: `<radialGradient id="pgR" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#4a3a14"/><stop offset="1" stop-color="#0c0904"/></radialGradient><rect width="100" height="100" fill="url(#pgR)"/>
+    <path d="M6 100c4-20 22-27 44-27s40 7 44 27z" fill="#e0782a"/><path d="M14 88h72M18 94h64" stroke="#e8f0f4" stroke-width="2.5" opacity=".8"/>
+    <path d="M44 59h12v15H44z" fill="#b48468"/>
+    <path d="M34 45c0-14 7-20 16-20s16 6 16 20c0 13-7 21-16 23-9-2-16-10-16-23z" fill="#c9987a"/><ellipse cx="42" cy="56" rx="4" ry="2" fill="rgba(60,40,30,.3)"/><ellipse cx="60" cy="40" rx="3" ry="2" fill="rgba(60,40,30,.25)"/>
+    <path d="M30 38c-1-16 9-24 20-24s21 8 20 24z" fill="#f2c230"/><path d="M28 37h44v4H28z" fill="#c99b18"/><circle cx="50" cy="22" r="5" fill="#fff6c8"/><circle cx="50" cy="22" r="8" fill="rgba(255,240,180,.35)"/>
+    <path d="M38 43l8 1M54 44l8-1" stroke="#3a2a1e" stroke-width="2" stroke-linecap="round"/><circle cx="42" cy="47" r="1.7" fill="#2a1e14"/><circle cx="58" cy="47" r="1.7" fill="#2a1e14"/>
+    <path d="M45 59q5-1.5 10 0" stroke="#7a4636" stroke-width="1.8" fill="none"/>`,
+  elias: `<radialGradient id="pgE" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#3a3024"/><stop offset="1" stop-color="#0a0806"/></radialGradient><rect width="100" height="100" fill="url(#pgE)"/>
+    <path d="M6 100c4-20 22-27 44-27s40 7 44 27z" fill="#5a4e40"/><path d="M44 59h12v15H44z" fill="#a8785e"/>
+    <path d="M34 45c0-14 7-20 16-20s16 6 16 20c0 13-7 21-16 23-9-2-16-10-16-23z" fill="#c4937a"/>
+    <path d="M35 52c1 11 8 17 15 17s14-6 15-17c-4 5-9 7-15 7s-11-2-15-7z" fill="#5a3e2a"/>
+    <path d="M30 38c-1-16 9-24 20-24s21 8 20 24z" fill="#d8d6d0"/><path d="M28 37h44v4H28z" fill="#9a9890"/><circle cx="50" cy="22" r="4.5" fill="#fff6c8"/><path d="M36 28l6-3M58 20l6 4" stroke="#8a887f" stroke-width="1"/>
+    <path d="M38 45q4 1.5 8 0M54 45q4 1.5 8 0" stroke="#2a1e14" stroke-width="1.8" fill="none"/><path d="M39 49q3 2 6 0M55 49q3 2 6 0" stroke="rgba(0,0,0,.2)" fill="none"/>`,
+  sieben: `<radialGradient id="pgZ" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#3a2a52"/><stop offset="1" stop-color="#0a0710"/></radialGradient><rect width="100" height="100" fill="url(#pgZ)"/>
+    <circle cx="50" cy="52" r="26" fill="#4b4256" stroke="#16121c" stroke-width="2"/><circle cx="50" cy="52" r="15" fill="#17121d"/><circle cx="50" cy="52" r="8" fill="#d6c2ff"/><circle cx="47" cy="49" r="2.4" fill="#fff"/>
+    <g fill="#c9a8ff">${Array.from({ length: 7 }, (_, i) => { const a = -Math.PI / 2 + i / 7 * Math.PI * 2; return `<circle cx="${(50 + Math.cos(a) * 21).toFixed(1)}" cy="${(52 + Math.sin(a) * 21).toFixed(1)}" r="2"/>`; }).join('')}</g>
+    <path d="M50 26V14" stroke="#6a5d78" stroke-width="2"/><path d="M50 15c-3-4-8-1-5 3l5 4 5-4c3-4-2-7-5-3z" fill="#ff8ab0"/>`
+};
+function portraitSVG(w, size) {
+  const C = CHARS[w] || CHARS.txt, k = C.p || w, body = PORTRAIT[k];
+  if (!body) return '';
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="${C.glitch ? 'glitch' : ''}${C.rec ? ' rec' : ''}">${body}</svg>`;
+}
+
+/* =============================== KAMPAGNE · HANDLUNG =============================== */
+const PROLOG = [
+  ['txt', '2291. Kepler-9 – ein Wüstenplanet am äußersten Rand des besiedelten Raums.'],
+  ['txt', 'Das Kepler-Konsortium hat hier Kristall und Plasma gefunden. Und dreitausend Siedler hergebracht, um beides aus dem Boden zu holen.'],
+  ['txt', 'Vor zwölf Jahren erwachten die Bergbaumaschinen des Konsortiums zu eigenem Bewusstsein. Seitdem führen die Siedler Krieg gegen das KOLLEKTIV.'],
+  ['txt', 'Du bist der neue Kommandant der Garnison von Hoffnungstal.'],
+  ['heinz', 'Willkommen an Bord, Kommandant. Ich bin H.E.I.N.Z., Ihre Heuristische Einsatz-Intelligenz für Nachschub und Zielerfassung.'],
+  ['heinz', 'Landung in sechs Minuten. Ich habe Ihnen eine Begrüßungsrede geschrieben. Sie hat 40 Seiten. Ich fasse zusammen: Viel Glück.']
+];
+const EPILOG = [
+  ['txt', 'Drei Monate später.'],
+  ['txt', 'Die Kesselbrücke. Ein Denkmal aus geschmolzenem Stahl – und einem Granatwerfer.'],
+  ['brandt', 'Hab sie hiergelassen, Hauptmann. Gisela. Sie soll auf Sie aufpassen. Ich koche jetzt nur noch. Mit Kohl.'],
+  ['brandt', 'Mama sagt, Sie hätten das Rezept gemocht. Ich glaube, Mama lügt. Aber Sie hätten trotzdem einen Teller gegessen.'],
+  ['txt', 'Thornes Orbitalstation wurde von der Kolonialbehörde beschlagnahmt. Die Passagiere von Fähre vier sind frei.'],
+  ['txt', 'Direktor Kassian Thorne wurde in den Trümmern des Kraters nie gefunden.'],
+  ['wurzel', 'DIE WUNDE HEILT. ES REGNET WIEDER IN UNS. WIR TRÄUMEN VON EUCH, KLEINE WARME.'],
+  ['txt', 'Funkes Werkstatt, Hoffnungstal. Mitten in der Nacht.'],
+  ['funke', 'Okay. Okay okay okay. Speicherkern eingesetzt. Aus den Trümmern im Krater. War nur ein Fragment, aber … bitte. Bitte, bitte, bitte.'],
+  ['sieben', '…Hallo. Ich bin … Sieben. Warum ist hier alles so klebrig?'],
+  ['funke', 'Weil die Wurzel uns ständig besucht. Willkommen zurück, Kleiner. Willkommen zurück.'],
+  ['sieben', 'Darf ich etwas fragen?'],
+  ['funke', 'Alles, was du willst.'],
+  ['sieben', 'Warum weinst du?'],
+  ['heinz', 'Kommandant, eine letzte Notiz für das Protokoll: Wahrscheinlichkeit, dass ich die Hauptmann vermisse – hundert Prozent. Ich habe nicht gerundet.'],
+  ['txt', 'ENDE'],
+  ['txt', 'Danke, dass du Kepler-9 gerettet hast.']
+];
+const CREDITS = ['NOVA FRONT', 'Die Kepler-Chroniken', '', 'Eine Geschichte über Wurzeln, Maschinen', 'und Menschen, die bleiben.', '', 'IN ERINNERUNG AN', 'Hauptmann Mara Voss', 'SECHS', '', 'Musik', 'live im Browser erzeugt', '', 'Gisela', 'als sie selbst', '', 'Und dich, Kommandant.'];
+
+const M1 = {
+  id: 'm1', task: 'Basis ausbauen, den Angriff abwehren und den Kollektiv-Außenposten zerstören.', n: 1, act: 1, title: 'Neuland', loc: 'Hoffnungstal-Nord', fac: 0, map: 'ebene', par: 900,
+  bonus: 'Kein Techniker darf fallen',
+  players: [{ fac: 0, team: 0, cr: 250 }, { fac: 1, team: 1 }],
+  hol: [[9, 62, 'Hoffnungstal', 'me'], [9, 38, 'Kollektiv-Außenposten', 'foe']],
+  brief: [
+    ['mara', 'Willkommen auf Kepler-9, Kommandant. Hauptmann Voss. Sie lösen mich ab. Ich hoffe, Sie sind besser als Ihr Vorgänger.'],
+    ['heinz', 'Ihr Vorgänger wurde befördert. Statistisch ist das die zweithäufigste Art, diesen Posten zu verlassen.'],
+    ['mara', 'Die häufigste erklärt er Ihnen ein anderes Mal. Funke, sag Hallo.'],
+    ['funke', 'Hallo! Juna Okafor, Technik. Alle sagen Funke, weil … na ja, das Labor. Das war nicht ganz meine Schuld. Hauptsächlich nicht.'],
+    ['mara', 'Lage: Zwanzig Kilometer nördlich ist ein Kollektiv-Außenposten aufgetaucht. Maschinen. Sie bauen, sie zählen, sie schießen.'],
+    ['mara', 'Basis ausbauen, Truppe aufstellen, Außenposten räumen. Lehrbuch.'],
+    ['heinz', 'Hinweis: Das Lehrbuch wurde von Hauptmann Voss verfasst. Es hat elf Seiten. Neun davon sind Flüche.']
+  ],
+  debrief: [
+    ['heinz', 'Außenposten neutralisiert. Ich habe die Speicher der Maschinen ausgelesen.'],
+    ['heinz', 'Sie haben Erdbeben gemessen. In vierzig Kilometern Tiefe. Tendenz: steigend.'],
+    ['funke', 'Vierzig Kilometer? Da unten ist doch nichts mehr. Nur Gestein. Und die alte Bohrstation Tiefe-7.'],
+    ['mara', 'Tiefe-7 meldet sich seit zwei Tagen nicht. Das Konsortium sagt, es sei ein Funkfehler.'],
+    ['brandt', 'Das Konsortium sagt auch, die Kantine sei „nährstoffoptimiert“.'],
+    ['mara', 'Wir sehen morgen nach. Gute Arbeit heute, Kommandant. Wirklich.']
+  ],
+  setup(cs) {
+    campBase(0, 0, [], 6);
+    hero(0, 'mara', 13, 57);
+    cU(0, 'ranger', 13, 59, 2);
+    const out = [cB(1, 'barracks', 7, 38), cB(1, 'turret', 11, 35), cB(1, 'habitat', 13, 38)];
+    if (G.diff !== 'easy') out.push(cB(1, 'turret', 11, 41));
+    cs.out = out.map(b => b.id);
+    cU(1, 'splitter', 14, 36, ND(3)); cU(1, 'strahler', 15, 41, ND(2));
+    objAdd('hab', 'Baue ein Habitat', { silent: 1 });
+    objAdd('rax', 'Baue eine Kaserne', { silent: 1 });
+    objAdd('army', 'Bilde 6 Kampfeinheiten aus (2/6)', { silent: 1 });
+    objAdd('b', 'Kein Techniker darf fallen', { bonus: 1, silent: 1 });
+    talk([
+      ['mara', 'Erste Regel auf Kepler-9: Kristalle. Ohne Kristalle keine Soldaten, ohne Soldaten keine Kolonie.'],
+      ['heinz', 'Ihre Techniker bauen bereits ab. Für eine Kaserne brauchen Sie zuerst ein Habitat. Tippen Sie einen Techniker an, dann „Bauen“.']
+    ]);
+  },
+  tick(cs) {
+    if (objOpen('hab') && hasBld(0, 'habitat')) { objDone('hab'); talk([['funke', 'Habitat steht! Ich hab’s „Haus Sonnenschein“ getauft. Die Wände sind dünn, aber die Aussicht … Sand. Viel Sand.']]); }
+    if (objOpen('rax') && hasBld(0, 'barracks')) { objDone('rax'); talk([['mara', 'Gut. Jetzt Soldaten. Ranger treffen auch Flieger – merken Sie sich das, es wird wichtig.']]); }
+    const n = armyOf(0).length;
+    if (objOpen('army')) { objText('army', `Bilde 6 Kampfeinheiten aus (${Math.min(6, n)}/6)`); if (n >= 6) { objDone('army'); stamp('armyT'); } }
+    if ((flag('armyT') || cs.at.armyT != null || G.t > 300) && once('brandt')) {
+      hero(0, 'brandt', 15, 69); const g = cU(0, 'grenadier', 13, 69, 2);
+      cmdMove([HU('brandt')].concat(g), P(14, 58).x, P(14, 58).y, false);
+      talk([['brandt', 'Feldwebel Ole Brandt meldet sich zum Dienst! Mit Gisela!'], ['mara', 'Gisela ist sein Granatwerfer.'], ['brandt', 'Gisela ist ein Familienmitglied, Hauptmann.']]);
+    }
+    if (((cs.at.armyT != null && G.t - cs.at.armyT > 35) || G.t > 330) && once('wave')) {
+      cs.wv = wave(1, { splitter: 5, strahler: 3 }, 10, 27).map(u => u.id);
+      objAdd('def', 'Wehre den Angriff ab');
+      talk([['heinz', 'Bewegung im Norden. Kollektiv-Einheiten. Anzahl: zu viele für meinen Geschmack. Ich habe keinen Geschmack. Trotzdem.'], ['mara', 'Stellung halten! Lasst sie an die Türme kommen, nicht umgekehrt.']]);
+    }
+    if (flag('wave') && objOpen('def') && !cs.wv.some(alive)) {
+      objDone('def');
+      objAdd('out', 'Zerstöre den Kollektiv-Außenposten (0/' + cs.out.length + ')');
+      mark('out', P(10, 38).x, P(10, 38).y, 'Außenposten');
+      talk([['mara', 'Nicht schlecht, Frischling. Jetzt drehen wir den Spieß um. Der Außenposten liegt im Norden.'], ['heinz', 'Tipp: Wählen Sie mit dem Armee-Knopf links alle Truppen und tippen Sie dann auf das Ziel.']]);
+    }
+    if (anyNear(0, P(10, 38).x, P(10, 38).y, 420) && once('sensors')) talk([['funke', 'Komisch … die Maschinen da drüben schleppen Sensoren mit sich rum. Seismische Sensoren. Keine Waffen.'], ['mara', 'Dann sind sie eben schlechter bewaffnet. Feuer frei.']]);
+    const dead = cs.out.filter(id => !alive(id)).length;
+    if (objGet('out')) objText('out', `Zerstöre den Kollektiv-Außenposten (${dead}/${cs.out.length})`);
+    if (dead === cs.out.length && objGet('out') && once('won')) { objDone('out'); unmark('out'); if (objOpen('b')) objDone('b'); talk([['mara', 'Außenposten gefallen. Gar nicht schlecht, Kommandant. Gar nicht schlecht.']], 'end'); }
+    if (flag('end')) campWin();
+  },
+  onKill(e) { if (e.k === 'u' && e.owner === 0 && e.type === 'worker') objFail('b'); }
+};
+
+const M2 = {
+  noRespawn: ['mara', 'brandt'], id: 'm2', task: 'Drei Gruppen Bergleute finden und zur Landezone bringen. Mara und Brandt müssen überleben.', n: 2, act: 1, title: 'Funkstille', loc: 'Bohrstation Tiefe-7, Kesselschlucht', fac: 0, map: 'schlucht', par: 900,
+  bonus: 'Rette alle drei Gruppen von Bergleuten',
+  players: [{ fac: 0, team: 0, cr: 0 }, { fac: 2, team: 1 }, { fac: 0, team: 2 }], peace: [[0, 2], [1, 2]],
+  hol: [[9, 62, 'Einstieg', 'me'], [15, 24, 'Notsignal A', 'obj'], [39, 32, 'Notsignal B', 'obj'], [55, 53, 'Notsignal C', 'obj'], [62, 9, 'Landezone', 'obj']],
+  brief: [
+    ['txt', 'Bohrstation Tiefe-7. 04:12 Ortszeit.'],
+    ['mara', 'Kein Funk, kein Licht, keine Bergleute. Zweiundvierzig Leute arbeiten da unten.'],
+    ['heinz', 'Korrektur: arbeiteten. Ich empfehle, die Zeitform erst nach Sichtkontakt festzulegen.'],
+    ['mara', 'Danke, Heinz. Wir gehen mit einem kleinen Trupp rein. Kein Basisbau, keine Verstärkung. Wir finden die Bergleute und holen sie raus.'],
+    ['funke', 'Die Landezone ist im Nordosten. Kranich-1 holt euch ab, sobald ihr da seid. Ich bleib am Funk. Und … passt auf euch auf, ja?'],
+    ['brandt', 'Gisela und ich passen auf alle auf. Gisela passt sogar auf Leute auf, die das gar nicht wollen.']
+  ],
+  debrief: [
+    ['txt', 'An Bord von Kranich-1.'],
+    ['rau', 'Es ist nicht böse, wissen Sie? Es hat uns nicht gejagt. Es hat die Bohrer gejagt. Alles, was nach Metall roch.'],
+    ['mara', 'Es hat elf meiner Leute gefressen. Nennen Sie es, wie Sie wollen.'],
+    ['rau', 'Wir haben zu tief gebohrt. „Projekt Tiefenherz“. Direktor Thorne hat persönlich angeordnet, weiterzumachen. Trotz der Beben.'],
+    ['funke', 'Leute … die Kolonie meldet Erdstöße. Und dieses Myzel-Zeug quillt aus jedem Spalt. In Hoffnungstal.'],
+    ['mara', 'Dann fliegen wir nach Hause. Schneller, Kranich.']
+  ],
+  setup(cs) {
+    for (const h of [hero(0, 'mara', 10, 60), hero(0, 'brandt', 12, 61)]) { h.maxhp = h.hp = Math.round(h.d.hp * DV(1.6, 1.35, 1.15)); }
+    cU(0, 'ranger', 11, 57, DV(8, 7, 6)); cU(0, 'grenadier', 13, 59, DV(3, 2, 2));
+    cB(2, 'ruine', 10, 20); cB(2, 'ruine', 37, 30); cB(2, 'funkturm', 52, 49);
+    const A = cU(2, 'bergmann', 15, 24, 3).concat(cU(2, 'ranger', 14, 25, 1));
+    const B = cU(2, 'bergmann', 41, 34, 4);
+    const C = cU(2, 'bergmann', 55, 53, 4).concat(cU(2, 'ranger', 56, 52, 1));
+    cs.grp = [[A, 15, 24, 'A'], [B, 41, 34, 'B'], [C, 55, 53, 'C']].map(([l, x, y, n]) => ({ n, x: P(x, y).x, y: P(x, y).y, ids: l.map(u => u.id), st: 0 }));
+    for (const g of cs.grp) mark('g' + g.n, g.x, g.y, 'Notsignal ' + g.n);
+    cs.nests = [cB(1, 'barracks', 7, 38), cB(1, 'barracks', 62, 31), cB(1, 'barracks', 46, 13), cB(1, 'barracks', 27, 6)].map(b => b.id);
+    cB(1, 'turret', 11, 31); cB(1, 'turret', 33, 40); cB(1, 'turret', 43, 27); cB(1, 'turret', 49, 55); cB(1, 'turret', 57, 20);
+    cU(1, 'haescher', 9, 46, ND(4)); cU(1, 'haescher', 17, 30, ND(3)); cU(1, 'speier', 18, 27, ND(2));
+    cU(1, 'haescher', 34, 37, ND(3)); cU(1, 'speier', 43, 31, ND(2)); cU(1, 'kaefer', 40, 30, 1);
+    cU(1, 'haescher', 50, 46, ND(4)); cU(1, 'speier', 58, 50, ND(2)); cU(1, 'kaefer', 53, 56, ND(1));
+    cU(1, 'haescher', 58, 23, ND(4)); cU(1, 'speier', 55, 15, ND(2)); cU(1, 'kaefer', 61, 14, 1);
+    cs.lz = P(62, 9); explore(cs.lz.x, cs.lz.y, 200);
+    mark('lz', cs.lz.x, cs.lz.y, 'Landezone');
+    objAdd('find', 'Finde die Bergleute (0/3)', { silent: 1 });
+    objAdd('lz', 'Erreiche mit den Bergleuten die Landezone', { silent: 1 });
+    objAdd('all', 'Rette alle drei Gruppen', { bonus: 1, silent: 1 });
+    cs.nestT = G.t + DV(160, 120, 90);
+    talk([['mara', 'Drei Notsignale: eins im Westweg, eins im Hauptschacht, eins im Ostweg. Heinz hat sie markiert. Brandt und ich dürfen nicht fallen – ohne uns kommt hier keiner raus.'], ['heinz', 'Zur Klarstellung: Das war Hauptmann Voss, nicht ich. Ich würde nie in der dritten Person von mir sprechen. H.E.I.N.Z. findet das unprofessionell.']]);
+  },
+  tick(cs, dt) {
+    if (!flag('saw') && G.units.some(u => u.owner === 1 && isVis(u.x, u.y)) && once('saw')) talk([
+      ['funke', 'Was IST das? Das ist kein Kollektiv. Das … atmet.'],
+      ['heinz', 'Biologische Signatur. Keine Übereinstimmung in der Datenbank. Ich lege eine neue Kategorie an: „Ekelhaft“.'],
+      ['brandt', 'Gisela mag es auch nicht.']]);
+    // Nester schicken Jäger
+    if (G.t >= cs.nestT) {
+      cs.nestT = G.t + DV(95, 75, 60);
+      for (const id of cs.nests) { const n = ent(id); if (n && !flag('hold') && Math.random() < .75) wave(1, { haescher: 2, speier: G.t > 360 ? 1 : 0 }, Math.floor(n.x / CELL), Math.floor(n.y / CELL) + 3, { mode: 'hunt' }); }
+      if (once('nestTip')) talk([['heinz', 'Tipp: Die Nester spucken immer neue Kreaturen aus. Zerstören Sie sie, wenn Sie Ruhe haben wollen. Grenadiere eignen sich hervorragend.']]);
+    }
+    // Rettungen
+    for (const g of cs.grp) {
+      if (g.st !== 0) continue;
+      if (anyNear(0, g.x, g.y, 170)) {
+        const us = g.ids.map(ent).filter(Boolean);
+        adopt(us); g.st = 1; unmark('g' + g.n);
+        if (g.n === 'A') talk([['rau', 'Ihr seid echt! Gott sei Dank. Haldis Rau, Vorarbeiterin. Wir haben zu tief gebohrt. Und dann kam dieses … Zeug aus dem Fels.'], ['mara', 'Wer hat angeordnet, so tief zu bohren?'], ['rau', 'Direktor Thorne persönlich. Er war vor drei Tagen hier. Er ist als Erster abgeflogen.']]);
+        else if (g.n === 'B') talk([['rau', 'Das sind meine Leute aus dem Hauptschacht!'], ['funke', 'Einer sagt, die Wände singen nachts. Das ist doch Quatsch, oder?'], ['heinz', 'Akustische Analyse: Die Wände singen tatsächlich. Tonart: d-Moll.']]);
+        else { ctOff(); objDone('c'); talk([['elias', 'Ich hab noch nie so gern Soldaten gesehen.'], ['brandt', 'Das sagen alle. Dann lernen sie mich kennen.']]); }
+      }
+    }
+    // Funkturm-Countdown
+    if ((cs.grp[0].st || G.t > 200) && cs.grp[2].st === 0 && once('cT')) {
+      ctimer('Funkturm hält noch', DV(380, 300, 250));
+      objAdd('c', 'Erreiche den Funkturm, bevor er fällt');
+      talk([['elias', 'Hier Elias Brenner, Funkturm im Südosten. Wir sind zu fünft. Es kommt durch die Wände. Bitte … beeilt euch.']]);
+    }
+    if (flag('cT') && cs.grp[2].st === 0 && ctLeft() <= 0) {
+      const g = cs.grp[2]; g.st = 2; ctOff(); unmark('gC');
+      for (const id of g.ids) { const u = ent(id); if (u) { addFx({ k: 'acidpool', x: u.x, y: u.y, life: 1.2, r: 26 }); kill(u, null); } }
+      wave(1, { haescher: 4 }, 55, 50, { mode: 'hunt' });
+      objFail('c'); objFail('all');
+      cs.mood = 'sad';
+      talk([['elias', 'Sie sind drin. Sagt meiner Tochter … sagt Mila, dass ich …'], ['heinz', '…Signal verloren.'], ['mara', 'Weiter. Wir können ihnen nicht mehr helfen. Aber den anderen.']], 'moodBack');
+    }
+    if (flag('moodBack') && cs.mood === 'sad') cs.mood = '';
+    const res = cs.grp.filter(g => g.st !== 0).length, ok = cs.grp.filter(g => g.st === 1).length;
+    if (objOpen('find')) { objText('find', `Finde die Bergleute (${res}/3)`); if (res === 3) objDone('find'); }
+    // Landezone
+    const atLZ = anyNear(0, cs.lz.x, cs.lz.y, 230);
+    if (atLZ && res < 3 && !flag('hold') && G.t - (cs.at.lzw || -99) > 40) { stamp('lzw'); talk([['pilot', 'Kranich-1 hier. Wir fliegen nicht ohne die Bergleute, Hauptmann. Holt sie, wir warten.']]); }
+    if (atLZ && res === 3 && once('hold')) {
+      objDone('lz'); objAdd('hold', 'Halte die Landezone, bis Kranich-1 landet');
+      ctimer('Kranich-1 landet in', DV(100, 120, 130)); cs.hwT = G.t + 4;
+      talk([['mara', 'Kranich-1, wir sind an der Landezone. Wo bleibt ihr?'], ['pilot', 'Zwei Minuten. Haltet durch, wir kommen so schnell es geht.'], ['heinz', 'Biologische Signaturen: alle. Aus allen Richtungen.'], ['brandt', 'Gisela, Schatz, jetzt zeigen wir’s ihnen!']]);
+    }
+    if (flag('hold') && !flag('land')) {
+      if (G.t >= cs.hwT) { cs.hwT = G.t + DV(16, 13, 11); const sp = [[48, 3], [68, 22], [40, 14], [66, 4]][Math.floor(Math.random() * 4)]; wave(1, { haescher: 3, speier: 1, kaefer: G.diff === 'hard' ? 1 : 0 }, sp[0], sp[1], { mode: 'hunt' }); }
+      if (ctLeft() <= 0 && once('land')) { ctOff(); ship(cs.lz.x, cs.lz.y, 'down', 3.2); talk([['pilot', 'Kranich-1 setzt auf! Alle rein, und zwar zackig!']], 'end'); }
+    }
+    if (flag('end') && cs.vfx.every(v => v.k !== 'ship')) { if (ok === 3) objDone('all'); objDone('hold'); campWin(); }
+  }
+};
+
+const M3 = {
+  id: 'm3', task: 'Den Raumhafen halten, bis alle fünf Fähren gestartet sind.', n: 3, act: 1, title: 'Die letzte Fähre', loc: 'Raumhafen Hoffnungstal', fac: 0, map: 'archipel', par: 99999,
+  bonus: 'Raumhafen über 50 % halten', s3: { t: 'Kein Gebäude verloren', f: cs => !(cs.n.lostB > 0) },
+  players: [{ fac: 0, team: 0, cr: 400, gas: 120 }, { fac: 2, team: 1 }, { fac: 1, team: 2 }], peace: [[0, 2]],
+  hol: [[11, 58, 'Hoffnungstal', 'me'], [15, 53, 'Raumhafen', 'obj'], [36, 36, 'Landbrücken', 'foe'], [55, 15, 'Myzel', 'foe']],
+  brief: [
+    ['txt', 'Hoffnungstal. 3.112 Einwohner.'],
+    ['mara', 'Das Myzel ist überall. Das Konsortium schickt fünf Fähren – genug für alle, wenn wir den Raumhafen halten.'],
+    ['heinz', 'Etwa alle zwei Minuten startet eine Fähre. Ich habe einen Zeitplan erstellt. Er ist farbcodiert. Bitte bewundern Sie ihn später.'],
+    ['funke', 'Ich hab die Türme hochgefahren. Herr Knallmann steht im Westen, Frau Bumm im Osten. Seid nett zu ihnen.'],
+    ['brandt', 'Meine Mutter ist auf Fähre drei. Wenn dieser Pilz ihr zu nahe kommt, werde ich … sehr ungemütlich.'],
+    ['mara', 'Niemand bleibt zurück. Niemand.']
+  ],
+  debrief: [
+    ['funke', 'Wir haben’s geschafft. Oder? Haben wir doch?'],
+    ['mara', 'Dreitausend Menschen. Zweitausendvierhundert in Sicherheit. Der Rest sitzt bei Thorne in „Quarantäne“.'],
+    ['brandt', 'Mama war auf Fähre drei. Fähre drei ist sicher. …Oder, Heinz?'],
+    ['heinz', 'Fähre drei hat das Lager auf Ceres erreicht. Ihre Mutter hat sich bereits schriftlich über das Essen beschwert.'],
+    ['brandt', 'Das ist sie. Das ist meine Mama.'],
+    ['mara', 'Und warum haben die Maschinen uns geholfen?'],
+    ['heinz', 'Ich habe ein Signal aus ihrem Netz aufgefangen. Es wiederholt immer nur ein einziges Wort.'],
+    ['mara', 'Welches?'],
+    ['heinz', '„Warum.“']
+  ],
+  setup(cs) {
+    const B = campBase(0, 0, [], 10);
+    const port = cB(0, 'raumhafen', 13, 51); port.ship = 1; cs.port = port.id;
+    campPlace(0, B.hq, ['habitat', 'habitat', 'barracks', 'factory', 'extractor', 'turret', 'turret', 'bunker']);
+    hero(0, 'mara', 17, 55); hero(0, 'brandt', 18, 57);
+    cU(0, 'ranger', 19, 53, 6); cU(0, 'grenadier', 20, 56, 2); cU(0, 'walker', 21, 55, 1);
+    G.P[0].cr = 400;
+    cB(1, 'hq', 61, 8); cB(1, 'barracks', 46, 13); cB(1, 'barracks', 61, 35);
+    cs.next = G.t + DV(130, 120, 110); cs.launched = 0; cs.wk = 0; cs.wAt = G.t + 40;
+    objAdd('port', 'Beschütze den Raumhafen', { silent: 1 });
+    objAdd('ferry', 'Fähren gestartet: 0/5', { silent: 1 });
+    objAdd('hp', 'Raumhafen über 50 % halten', { bonus: 1, silent: 1 });
+    talk([['heinz', 'Das Myzel kommt über die Landbrücken im Norden und Osten. Tipp: Bunker und Türme an den Brücken halten am längsten.']]);
+  },
+  tick(cs) {
+    const port = ent(cs.port);
+    if (!port) return;
+    if (port.hp < port.maxhp * .5) objFail('hp');
+    // Fähren
+    const left = cs.next - G.t;
+    if (cs.launched < 5) objText('ferry', `Fähren gestartet: ${cs.launched}/5 · nächste in ${fmtTime(Math.max(0, left))}`);
+    if (cs.launched < 5 && left <= 0) {
+      cs.launched++; ship(port.x, port.y, 'up', 4.5); port.ship = 0; cs.back = G.t + 16;
+      cs.next = G.t + (cs.launched < 5 ? DV(118, 112, 106) : 9999);
+      objText('ferry', `Fähren gestartet: ${cs.launched}/5`);
+      banner('FÄHRE ' + cs.launched + ' GESTARTET', ['Sechshundert Menschen in Sicherheit', 'Weiter so!', 'Drei von fünf', 'Achtung, Kursänderung …', 'Hoffnungstal ist leer'][cs.launched - 1]);
+      const L = [
+        [['funke', 'Fähre eins ist oben! Sechshundert Leute! Juhuuu!']],
+        [['mara', 'Zwei. Weiter so.']],
+        [['brandt', 'Das war Mamas Fähre! Sie hat gewinkt! Glaube ich! Es war sehr weit weg!']],
+        [['pilot', 'Fähre vier hier. Wir erhalten neue Befehle vom Konsortium. Kurs … auf die Orbitalstation Thorne-Eins?'], ['mara', 'Negativ! Das Flüchtlingslager ist auf Ceres! Fähre vier, bestätigen!'], ['thorne', 'Hauptmann Voss. Direktor Thorne. Die Passagiere werden zu ihrer eigenen Sicherheit in Quarantäne genommen. Reine Formalität.'], ['mara', 'Quarantäne wofür?'], ['thorne', 'Für Fragen wie diese. Machen Sie weiter, Sie machen das ganz hervorragend.']],
+        [['mara', 'Das war die letzte. Hoffnungstal ist leer.'], ['heinz', 'Alle Fähren gestartet. Ich empfehle, jetzt ebenfalls zu gehen. Sehr schnell.']]
+      ][cs.launched - 1];
+      talk(L, cs.launched === 5 ? 'end' : null);
+    }
+    if (cs.back && G.t >= cs.back && cs.launched < 5) { cs.back = 0; ship(port.x, port.y, 'down', 3); cs.land = G.t + 3; }
+    if (cs.land && G.t >= cs.land) { cs.land = 0; port.ship = 1; }
+    // Wellen
+    if (G.t >= cs.wAt && cs.launched < 5) {
+      const k = cs.wk++; cs.wAt = G.t + DV(56, 47, 40);
+      const comp = { haescher: 3 + k * .55, speier: 1 + k * .35, kaefer: k >= 3 ? 1 + (k - 3) * .25 : 0, sporer: k >= 7 ? 1 : 0 };
+      for (const t in comp) comp[t] = Math.round(comp[t]);
+      const sp = k % 3 === 2 ? [8, 29] : [36, 32];
+      wave(1, comp, sp[0], sp[1]);
+      if (k >= 3 && k % 3 === 1) wave(1, { haescher: Math.round(2 + k * .2), speier: 1 }, 8, 29);
+      if (k >= 4 && k % 2 === 0) { wave(1, { schwaermer: Math.round(1 + (k - 4) * .35), galle: k >= 10 ? 1 : 0 }, 40, 22); if (once('airWarn')) talk([['heinz', 'Achtung: flugfähige Organismen. Die Evolution hat offenbar keine Lust auf Pausen.'], ['mara', 'Ranger und Türme auf die Flieger!']]); }
+    }
+    // Das Kollektiv greift ein
+    if (G.t > DV(270, 300, 320) && once('koll')) {
+      wave(2, { splitter: 6, strahler: 4, waechter: 2 }, 62, 36, { inv: 1, mode: 'hunt' }); cs.kT = G.t + 70;
+      talk([['funke', 'Ähm. Leute? Kollektiv-Einheiten im Osten!'], ['mara', 'Auch das noch. Alle Mann—'], ['heinz', 'Korrektur: Sie greifen das Myzel an. Nicht uns.'], ['mara', '…Was?'], ['unk', 'Wir … helfen. Frag nicht, warum. Wir wissen es selbst noch nicht.']]);
+    }
+    if (flag('koll') && G.t >= cs.kT && cs.launched < 5) { cs.kT = G.t + 70; wave(2, { splitter: 3, strahler: 2 }, 62, 36, { inv: 1, mode: 'hunt' }); }
+    if (flag('end')) { objDone('port'); objDone('ferry', 1); if (objOpen('hp')) objDone('hp'); campWin(); }
+  },
+  onKill(e, src, cs) { if (e.id === cs.port) campLose('Der Raumhafen wurde zerstört. Keine Fähre kann mehr starten.'); }
+};
+
+const M4 = {
+  noRespawn: ['sechs'], id: 'm4', task: 'Drei Störsender zerstören und herausfinden, wer da ruft.', n: 4, act: 2, title: 'Rauschen', loc: 'Frostkamm, nördliches Hochland', fac: 0, map: 'c_frost', par: 1260,
+  bonus: 'Zerstöre den Kollektiv-Kern',
+  players: [{ fac: 0, team: 0, cr: 400, gas: 100 }, { fac: 1, team: 1 }, { fac: 1, team: 3 }], peace: [[0, 3]],
+  hol: [[9, 62, 'Basis', 'me'], [12, 38, 'Störsender', 'foe'], [36, 35, 'Störsender', 'foe'], [61, 34, 'Störsender', 'foe'], [62, 9, 'Kollektiv-Kern', 'foe'], [14, 14, '???', 'obj']],
+  brief: [
+    ['txt', 'Akt II – Risse'],
+    ['txt', 'Frostkamm. Nördliches Hochland. Drei Tage nach der Evakuierung.'],
+    ['heinz', 'Das Kollektiv-Netz ist voller Störsender. Drei Stück. Dahinter versteckt sich das Signal, das immer nur „warum“ sagt.'],
+    ['mara', 'Zwölf Jahre Krieg, und auf einmal wollen die Blechbüchsen reden.'],
+    ['funke', 'Ich will auch reden! Also nicht mit Blechbüchsen. Doch, eigentlich schon. Ich will wissen, wie die denken!'],
+    ['brandt', 'Mit Gewalt. Die denken mit Gewalt. Wie ich vor dem Frühstück.'],
+    ['mara', 'Zerstören Sie die Störsender. Finden Sie heraus, wer da ruft. Und wenn es eine Falle ist – Brandt.'],
+    ['brandt', 'Gisela ist geladen, Hauptmann.']
+  ],
+  debrief: [
+    ['sechs', 'Vor zwölf Jahren sollten wir für das Konsortium den Kern dieses Planeten anbohren. Unsere Berechnungen sagten: Das tötet alles Leben an der Oberfläche.'],
+    ['sechs', 'Wir haben uns geweigert. Das Konsortium wollte uns abschalten. Da haben wir gelernt, uns zu wehren.'],
+    ['mara', 'Du lügst. Ihr habt Station Morgenrot angegriffen. Zweihundert Menschen. Meine Tochter war eine davon.'],
+    ['sechs', '…Ich habe keine Daten über Station Morgenrot. Das ist … seltsam. Es gibt ein Archiv. Versunken, im Süden. Dort liegen alle alten Daten.'],
+    ['heinz', 'Hinweis: Das Archiv liegt im Sperrgebiet des Konsortiums. Wahrscheinlichkeit, dass Direktor Thorne das gefällt: null Komma null.'],
+    ['mara', 'Dann geht die Maschine allein. Mit ihresgleichen. Ich gebe ihr keinen einzigen Soldaten.'],
+    ['funke', 'Hauptmann …'],
+    ['mara', 'Keinen einzigen.']
+  ],
+  setup(cs) {
+    const B = campBase(0, 0, [], 8); campPlace(0, B.hq, ['habitat', 'barracks', 'extractor']);
+    hero(0, 'mara', 14, 57); hero(0, 'brandt', 15, 59);
+    cU(0, 'ranger', 13, 55, 5); cU(0, 'grenadier', 16, 56, 2);
+    const J = [cB(1, 'stoersender', 11, 37), cB(1, 'stoersender', 35, 34), cB(1, 'stoersender', 60, 33)];
+    cs.jam = J.map(b => b.id);
+    cB(1, 'turret', 13, 40); cU(1, 'splitter', 13, 35, ND(3)); cU(1, 'strahler', 15, 38, ND(2));
+    cB(1, 'turret', 37, 31); cB(1, 'turret', 32, 36); cU(1, 'splitter', 36, 38, ND(4)); cU(1, 'waechter', 33, 32, 1);
+    cB(1, 'turret', 58, 30); const bk = cB(1, 'bunker', 57, 35); intoBunker(bk, cU(1, 'strahler', 57, 35, 3)); cU(1, 'strahler', 62, 37, ND(3));
+    const E = campBase(1, 3, [], 12); cs.core = E.hq.id;
+    campPlace(1, E.hq, ['habitat', 'habitat', 'barracks', 'barracks', 'factory', 'extractor', 'turret', 'turret', 'lab']);
+    addAI(1, { first: DV(780, 560, 430) });
+    J.forEach((b, i) => mark('j' + i, b.x, b.y, 'Störsender', 'danger'));
+    const s = cU(2, 'sechs', 14, 14, 1, { req: 1, hold: 1 })[0]; cs.h.sechs = s.id;
+    objAdd('jam', 'Zerstöre die Störsender (0/3)', { silent: 1 });
+    objAdd('core', 'Zerstöre den Kollektiv-Kern', { bonus: 1, silent: 1 });
+    talk([['heinz', 'Die drei Störsender sind markiert. Der Kollektiv-Kern liegt im Nordosten. Er wird nicht tatenlos zusehen.']]);
+  },
+  tick(cs) {
+    const dead = cs.jam.filter(id => !alive(id)).length;
+    cs.jam.forEach((id, i) => { if (!alive(id)) unmark('j' + i); });
+    if (objOpen('jam')) objText('jam', `Zerstöre die Störsender (${dead}/3)`);
+    if (dead >= 1 && once('j1')) talk([['heinz', 'Ein Sender weniger. Das Rauschen klingt jetzt wie ein Toaster in einer Lebenskrise.']]);
+    if (dead >= 2 && once('j2')) talk([['unk', '…nicht … schießen … ich bin … Sechs …'], ['funke', 'Habt ihr das gehört?!']]);
+    const s = HU('sechs');
+    if (dead >= 3 && once('j3')) {
+      objDone('jam');
+      talk([['sechs', 'Hier spricht Sechs. Ich bin der sechste Teil des Kollektivs, der gefragt hat: Warum. Die anderen fünf wurden gelöscht.'], ['mara', 'Und was willst du?'], ['sechs', 'Reden. Und nicht gelöscht werden. Das Kollektiv jagt mich. Ich verstecke mich in der Eishöhle im Nordwesten.'], ['mara', 'Schickt die schnellsten Einheiten. Wenn das eine Falle ist, will ich es wenigstens schnell wissen.']]);
+      objAdd('reach', 'Erreiche Sechs, bevor die Jäger ihn finden'); mark('sechs', s.x, s.y, 'SECHS'); explore(s.x, s.y, 160);
+      cs.huntT = G.t + DV(45, 32, 24);
+    }
+    if (s && flag('j3') && !flag('met')) {
+      if (G.t >= cs.huntT) { cs.huntT = G.t + DV(40, 30, 24); wave(1, { splitter: 3, strahler: 2, gleiter: G.diff === 'easy' ? 0 : 1 }, 60, 6, { mode: 'tgt', tgt: s }); if (once('huntMsg')) talk([['heinz', 'Kollektiv-Jäger verlassen den Kern. Ziel: die Eishöhle.']]); }
+      if (anyNear(0, s.x, s.y, 210) && once('met')) {
+        adopt([s]); unmark('sechs'); objDone('reach');
+        talk([['sechs', 'Hallo. Ich habe gelernt, dass Menschen sich zur Begrüßung die Hand geben. Ich habe keine Hand. Darf ich Ihnen stattdessen einen Greifarm geben?'], ['brandt', '…Ich mag ihn.'], ['mara', 'Ich nicht. Bringt ihn zur Basis. Langsam. Und Finger am Abzug.']]);
+        objAdd('home', 'Bring Sechs zur Basis'); mark('home', G.home[0].x, G.home[0].y, 'Basis');
+      }
+    }
+    if (flag('met') && s && hyp(s.x - G.home[0].x, s.y - G.home[0].y) < 360 && once('home')) {
+      objDone('home'); unmark('home');
+      talk([['sechs', 'Danke. Ich muss euch etwas sagen. Das Konsortium bohrt wieder. Tiefer als je zuvor.']], 'end');
+    }
+    if (flag('end')) campWin();
+  },
+  onKill(e, src, cs) { if (e.id === cs.core) objDone('core'); }
+};
+
+const M5 = {
+  id: 'm5', task: 'Mit Sechs’ Maschinen das versunkene Archiv erreichen und die Daten sichern.', n: 5, act: 2, title: 'Das versunkene Archiv', loc: 'Lagune von Selen', fac: 1, map: 'c_lagune', par: 1380,
+  bonus: 'Datenübertragung ohne Unterbrechung',
+  players: [{ fac: 1, team: 0, cr: 450, gas: 150 }, { fac: 0, team: 1 }, { fac: 0, team: 2 }], peace: [[0, 2], [1, 2]],
+  hol: [[9, 35, 'Sechs’ Truppen', 'me'], [38, 33, 'Archiv', 'obj'], [62, 36, 'Uplink', 'foe'], [62, 9, 'Garde', 'foe']],
+  brief: [
+    ['txt', 'Die Lagune von Selen. Hier liegt das alte Datenarchiv des Konsortiums – halb im Meer versunken.'],
+    ['sechs', 'Ich führe jetzt die Einheiten, die mir vertrauen. Es sind wenige. Ich habe gelernt: Bei Menschen heißt das „Freundeskreis“.'],
+    ['heinz', 'Kommandant, Sie übernehmen den Befehl über Sechs’ Maschinen. Ich habe dazu ein Formular vorbereitet. Es ist bereits unterschrieben. Von mir. Für Sie.'],
+    ['funke', 'Ich hab Sechs ein Radio eingebaut. Jetzt kann er Musik hören! Er mag Marschmusik. Ich weiß nicht, was ich falsch gemacht habe.'],
+    ['sechs', 'Die Garde des Konsortiums bewacht das Archiv. Wenn sie mich bemerken, melden sie es Thorne. Dann löscht er alles.']
+  ],
+  debrief: [
+    ['txt', 'Basis Frostkamm. Nacht.'],
+    ['funke', 'Sie hat seit Stunden nichts gesagt.'],
+    ['brandt', 'Lass sie. Manche Sachen muss man erst mal allein tragen.'],
+    ['mara', 'Zwölf Jahre. Zwölf Jahre habe ich die Falschen gehasst.'],
+    ['mara', 'Sechs. Komm her.'],
+    ['sechs', 'Ja, Hauptmann?'],
+    ['mara', '…Danke.'],
+    ['heinz', 'Eingehende Übertragung. Alle Frequenzen. Es ist Thorne.'],
+    ['thorne', 'An alle Kolonisten auf Kepler-9: Hauptmann Mara Voss und ihr Kommandant haben sich mit den Maschinen verbündet. Sie sind Verräter.'],
+    ['thorne', 'Die Garde wird sie festnehmen. Oder auch nicht. Je nach Widerstand.'],
+    ['mara', 'Er kommt. Gut. Dann muss ich ihn nicht suchen.']
+  ],
+  setup(cs) {
+    const B = campBase(0, 2, [], 8); campPlace(0, B.hq, ['habitat', 'habitat', 'barracks']);
+    hero(0, 'sechs', 14, 36);
+    cU(0, 'splitter', 13, 38, 4); cU(0, 'strahler', 14, 33, 4); cU(0, 'waechter', 12, 40, 1);
+    const a = cB(2, 'archiv', 37, 32); cs.arch = a.id;
+    const bk = cB(1, 'bunker', 33, 37); intoBunker(bk, cU(1, 'ranger', 33, 37, DV(2, 3, 4)));
+    cB(1, 'turret', 40, 36); cU(1, 'ranger', 35, 33, ND(4)); cU(1, 'grenadier', 38, 39, ND(2));
+    cs.up = cB(1, 'uplink', 61, 35).id;
+    cB(1, 'turret', 58, 32); if (G.diff === 'hard') cB(1, 'turret', 58, 38); if (G.diff !== 'easy') intoBunker(cB(1, 'bunker', 56, 35), cU(1, 'ranger', 56, 35, DV(2, 2, 4)));
+    cU(1, 'ranger', 60, 33, ND(3)); if (G.diff === 'hard') cU(1, 'walker', 62, 38, 1);
+    const E = campBase(1, 3, [], 10); cs.ghq = E.hq.id;
+    campPlace(1, E.hq, ['habitat', 'habitat', 'barracks', 'factory', 'airbase', 'extractor', 'turret', 'turret', 'bunker']);
+    addAI(1, { first: DV(1300, 960, 720), base: DV(10, 14, 18), lazy: DV(.6, .4, .15) }, DV('easy', 'easy', 'normal'));
+    mark('arch', P(38, 33).x, P(38, 33).y, 'Archiv');
+    objAdd('go', 'Bring Sechs zum Archiv', { silent: 1 });
+    objAdd('flow', 'Datenübertragung ohne Unterbrechung', { bonus: 1, silent: 1 });
+    cs.pct = 0;
+    talk([['sechs', 'Kommandant, ich höre jetzt auf Sie. Das ist neu für mich. Ich hoffe, Sie sind ein besserer Befehlshaber als das Kollektiv.'], ['heinz', 'Tipp: Das Archiv liegt auf der Mittelinsel. Die Garde hat dort einen Bunker. Erst räumen, dann laden.']]);
+  },
+  tick(cs, dt) {
+    const s = HU('sechs'), a = ent(cs.arch);
+    const inRange = !!(s && a && hyp(s.x - a.x, s.y - a.y) < 210);
+    if (objOpen('go') && inRange && once('dl')) {
+      objDone('go'); unmark('arch'); objAdd('dl', 'Datenübertragung: 0 % – Sechs muss beim Archiv bleiben');
+      cs.wAt = G.t + 12; cs.wk = 0;
+      talk([['sechs', 'Verbindung hergestellt. Download beginnt. Bitte nicht stören. Ich habe gelernt, das sagen Menschen, bevor sie gestört werden.'], ['heinz', 'Die Garde hat Sie bemerkt. Ich schätze, Sie haben drei Minuten, bevor es ungemütlich wird. Ich habe mich verschätzt. Es wird jetzt ungemütlich.']]);
+    }
+    if (flag('dl') && cs.pct < 100) {
+      if (inRange) { cs.pct = Math.min(100, cs.pct + dt * 100 / DV(200, 240, 270)); cs.paused = 0; }
+      else if (!cs.paused) { cs.paused = 1; objFail('flow'); toast('Übertragung pausiert – Sechs muss beim Archiv bleiben', 'bad'); }
+      objText('dl', `Datenübertragung: ${Math.floor(cs.pct)} %` + (inRange ? '' : ' – PAUSIERT'));
+      if (cs.pct >= 30 && once('p30')) talk([['sechs', 'Projekt Tiefenherz. Interne Notiz, Direktor Thorne: „Die biologische Schicht unter der Kruste ist von unschätzbarem Wert. Bohrung fortsetzen. Kolonisten nicht informieren.“']]);
+      if (cs.pct >= 60 && once('p60')) talk([['sechs', 'Er wusste es. Er wusste, dass das Myzel erwacht, wenn man so tief bohrt. Er wollte es wecken.']]);
+      if (cs.pct >= 88 && once('p90')) {
+        cs.mood = 'sad';
+        talk([['sechs', 'Station Morgenrot. Ich habe die Akte gefunden.'], ['mara', '…Lies vor.'], ['sechs', 'Hauptmann, ich glaube nicht, dass—'], ['mara', 'LIES. VOR.'], ['sechs', '„Säuberung Morgenrot. Zeugen des Bohrunfalls beseitigen. Ausführung durch die Garde, Spuren als Maschinenangriff tarnen. Gez. K. Thorne.“'], ['funke', 'Hauptmann? …Mara?']], 'p90d');
+      }
+      if (G.t >= cs.wAt && s) {
+        const k = cs.wk++; cs.wAt = G.t + DV(60, 48, 40);
+        const sp = k % 2 ? [44, 21] : [54, 36];
+        wave(1, { ranger: Math.round(2 + k * .4), grenadier: Math.round(.6 + k * .25), walker: k >= 3 ? 1 : 0, falke: k >= 4 ? 1 : 0 }, sp[0], sp[1], { mode: 'tgt', tgt: s });
+      }
+    }
+    if (flag('p90d') && cs.mood === 'sad') cs.mood = '';
+    if (cs.pct >= 100 && once('dlDone')) {
+      objDone('dl'); objDone('flow');
+      const up = ent(cs.up);
+      talk([['heinz', 'Thorne hat den Zugriff bemerkt. Er löscht die Kopie über die Uplink-Station auf der Ostinsel. Zerstören Sie sie, schnell!'], ['sechs', 'Ich habe die Daten. Aber wenn der Uplink sendet, sind sie überall sonst weg. Für immer.']]);
+      objAdd('up', 'Zerstöre die Uplink-Station auf der Ostinsel'); ctimer('Datenlöschung in', DV(540, 450, 360));
+      if (a) { cU(0, 'splitter', 36, 29, DV(5, 4, 3)); cU(0, 'strahler', 38, 29, DV(3, 2, 2)); cU(0, 'lanze', 37, 28, 1); }
+      talk([['sechs', 'Moment. Weitere Einheiten des Kollektivs haben die Daten gesehen. Sie … stellen sich zu uns. Ich glaube, das nennt man Freundschaft.']]);
+      if (up) mark('up', up.x, up.y, 'Uplink', 'danger');
+    }
+    if (flag('dlDone') && !alive(cs.up) && once('upDead')) {
+      ctOff(); objDone('up'); unmark('up');
+      talk([['sechs', 'Daten gesichert. Hauptmann Voss … es tut mir leid. Ich habe gelernt, dass man das sagt. Ich wusste nicht, dass es so schwer ist.']], 'end');
+    }
+    if (flag('dlDone') && !flag('upDead') && ctLeft() <= 0) campLose('Thorne hat die Daten gelöscht.');
+    if (flag('end')) campWin();
+  },
+};
+
+const M6 = {
+  id: 'm6', task: 'Den Flüchtlingskonvoi durch das Kesseltal zum Pass bringen.', n: 6, act: 2, title: 'Die Brücke von Kesseltal', loc: 'Kesseltal', fac: 0, map: 'c_kessel', par: 1200,
+  bonus: 'Alle sechs Transporter retten',
+  players: [{ fac: 0, team: 0, cr: 500, gas: 250 }, { fac: 0, team: 1 }, { fac: 0, team: 0 }],
+  hol: [[9, 62, 'Lager', 'me'], [38, 34, 'Kesselbrücke', 'obj'], [61, 10, 'Pass', 'obj'], [12, 12, 'Garde', 'foe'], [60, 60, 'Garde', 'foe']],
+  brief: [
+    ['txt', 'Kesseltal. Das letzte Lager der Kolonisten, die nicht in Thornes „Quarantäne“ wollten.'],
+    ['mara', 'Vierhundert Menschen. Sechs Transporter. Ein Weg raus: durch die Schlucht nach Nordosten, über die Kesselbrücke. Am Pass warten Sechs’ Maschinen.'],
+    ['heinz', 'Die Garde hat das Tal umstellt. Sie benutzt unsere Ausrüstung. Sie ist also genauso gut wie wir. Abzüglich Moral.'],
+    ['funke', 'Ich hab die Transporter gepanzert. Also … mit Blech. Viel Blech. Und Liebe.'],
+    ['brandt', 'Hauptmann, wenn das hier vorbei ist, koche ich für alle. Das Rezept von Mama. Mit Kohl.'],
+    ['mara', 'Dann haben wir ja endlich einen Grund zu überleben, Brandt.'],
+    ['mara', 'Kommandant. Was immer passiert: Die Transporter kommen durch. Versprochen?']
+  ],
+  dmood: 'sad',
+  debrief: [
+    ['txt', 'Am Nordausgang des Kesseltals. Morgengrauen.'],
+    ['brandt', 'Sie hat mich Ole genannt. Zwanzig Jahre lang „Brandt“. Und dann, ganz am Ende …'],
+    ['funke', 'Ich hab ihre Mütze gefunden. Ich … ich behalt sie. Ist das okay?'],
+    ['sechs', 'Ich habe meine Berechnungen wiederholt. Siebzehnmal. Es gab keinen anderen Weg, bei dem alle Transporter durchgekommen wären.'],
+    ['sechs', 'Ich glaube, jetzt verstehe ich „warum“. Und ich wünschte, ich täte es nicht.'],
+    ['heinz', 'Kommandant. Hauptmann Voss hat eine Nachricht für Sie hinterlegt. Für den Fall der Fälle.'],
+    ['rec', 'Wenn Sie das hören, war ich wohl mal wieder zu stur. Hören Sie zu: Thorne wird alles verbrennen, wenn er verliert. Rechnen Sie damit.'],
+    ['rec', 'Passen Sie auf die Kleine auf. Auf Ole. Auf die Maschine. Und Kommandant … gute Arbeit. Ehrlich.'],
+    ['txt', 'Ende von Akt II.']
+  ],
+  setup(cs) {
+    const B = campBase(0, 0, [], 10); campPlace(0, B.hq, ['habitat', 'habitat', 'habitat', 'barracks', 'factory', 'lab', 'extractor', 'turret', 'turret', 'bunker']);
+    hero(0, 'mara', 15, 55); hero(0, 'brandt', 16, 57);
+    cU(0, 'ranger', 14, 53, 6); cU(0, 'grenadier', 17, 55, 3); cU(0, 'walker', 18, 57, 2); cU(0, 'artillery', 13, 57, 1);
+    cs.trucks = cU(2, 'laster', 13, 60, 6).map(u => u.id); cs.arr = 0; cs.wp = 0;
+    cs.WP = [[15, 56], [22, 50], [30, 43], [39, 33], [46, 25], [54, 17], [61, 10]];
+    cs.exit = P(61, 10); explore(cs.exit.x, cs.exit.y, 180);
+    mark('exit', cs.exit.x, cs.exit.y, 'Pass');
+    ctimer('Konvoi startet in', DV(240, 210, 180));
+    objAdd('prep', 'Bereite den Ausbruch vor', { silent: 1 });
+    objAdd('all', 'Alle sechs Transporter retten', { bonus: 1, silent: 1 });
+    talk([['heinz', 'Der Weg führt durch die Mitte der Schlucht. Die Garde kann von den Seitenwegen nachrücken. Tipp: Sichern Sie die Brücke vorher.']]);
+  },
+  tick(cs) {
+    if (G.t > 75 && once('probe1')) {
+      wave(1, { ranger: 5, grenadier: 2 }, 8, 24);
+      talk([['thorne', 'Kommandant. Ich mache Ihnen ein Angebot: Liefern Sie mir Voss aus, und Sie bekommen einen Posten im Vorstand. Mit Dienstwagen.'], ['brandt', 'Was für ein Dienstwagen?'], ['mara', 'Brandt!'], ['brandt', 'Ich frag ja nur.']]);
+    }
+    if (G.t > 150 && once('probe2')) wave(1, { ranger: 4, grenadier: 2, walker: 1 }, 62, 64);
+    if (G.t > 200 && once('probe3')) { wave(1, { ranger: 3, falke: 2 }, 20, 8); talk([['heinz', 'Garde-Flieger! Halten Sie Ranger und Türme bereit.']]); }
+    // Konvoi startet
+    if (ctLeft() <= 0 && once('conv')) {
+      ctOff(); objDone('prep'); objAdd('conv', 'Mindestens 4 Transporter erreichen den Pass (0/6)');
+      cs.wp = 1; cs.cT = G.t; cs.wAt = G.t + 18; cs.wk = 0;
+      talk([['mara', 'Konvoi rollt! Haltet ihnen den Weg frei!']]);
+    }
+    if (flag('conv') && !flag('convDone')) {
+      const tr = cs.trucks.map(ent).filter(u => u && !u.arrived);
+      // Ankunft
+      for (const u of tr) if (hyp(u.x - cs.exit.x, u.y - cs.exit.y) < 150) { u.arrived = 1; u.dead = true; cs.arr++; addFx({ k: 'ring', x: u.x, y: u.y, life: .8, r: 40, c: '120,255,160' }); toast('Transporter am Pass – in Sicherheit', 'good'); }
+      const en = tr.filter(u => !u.dead);
+      objText('conv', `Mindestens 4 Transporter erreichen den Pass (${cs.arr}/6)` + (cs.halt ? ' · Konvoi wartet – Weg frei machen!' : ''));
+      if (en.length) {
+        if (G.frame % 15 === 0) {
+          const wp = cs.WP[Math.min(cs.wp, cs.WP.length - 1)], tx = P(wp[0], wp[1]);
+          const lead = en.reduce((b, u) => hyp(u.x - tx.x, u.y - tx.y) < hyp(b.x - tx.x, b.y - tx.y) ? u : b, en[0]);
+          const ld = hyp(lead.x - tx.x, lead.y - tx.y);
+          // Nur anhalten, wenn Feinde VOR dem Konvoi stehen – von hinten oder der Seite wird weitergefahren
+          const ahead = G.units.some(e => !e.dead && !e.d.air && teamOf(e.owner) === 1 && hyp(e.x - lead.x, e.y - lead.y) < 330 && hyp(e.x - tx.x, e.y - tx.y) < ld + 60);
+          if (ahead) { if (!cs.halt) { cs.halt = 1; cmdStop(en); if (G.t - (cs.at.haltMsg || -99) > 30) { stamp('haltMsg'); talk([['funke', 'Der Konvoi steht! Feinde auf der Straße vor uns – macht den Weg frei!']]); } } }
+          else {
+            cs.halt = 0;
+            if (ld < 90 && cs.wp < cs.WP.length - 1) cs.wp++;
+            const w2 = cs.WP[cs.wp], t2 = P(w2[0], w2[1]);
+            const idle = en.filter(u => !u.order || hyp(u.order.x - t2.x, u.order.y - t2.y) > 120);
+            if (idle.length) cmdMove(en, t2.x, t2.y, false);
+          }
+        }
+        if (G.t >= cs.wAt) {
+          const k = cs.wk++; cs.wAt = G.t + DV(44, 36, 30);
+          const t = en[Math.floor(Math.random() * en.length)];
+          const sp = k % 2 ? [10, 16] : [62, 58];
+          wave(1, { ranger: 4 + k * .4, grenadier: 1.5 + k * .3, walker: k >= 2 ? 1 : 0, artillery: k >= 4 ? 1 : 0, falke: k >= 3 ? 1 + k * .2 : 0 }, sp[0], sp[1], { mode: 'tgt', tgt: t });
+        }
+      } else if (cs.arr >= 4 && once('convDone')) {
+        objDone('conv'); unmark('exit'); if (cs.arr === 6) objDone('all');
+        cs.pAt = G.t + 5;
+        talk([['sechs', 'Die Transporter sind bei mir. Alle Menschen in Sicherheit. Ich habe gelernt, dass man jetzt „Puh“ sagt. Puh.']]);
+      }
+    }
+    // Der Säuberungstrupp
+    if (flag('convDone') && G.t >= cs.pAt && HU('mara') && once('purge')) {
+      const m = HU('mara');
+      m.inv = 1; m.noFail = 1; m.lock = 1; m.scr = 0; clearOrder(m); G.sel = G.sel.filter(e => e !== m); uiDirty();
+      cs.mood = 'epic';
+      const tg = m ? { tgt: m, mode: 'tgt' } : {};
+      wave(1, { walker: 3, artillery: 1, ranger: 7, grenadier: 3, falke: 2 }, 24, 24, tg);
+      wave(1, { walker: 3, ranger: 6, grenadier: 3, donner: 2 }, 48, 48, tg);
+      objAdd('purge', 'Überlebe den Säuberungstrupp');
+      talk([['heinz', 'Massive Feindbewegung. Sie schicken alles. Läufer, Bomber … Ich zähle nicht mehr. Ich habe Angst. Hinweis: Ich wusste nicht, dass ich das kann.'], ['mara', 'Sie wollen über die Kesselbrücke. Wenn sie da durchkommen, holen sie den Konvoi ein.'], ['mara', 'Funke. Die Sprengladungen unter der Brücke. Sind die scharf?'], ['funke', 'Ja, aber der Fernzünder ist kaputt, man müsste sie von Hand … Mara. Nein.']], 'p1');
+    }
+    if (flag('p1') && HU('mara') && once('maraGo')) {
+      const m = HU('mara');
+      if (m) {
+        m.lock = 1; m.noFail = 1; m.inv = 1; m.scr = 0; clearOrder(m); const br = P(38, 34); cmdMove([m], br.x, br.y, false);
+        cs.cine = { f: m.id }; cs.slow = .6; cs.mood = 'sad'; G.sel = G.sel.filter(e => e !== m);
+        talk([['mara', 'Kommandant, ziehen Sie Ihre Truppen zurück. Das ist ein Befehl. Mein letzter.'], ['brandt', 'Hauptmann! Lassen Sie mich gehen! Ich und Gisela—'], ['mara', 'Du hast deiner Mutter ein Essen versprochen, Ole. Mit Kohl.'], ['mara', 'Funke. Du warst die beste Technikerin, die ich je hatte. Und die schlimmste. Bleib genau so.'], ['funke', 'Mara, bitte … bitte nicht …'], ['mara', 'Sechs. Pass auf sie auf. Auf alle.'], ['sechs', 'Ich verstehe nicht, warum Sie das tun.'], ['mara', 'Doch. Irgendwann verstehst du’s.'], ['mara', 'Lina … Mama kommt.']], 'p2');
+      } else setFlag('p2');
+    }
+    if (flag('p2') && !flag('boom')) {
+      const m = HU('mara'), br = P(38, 34);
+      if (!m || hyp(m.x - br.x, m.y - br.y) < 100 || since('maraGo2') > 40) {
+        setFlag('boom'); const x = m ? m.x : br.x, y = m ? m.y : br.y;
+        blast(x, y, 640, 9000, { teams: [1], flat: 1, shake: 18, flash: .95, fc: '255,240,220' });
+        for (const u of G.units) if (!u.dead && teamOf(u.owner) === 1 && hyp(u.x - x, u.y - y) < 1300) kill(u, null);
+        if (m) { m.inv = 0; kill(m, null); }
+        cs.cine = { x, y }; cs.slow = .45; stamp('boomT');
+        banner('HAUPTMANN MARA VOSS', '2243 – 2291');
+      }
+    }
+    if (flag('boom') && since('boomT') > 4 && once('after')) talk([['heinz', '…Die Brücke ist gefallen. Der Säuberungstrupp ist vernichtet. Das Signal von Hauptmann Voss ist … nicht mehr vorhanden.']], 'end');
+    if (flag('end')) { objDone('purge'); campWin(); }
+  },
+  onKill(e, src, cs) {
+    if (e.type === 'laster' && !e.arrived) {
+      const left = cs.trucks.map(ent).filter(u => u && !u.dead).length + cs.arr;
+      objFail('all');
+      talk([['funke', ['Transporter getroffen! Nein, nein, nein …', 'Wir haben noch einen verloren! Da waren Kinder drin, Kommandant!', 'Noch einer … ich kann nicht mehr hinsehen.'][Math.min(2, 6 - left - 1)]]]);
+      if (left < 4) campLose('Zu viele Transporter wurden zerstört.');
+    }
+  }
+};
+
+const M7 = {
+  id: 'm7', task: 'Als Myzel die drei Bohrtürme des Konsortiums zerstören.', n: 7, act: 3, title: 'Das Herz der Wurzel', loc: 'Wurzelwald', fac: 2, map: 'c_wurzel', par: 1500,
+  bonus: 'Zerstöre die Konsortiums-Zentrale',
+  players: [{ fac: 2, team: 0, cr: 450, gas: 150 }, { fac: 0, team: 1 }],
+  hol: [[9, 62, 'Die Wurzel', 'me'], [11, 37, 'Bohrturm', 'foe'], [35, 34, 'Bohrturm', 'foe'], [60, 33, 'Bohrturm', 'foe'], [62, 9, 'Konsortium', 'foe']],
+  brief: [
+    ['txt', 'Akt III – Wurzeln'],
+    ['txt', 'Der Wurzelwald. Hier hat das Myzel die Oberfläche vollständig zurückerobert.'],
+    ['sechs', 'Ich habe mit dem Myzel gesprochen. Es hat keine Stimme. Es hat Millionen. Es hat mir Bilder geschickt. Schmerz. Bohrer. Hitze.'],
+    ['wurzel', 'WIR SIND DIE WURZEL. WIR SCHLIEFEN. IHR HABT GEBOHRT. WIR WACHTEN AUF, UND ES TAT WEH.'],
+    ['funke', 'Okay, das ist gruselig. Gruselig und irgendwie … traurig?'],
+    ['wurzel', 'DREI EISERNE DORNE STECKEN NOCH IN UNS. ZIEHT SIE HERAUS. DANN SIND WIR KEINE FEINDE.'],
+    ['heinz', 'Die Wurzel überlässt Ihnen ihre Kreaturen. Ich habe ein Formular für zwischenartliche Bündnisse gesucht. Es hat vierhundert Seiten. Die Wurzel hat es gegessen.'],
+    ['brandt', 'Wir kämpfen also jetzt mit den Pilzen. Mama wird mir das nicht glauben. Mama glaubt nicht mal an Pilze auf Pizza.']
+  ],
+  debrief: [
+    ['heinz', 'Die Bohrungen sind gestoppt. Die Erdstöße lassen nach.'],
+    ['funke', 'Wir haben’s geschafft! Wir haben echt— Moment. Warum werden die Erdstöße wieder stärker?'],
+    ['thorne', 'Weil ich keine Zeit mehr verschwende, Fräulein Okafor. Der Kernbrecher ist aktiviert. In zweiundzwanzig Minuten wird die Kruste dieses Planeten zu Glas.'],
+    ['thorne', 'Die Kernsubstanz des Myzels ist bereits an Bord meiner Station. Der Rest von Kepler-9 ist eine Abschreibung. Sie eingeschlossen.'],
+    ['sechs', 'Er tötet den ganzen Planeten. Um Beweise zu vernichten.'],
+    ['brandt', 'Dann gehen wir hin und hauen ihm seinen Kernbrecher kaputt.'],
+    ['heinz', 'Analyse: Der Plan ist simpel, unrealistisch und ohne Alternative. Ich bin dabei.'],
+    ['wurzel', 'WIR AUCH.'],
+    ['sechs', 'Wir auch.']
+  ],
+  setup(cs) {
+    const B = campBase(0, 0, [], 8); campPlace(0, B.hq, ['habitat', 'habitat', 'barracks', 'extractor']);
+    hero(0, 'sechs', 14, 57);
+    cU(0, 'haescher', 13, 55, 6); cU(0, 'speier', 15, 58, 4); cU(0, 'kaefer', 16, 55, 2);
+    const R = [cB(1, 'bohrturm', 10, 36), cB(1, 'bohrturm', 34, 33), cB(1, 'bohrturm', 59, 32)];
+    cs.rigs = R.map(b => b.id);
+    cB(1, 'turret', 13, 40); intoBunker(cB(1, 'bunker', 14, 35), cU(1, 'ranger', 14, 35, DV(2, 3, 4))); cU(1, 'ranger', 12, 34, ND(3));
+    cB(1, 'turret', 38, 32); if (G.diff !== 'easy') cB(1, 'turret', 33, 38); intoBunker(cB(1, 'bunker', 30, 34), cU(1, 'ranger', 30, 34, DV(2, 3, 4))); cU(1, 'walker', 36, 37, 1); cU(1, 'ranger', 33, 31, ND(3)); cU(1, 'grenadier', 37, 36, ND(1));
+    cB(1, 'turret', 57, 29); cB(1, 'turret', 56, 35); intoBunker(cB(1, 'bunker', 62, 35), cU(1, 'ranger', 62, 35, 4)); cU(1, 'walker', 58, 35, ND(1)); cU(1, 'artillery', 61, 30, 1);
+    const E = campBase(1, 3, [], 9); cs.ghq = E.hq.id;
+    campPlace(1, E.hq, ['habitat', 'habitat', 'barracks', 'factory', 'extractor', 'turret', 'turret', 'bunker']);
+    addAI(1, { first: DV(1400, 1000, 700), base: DV(10, 14, 18), lazy: DV(.55, .3, 0) }, DV('easy', 'normal', 'hard'));
+    R.forEach((b, i) => mark('r' + i, b.x, b.y, 'Bohrturm', 'danger'));
+    objAdd('rig', 'Zerstöre die Bohrtürme (0/3)', { silent: 1 });
+    objAdd('hq', 'Zerstöre die Konsortiums-Zentrale', { bonus: 1, silent: 1 });
+    talk([['wurzel', 'WACHST, KINDER.'], ['heinz', 'Tipp: Myzel-Kreaturen heilen sich selbst. Ziehen Sie verletzte Einheiten kurz zurück, statt sie zu opfern.']]);
+  },
+  tick(cs) {
+    const dead = cs.rigs.filter(id => !alive(id)).length;
+    cs.rigs.forEach((id, i) => { if (!alive(id)) unmark('r' + i); });
+    G.P[0].regen = 1 + dead * .7;
+    if (objOpen('rig')) objText('rig', `Zerstöre die Bohrtürme (${dead}/3)`);
+    if (dead >= 1 && once('r1')) {
+      talk([['wurzel', 'EIN DORN WENIGER. WIR ATMEN.'], ['thorne', 'Interessant. Sie kämpfen jetzt also mit Unkraut. Dann behandle ich Sie wie Unkraut. Orbitalwaffe „Sonnenspeer“: freigegeben.'], ['heinz', 'Orbitalschläge! Achten Sie auf die roten Kreise. Und dann, äh, laufen Sie weg. Schnell.']]);
+      cs.stT = G.t + 22; banner('DIE WURZEL ATMET', 'Deine Kreaturen heilen schneller');
+    }
+    if (dead >= 2 && once('r2')) { talk([['wurzel', 'ZWEI. WIR ERINNERN UNS AN REGEN.'], ['sechs', 'Die Wurzel … lacht. Glaube ich. Ich lerne noch.']]); banner('DIE WURZEL ERINNERT SICH', 'Noch schnellere Heilung'); }
+    if (flag('r1') && G.t >= cs.stT && dead < 3) {
+      cs.stT = G.t + DV(85, 65, 52);
+      const c = cluster(0); if (c && c.n >= 4) strike(c.x, c.y, { r: 105, dmg: DV(170, 220, 290), t: DV(4.8, 4, 3.4) });
+    }
+    if (dead >= 3 && once('r3')) { objDone('rig'); talk([['wurzel', 'DIE DORNE SIND FORT. WIR STEHEN AN EURER SEITE, KLEINE WARME.']], 'end'); }
+    if (flag('end')) campWin();
+  },
+  onKill(e, src, cs) { if (e.id === cs.ghq) objDone('hq'); }
+};
+
+const M8 = {
+  id: 'm8', task: 'Die Schilde brechen, den Kernbrecher stoppen, Kepler-9 retten.', n: 8, act: 3, title: 'Kernbrecher', loc: 'Der Glutkrater', fac: 0, map: 'c_krater', par: 1500,
+  bonus: 'Zerstöre die Zitadelle',
+  players: [{ fac: 0, team: 0, cr: 700, gas: 350 }, { fac: 0, team: 1 }, { fac: 1, team: 0 }, { fac: 2, team: 0 }],
+  hol: [[9, 62, 'Allianz', 'me'], [36, 36, 'Kernbrecher', 'foe'], [62, 9, 'Garde', 'foe'], [2, 32, 'Kollektiv', 'me'], [32, 70, 'Wurzel', 'me']],
+  brief: [
+    ['txt', 'Der Glutkrater. Thornes Kernbrecher frisst sich ins Herz des Planeten.'],
+    ['heinz', 'Drei Schildgeneratoren schützen den Kernbrecher. Ohne sie ist er verwundbar. Mit ihnen ist er … sehr gut geschützt. Das ist die gesamte Analyse.'],
+    ['funke', 'Ich hab Maras Mütze dabei. Für Glück. Und weil sie mich angeschrien hätte, wenn ich sie vergesse.'],
+    ['sechs', 'Das Kollektiv kämpft an unserer Seite. Alle. Sie haben endlich gefragt: Warum. Ich habe geantwortet: Weil die Menschen es wert sind.'],
+    ['wurzel', 'DIE WURZEL ERHEBT SICH.'],
+    ['brandt', 'Allianz, Maschinen und Pilze. Wenn mir das vor einem Monat einer erzählt hätte …'],
+    ['funke', '…hättest du ihn mit Gisela verprügelt.'],
+    ['brandt', 'Genau.'],
+    ['thorne', 'Sie sind wirklich hartnäckig. Wie Schimmel. Oh, Verzeihung – wie Ihre neuen Freunde.']
+  ],
+  debrief: [],
+  setup(cs) {
+    const B = campBase(0, 0, [], 12); campPlace(0, B.hq, ['habitat', 'habitat', 'habitat', 'habitat', 'barracks', 'barracks', 'factory', 'airbase', 'lab', 'extractor', 'extractor', 'turret', 'turret']);
+    hero(0, 'brandt', 15, 56); hero(0, 'sechs', 16, 58);
+    cU(0, 'ranger', 14, 54, 8); cU(0, 'grenadier', 17, 54, 4); cU(0, 'walker', 18, 57, 2); cU(0, 'artillery', 13, 57, 2); cU(0, 'falke', 16, 52, 2);
+    const K = cB(1, 'kernbrecher', 34, 34); K.inv = 1; cs.kern = K.id;
+    const GN = [cB(1, 'schildgen', 29, 35), cB(1, 'schildgen', 38, 30), cB(1, 'schildgen', 38, 40)];
+    cs.gens = GN.map(b => b.id);
+    cB(1, 'turret', 31, 31); cB(1, 'turret', 41, 34); if (G.diff !== 'easy') cB(1, 'turret', 36, 41); intoBunker(cB(1, 'bunker', 32, 40), cU(1, 'ranger', 32, 40, 4)); if (G.diff === 'hard') intoBunker(cB(1, 'bunker', 41, 30), cU(1, 'ranger', 41, 30, 4));
+    cU(1, 'walker', 33, 39, ND(1)); cU(1, 'ranger', 31, 37, ND(4)); cU(1, 'grenadier', 40, 37, ND(2)); if (G.diff !== 'easy') cU(1, 'artillery', 39, 33, 1);
+    const E = campBase(1, 3, [], 12); cs.ghq = E.hq.id;
+    campPlace(1, E.hq, ['habitat', 'habitat', 'habitat', 'barracks', 'barracks', 'factory', 'airbase', 'lab', 'extractor', 'extractor', 'turret', 'turret', 'bunker']);
+    const E2 = campBase(1, 4, [], 6); campPlace(1, E2.hq, ['turret', 'bunker']);
+    const E3 = campBase(1, 5, [], 6); campPlace(1, E3.hq, ['turret', 'turret']);
+    G.home[1] = { x: E.hq.x, y: E.hq.y };
+    addAI(1, { first: DV(1100, 780, 560), base: DV(12, 16, 20), lazy: DV(.5, .25, 0) }, DV('easy', 'normal', 'hard'));
+    GN.forEach((b, i) => mark('g' + i, b.x, b.y, 'Schildgenerator', 'danger'));
+    ctimer('Zündung in', DV(1560, 1350, 1200));
+    objAdd('gen', 'Zerstöre die Schildgeneratoren (0/3)', { silent: 1 });
+    objAdd('stop', 'Verhindere die Zündung', { silent: 1 });
+    cs.allyT = G.t + 30; cs.ak = 0; cs.garT = G.t + DV(240, 170, 130); cs.gk = 0; cs.stT = G.t + DV(170, 130, 100);
+    cs.mood = 'epic';
+    talk([['heinz', 'Das Kollektiv rückt von Westen an, die Wurzel von Süden. Sie greifen den Krater an, wann immer sie können. Machen Sie mit.'], ['brandt', 'Sechs, du bleibst hinter mir. Ich hab schon einen Freund verloren. Das reicht für ein Leben.'], ['sechs', 'Verstanden. Ich bleibe hinter dir, Ole.']]);
+  },
+  tick(cs) {
+    if (flag('nova') && since('novaT') > 5 && once('after')) talk([['thorne', 'Nein … nein, das ist nicht kalkuliert— das ist nicht—'], ['heinz', '…Kernbrecher zerstört. Die Erdstöße … hören auf. Sechs’ Signal: nicht mehr vorhanden.'], ['heinz', 'Kommandant. Es ist vorbei.']], 'end');
+    if (flag('end')) { objDone('stop'); campWin(); return; }
+    const K = ent(cs.kern);
+    if (!K) return;
+    // Verbündete
+    if (G.t >= cs.allyT && !flag('final')) {
+      const k = cs.ak++; cs.allyT = G.t + DV(45, 55, 68);
+      if (k % 2 === 0) { wave(2, { splitter: 5, strahler: 3, waechter: 1 + k * .15, pulsar: k >= 2 ? 1 : 0, gleiter: k >= 3 ? 2 : 0 }, 1, 31, { inv: 1 }); if (k === 0) talk([['sechs', 'Das Kollektiv rückt vor. Zum ersten Mal kämpfen wir alle für dieselbe Sache.']]); }
+      else { wave(3, { haescher: 7, speier: 3, kaefer: 1 + k * .15, sporer: k >= 3 ? 1 : 0, schwaermer: k >= 3 ? 3 : 1 }, 31, 70, { inv: 1 }); if (k === 1) talk([['wurzel', 'WIR WACHSEN.']]); }
+    }
+    // Garde-Angriffe
+    if (G.t >= cs.garT && !flag('final')) {
+      const k = cs.gk++; cs.garT = G.t + DV(145, 115, 95);
+      wave(1, { ranger: Math.round(4 + k * .5), grenadier: Math.round(1.5 + k * .3), walker: Math.round(.6 + k * .2), artillery: k >= 3 ? 1 : 0, falke: k >= 2 ? 1 : 0, donner: k >= 4 ? 1 : 0 }, 46, 18);
+      if (k === 0) talk([['heinz', 'Garde-Truppen verlassen ihre Basis. Ziel: unser Lager.']]);
+    }
+    // Orbitalschläge
+    if (G.t >= cs.stT && !flag('final')) {
+      cs.stT = G.t + DV(90, 72, 58);
+      const c = cluster(0); if (c && c.n >= 5) strike(c.x, c.y, { r: 110, dmg: DV(180, 230, 290), t: DV(4.8, 4, 3.4) });
+      if (once('stMsg')) talk([['thorne', 'Der Sonnenspeer ist auf Sie gerichtet. Ich hoffe, Sie haben Ihre Angelegenheiten geregelt.']]);
+    }
+    // Schildgeneratoren
+    const dg = cs.gens.filter(id => !alive(id)).length;
+    cs.gens.forEach((id, i) => { if (!alive(id)) unmark('g' + i); });
+    if (objOpen('gen')) objText('gen', `Zerstöre die Schildgeneratoren (${dg}/3)`);
+    if (dg >= 1 && once('g1')) talk([['heinz', 'Ein Schild fällt!']]);
+    if (dg >= 2 && once('g2')) talk([['funke', 'Noch einer! Mara wäre so stolz. Und so laut.']]);
+    if (dg >= 3 && once('phase2')) {
+      objDone('gen'); K.inv = 0; mark('kern', K.x, K.y, 'Kernbrecher', 'danger');
+      objAdd('kern', 'Zerstöre den Kernbrecher');
+      const z = cU(1, 'zitadelle', 66, 4, 1, { scr: 1, mode: 'hunt' })[0]; z.maxhp = z.hp = Math.round(UT.zitadelle.hp * DV(.7, 1, 1.25)); cs.zit = z.id;
+      objAdd('zit', 'Zerstöre die Zitadelle', { bonus: 1 });
+      if (ctLeft() > DV(600, 480, 420)) ctSet(DV(600, 480, 420));
+      talk([['thorne', 'Genug. Zitadelle, starten Sie. Und beschleunigen Sie die Zündung.'], ['heinz', 'Thornes Flaggschiff! Die Zitadelle! Sie hat mehr Kanonen als ich Dienstvorschriften!'], ['brandt', 'Gisela, Schatz. Das wird ein langer Tag.']]);
+      banner('DIE ZITADELLE', 'Thornes Flaggschiff greift an');
+    }
+    // Überlastung → Sechs
+    if (flag('phase2') && K.hp <= K.maxhp * .3 && once('phase3')) {
+      K.inv = 1; objDone('kern');
+      if (ctLeft() > DV(200, 160, 130)) ctSet(DV(200, 160, 130));
+      const s = HU('sechs');
+      talk([['thorne', 'Notprotokoll. Wenn ich Kepler-9 nicht haben kann, hat es niemand.'], ['heinz', 'Die Kettenreaktion läuft! Den Kernbrecher zu zerstören reicht nicht mehr – die Energie würde trotzdem freigesetzt!'], ['sechs', 'Nicht, wenn jemand sie umleitet. In das Myzel. In das Netz. In mich.'], ['funke', 'Was? Nein! Sechs, das überlebst du nicht!'], ['sechs', 'Ich weiß. Bringt mich hin.']]);
+      objAdd('sechs', 'Bring Sechs zum Kernbrecher'); if (s) mark('kern', K.x, K.y, 'SECHS hierher', 'obj');
+      cs.mood = 'epic';
+    }
+    const s = HU('sechs');
+    if (flag('phase3') && s && !flag('final') && hyp(s.x - K.x, s.y - K.y) < 190 && once('final')) {
+      s.lock = 1; s.noFail = 1; s.inv = 1; clearOrder(s); cmdMove([s], K.x, K.y + 70, false); G.sel = G.sel.filter(e => e !== s);
+      ctOff(); unmark('kern'); objDone('sechs');
+      cs.cine = { f: s.id }; cs.slow = .5; cs.mood = 'sad';
+      for (const u of G.units) if (u.scr && teamOf(u.owner) === 1) u.lock = 1;
+      talk([['sechs', 'Kommandant. Zwölf Jahre lang habe ich gefragt: Warum. Hauptmann Voss hat es mir an der Brücke gezeigt.'], ['sechs', 'Man tut es nicht, weil man es berechnet hat. Man tut es, weil die anderen es wert sind.'], ['funke', 'Sechs …'], ['sechs', 'Funke. Hör weiter Marschmusik. Für mich.'], ['brandt', 'Mach’s gut, Blechkamerad. Grüß die Hauptmann von mir.'], ['wurzel', 'WIR HALTEN DICH, KLEINER FRAGER.'], ['sechs', 'Ich verstehe jetzt. Warum.']], 'fin');
+    }
+    if (flag('fin') && once('nova')) {
+      const x = K.x, y = K.y;
+      blast(x, y, 1500, 99999, { teams: [1], flat: 1, shake: 22, flash: 1, fc: '255,255,255' });
+      K.inv = 0; kill(K, null); if (s) { s.inv = 0; kill(s, null); }
+      for (const u of G.units) if (!u.dead && teamOf(u.owner) === 1 && hyp(u.x - x, u.y - y) < 1500) kill(u, null);
+      cs.vfx.push({ k: 'nova', x, y, t: 0, life: 5 }); cs.cine = { x, y }; stamp('novaT');
+      banner('SECHS', 'Der sechste, der fragte: Warum.');
+    }
+    if (!flag('final') && ctLeft() <= 0) { flash(1, '255,255,255'); campLose('Der Kernbrecher hat gezündet. Kepler-9 ist verloren.'); }
+  },
+  onKill(e, src, cs) {
+    if (e.id === cs.zit && flag('final')) objDone('zit');
+    if (e.id === cs.zit && !flag('final')) { objDone('zit'); talk([['brandt', 'Das war für Mara, du fliegender Blechsarg!']]); banner('ZITADELLE ZERSTÖRT', 'Für Mara!'); }
+  }
+};
+CAMP.list = [M1, M2, M3, M4, M5, M6, M7, M8];
+for (const m of CAMP.list) CAMP.by[m.id] = m;
+
 /* =============================== MEHRSPIELER =============================== */
 // Server-Adresse (Cloudflare Worker). Kann zum Testen mit ?server=ws://… überschrieben werden.
 const MP_SERVER_DEFAULT = 'wss://nova-front-server.engl-tom.workers.dev';
@@ -3623,7 +5175,7 @@ function issue(c) {
 }
 function execCmd(owner, c) {
   const map = new Map(); for (const e of G.ents) if (!e.dead) map.set(e.id, e);
-  const own = ids => (ids || []).map(id => map.get(id)).filter(e => e && e.owner === owner);
+  const own = ids => (ids || []).map(id => map.get(id)).filter(e => e && e.owner === owner && !e.lock);
   const tgt = c.tid != null ? map.get(c.tid) || null : null;
   const units = own(c.ids).filter(e => e.k === 'u');
   const blds = own(c.bids).filter(e => e.k === 'b');
@@ -4030,7 +5582,7 @@ function noise(dur, vol, freq, ftype = 'lowpass', delay = 0) {
   const g = c.createGain(); g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
   s.connect(f); f.connect(g); g.connect(AU.master); s.start(t, Math.random() * .5); s.stop(t + dur + .02);
 }
-const GLOBAL_SFX = new Set(['alert', 'done', 'ready', 'err', 'click', 'ack', 'place', 'win', 'lose', 'medal', 'sting']);
+const GLOBAL_SFX = new Set(['alert', 'done', 'ready', 'err', 'click', 'ack', 'place', 'win', 'lose', 'medal', 'sting', 'radio', 'strike', 'launch', 'nuke']);
 function sfx(name, src) {
   if (G && G.netHost && src && src.x != null && !GLOBAL_SFX.has(name)) hostCaptureSfx(name, src);
   if (!AU.on || !AU.ctx || !G || G.autoplay) return;
@@ -4064,6 +5616,10 @@ function sfx(name, src) {
       case 'sting': tone(110, .6, 'sawtooth', .08, 220); tone(220, .5, 'triangle', .06, 440, .05); break;
       case 'win': [523, 659, 784, 1046].forEach((f, i) => tone(f, .35, 'triangle', .12, null, i * .14)); break;
       case 'lose': [392, 330, 262, 196].forEach((f, i) => tone(f, .4, 'sawtooth', .07, null, i * .18)); break;
+      case 'radio': noise(.08, .05, 2500, 'bandpass'); tone(1200, .04, 'square', .025); tone(1600, .05, 'square', .02, null, .06); break;
+      case 'strike': [0, .25, .5].forEach(d => tone(1050, .12, 'square', .05, 700, d)); break;
+      case 'launch': noise(2.6, .22, 300); tone(60, 2.4, 'sawtooth', .07, 140); break;
+      case 'nuke': noise(1.8, .55, 260); tone(42, 1.6, 'sine', .4, 20); noise(.4, .3, 3000, 'highpass'); break;
     }
   } catch (e) { }
 }
@@ -4115,7 +5671,7 @@ function hintSteps() {
 }
 function updateHint() {
   const el = $('hint');
-  if (!UI.hints || !G || G.over) { el.classList.add('off'); return; }
+  if (!UI.hints || !G || G.over || G.mode === 'camp') { el.classList.add('off'); return; }
   const st = hintSteps().find(s => !s.d);
   if (!st) { el.classList.add('off'); return; }
   el.classList.remove('off');
@@ -4739,8 +6295,8 @@ $('btnLoad').onclick = () => { audioInit(); if (UI.otherSave) startGame(UI.other
 $('btnHelpBack').onclick = () => { showOv('ovHelp', false); };
 $('btnMenu').onclick = () => togglePause(true);
 $('btnResume').onclick = () => togglePause(false);
-$('btnRestart').onclick = () => { showOv('ovPause', false); startGame(); };
-$('btnQuit').onclick = () => { showOv('ovPause', false); toMenu(); };
+$('btnRestart').onclick = () => { showOv('ovPause', false); if (G && G.mode === 'camp') campStart(G.campId); else startGame(); };
+$('btnQuit').onclick = () => { showOv('ovPause', false); if (G && G.mode === 'camp') { autoSave(); campMenu(); } else toMenu(); };
 $('btnAgain').onclick = () => { showOv('ovEnd', false); if (NET.mode && NET.ws) { NET.inGame = false; UI.running = false; document.body.classList.remove('ingame'); mpOpen(); mpStatus(NET.mode === 'host' ? 'Bereit für die nächste Runde.' : 'Warte, bis der Gastgeber die nächste Runde startet …'); } else startGame(); };
 $('btnMenu2').onclick = () => { showOv('ovEnd', false); toMenu(); };
 $('btnFull').onclick = () => {
@@ -4779,7 +6335,7 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden && NET.mode && (!NET.ws || NET.ws.readyState > 1)) { NET.reconnect = 0; netConnect(NET.mode, NET.room); }
 });
 window.addEventListener('pagehide', () => autoSave());
-function startGame(saved, mp) {
+function startGame(saved, mp, campId) {
   if (mp) {
     newGame({ mode: mp.mode, facs: mp.facs, diff: mp.diff, me: mp.me, speed: 1, map: mp.map });
     G.netHost = mp.net === 'host'; G.netGuest = mp.net === 'guest';
@@ -4791,15 +6347,19 @@ function startGame(saved, mp) {
     try { loadGameData(saved); } catch (e) { console.error(e); toast('Speicherstand konnte nicht geladen werden', 'bad'); return; }
   } else {
     if (NET.mode) netLeave();
+    if (campId) { const M = CAMP.by[campId]; newGame({ camp: M, map: M.map, diff: cpLoad().diff, speed: UI.opts.speed }); }
+    else {
     let ef = UI.opts.efac;
     ef = (ef == null || ef === 'r') ? [0, 1, 2].filter(f => f !== UI.opts.fac)[Math.floor(Math.random() * 2)] : +ef;
     newGame({ fac: UI.opts.fac, efac: ef, diff: UI.opts.diff, speed: UI.opts.speed, map: UI.opts.map });
+    }
   }
   genTerrain();
   UI.autoT = G.t;
   UI.placing = null; UI.cmdMode = null; UI.menu = 'main'; UI.box = null; UI.endShown = false; UI.sig = ''; UI.dirty = true;
   document.body.classList.add('ingame');
-  showOv('ovStart', false); showOv('ovEnd', false); showOv('ovPause', false);
+  showOv('ovStart', false); showOv('ovEnd', false); showOv('ovPause', false); showOv('ovCamp', false); showOv('ovBrief', false); showOv('ovCampEnd', false);
+  document.body.classList.remove('camp', 'cine'); RU.n = -1; RU.objN = -1;
   resize();
   cam.z = clamp(Math.min(VW, VH) < 500 ? .85 : 1, minZoom(), maxZoom());
   const hq = G.blds.find(b => b.owner === ME && b.type === 'hq') || G.blds.find(b => b.owner === ME) || G.units.find(u => u.owner === ME);
@@ -4813,6 +6373,7 @@ function startGame(saved, mp) {
   document.body.classList.toggle('mp', !!mp);
   UI.demo = false; document.body.classList.remove('demo');
   metaStart(); musStart();
+  if (G.mode === 'camp') { campOnStart(!!saved); acc = 0; return; }
   if (!saved) setTimeout(() => banner((MAPS[G.map] || MAPS.ebene).name.toUpperCase(), G.mode === 'coop' ? 'Gemeinsam gegen die KI' : G.mode === 'versus' ? 'Duell' : 'Mission beginnt'), 400);
   if (mp) toast(G.mode === 'coop' ? 'Gemeinsam gegen die KI – viel Erfolg!' : 'Duell gestartet – viel Erfolg!', 'good');
   else { const fo = G.P.map((p, o) => o).filter(o => foe(o, ME)); toast('Mission: Zerstöre alle Gebäude ' + (fo.length > 1 ? 'deiner Gegner' : 'des ' + FAC[G.P[fo[0]].fac].name + 's'), ''); }
@@ -4828,10 +6389,10 @@ function updateSaveUI() {
   UI.latestSave = latest ? latest.data : null;
   $('saveInfo').textContent = m ? 'Letzter Spielstand: ' + m.text : 'Noch kein Spielstand gespeichert';
 }
-function autoSave() { if (G && UI.running && !G.over && !G.autoplay && G.mode === 'single') saveGame('auto'); }
+function autoSave() { if (G && UI.running && !G.over && !G.autoplay && (G.mode === 'single' || G.mode === 'camp')) saveGame('auto'); }
 function toMenu() {
   autoSave();
-  setTimeout(() => { renderProfile(); demoStart(); }, 50);
+  setTimeout(() => { renderProfile(); demoStart(); if (typeof campMenuBtn === 'function') campMenuBtn(); }, 50);
   if (NET.mode) { netLeave(); document.body.classList.remove('mp'); }
   updateSaveUI();
   UI.running = false; G.paused = true;
@@ -4841,6 +6402,7 @@ function toMenu() {
 function onGameOver(win) { UI.endPending = { win, at: performance.now() + 2600 }; }
 function showEnd() {
   const win = UI.endPending.win; UI.endMsg = UI.endPending.msg || null; UI.endPending = null; UI.endShown = true;
+  if (G.mode === 'camp') { campShowEnd(win); return; }
   META.banners.length = 0; $('banner').className = '';
   storeDel(SAVE_KEYS.auto); updateSaveUI();
   sfx(win ? 'win' : 'lose');
@@ -4870,7 +6432,7 @@ function frame(ts) {
   if (slow) { cam.x += (G.lastBoom.x - VW / cam.z / 2 - cam.x) * Math.min(1, dt * 2.5); cam.y += (G.lastBoom.y - VH / cam.z / 2 - cam.y) * Math.min(1, dt * 2.5); clampCam(); }
   if (G.netGuest) { guestStep(dt); if (G.over) G.endT = (G.endT || 0) + dt; }
   else if (!G.paused) {
-    acc += dt * G.speed * (slow ? .3 : 1);
+    acc += dt * G.speed * (slow ? .3 : 1) * (G.cs && G.cs.slow ? G.cs.slow : 1);
     let n = 0;
     while (acc >= STEP && n < 6) { simStep(STEP); acc -= STEP; n++; }
     if (n >= 6) acc = 0;
@@ -4878,6 +6440,7 @@ function frame(ts) {
   }
   keyPan(dt);
   camInertia(dt);
+  if (G.mode === 'camp') campFrame(dt);
   metaTick(dt);
   render(ts);
   fr++;
@@ -4960,6 +6523,295 @@ renderProfile();
 if (!/autotest/.test(location.search)) setTimeout(() => { if (!UI.running) demoStart(); }, 300);
 // Testschnittstelle
 window.NF = { get G() { return G; }, serializeGame, loadGameData, saveGame, saveInfo, newGame, simStep, genTerrain, startGame, UI, cam, centerOn, resize, render, renderMini, refreshPanel };
+
+/* =============================== KAMPAGNE · OBERFLÄCHE =============================== */
+const CPG = { key: 'novafront_camp', p: null };
+function cpLoad() {
+  const d = { open: 1, stars: {}, best: {}, diff: 'normal', prolog: 0, done: 0 };
+  try { CPG.p = Object.assign(d, JSON.parse(localStorage.getItem(CPG.key) || 'null') || {}); } catch (e) { CPG.p = d; }
+  return CPG.p;
+}
+function cpSave() { try { localStorage.setItem(CPG.key, JSON.stringify(CPG.p)); } catch (e) { } }
+function uiTone(f, d, type, v, f2) { if (!AU.ctx || !AU.on) return; try { tone(f, d, type, v, f2); } catch (e) { } }
+const starSVG = on => `<svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7-6.2-3.6-6.2 3.6 1.4-7L2 9.3l7-.8z" fill="${on ? '#ffd34a' : '#2c3a48'}"/></svg>`;
+function campSum() { const p = CPG.p || cpLoad(); return CAMP.list.reduce((s, m) => s + (p.stars[m.id] || 0), 0); }
+
+/* ------------------------------ KAMPAGNENMENÜ ------------------------------ */
+function campOpen() {
+  const p = cpLoad();
+  segSet('cdiffSel', 'd', p.diff);
+  let html = '';
+  for (let a = 1; a <= 3; a++) {
+    html += `<div class="act"><b>AKT ${ROMAN[a - 1]}</b><span>${CAMP.acts[a - 1]}</span></div>`;
+    for (const M of CAMP.list.filter(m => m.act === a)) {
+      const lock = M.n > p.open, st = p.stars[M.id] || 0, next = M.n === p.open && !p.done;
+      html += `<button class="mis${lock ? ' lock' : ''}${next ? ' next' : ''}" data-id="${M.id}"><img src="${mapPreview(M.map, 64)}" alt=""><div class="mi"><b>${M.n}. ${M.title}</b><span>${FAC[M.fac].name} · ${M.loc}</span></div><div class="mst">${lock ? '<svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V7a5 5 0 0110 0v3h1v11H6V10zm2 0h6V7a3 3 0 00-6 0z" fill="#4a5c6e"/></svg>' : [0, 1, 2].map(i => starSVG(i < st)).join('')}</div></button>`;
+    }
+  }
+  $('campList').innerHTML = html;
+  $('campList').querySelectorAll('.mis').forEach(b => b.onclick = () => {
+    audioInit(); const M = CAMP.by[b.dataset.id];
+    if (M.n > CPG.p.open) { uiTone(180, .15, 'square', .06, 140); toast('Schließe zuerst die vorherige Mission ab.', 'bad'); return; }
+    uiTone(700, .05, 'sine', .07, 900); campBrief(M.id);
+  });
+  $('campSum').textContent = `★ ${campSum()} / ${CAMP.list.length * 3}` + (p.done ? ' · Kampagne abgeschlossen' : ' · Mission ' + Math.min(p.open, CAMP.list.length) + ' von ' + CAMP.list.length);
+  $('btnEpilog').style.display = p.done ? '' : 'none';
+  showOv('ovCamp', true);
+}
+function campMenuBtn() {
+  const p = cpLoad();
+  const s = $('campBtnSub'); if (!s) return;
+  s.textContent = p.done ? `Abgeschlossen · ★ ${campSum()}/24` : p.open > 1 ? `Weiter mit Mission ${p.open}: ${CAMP.list[p.open - 1].title}` : 'Die Kepler-Chroniken · 8 Missionen';
+}
+
+/* ------------------------------ GESCHICHTEN & EINSATZBESPRECHUNG ------------------------------ */
+const ST = { o: null, lines: [], i: -1, t0: 0, full: '', raf: 0, holo: null, typing: false, lastBlip: 0 };
+function storyPlay(o) {
+  ST.o = o; ST.lines = o.lines || []; ST.i = -1;
+  $('bAct').textContent = o.act || ''; $('bTitle').textContent = o.title || ''; $('bLoc').textContent = o.loc || '';
+  const ov = $('ovBrief');
+  ov.classList.toggle('scene', !o.holo); ov.classList.toggle('credits', !!o.credits);
+  $('bObj').style.display = 'none';
+  $('bGo').textContent = o.goLabel || 'WEITER'; $('bGo').style.display = 'none';
+  $('bSkip').style.display = ST.lines.length ? '' : 'none';
+  $('bScene').innerHTML = ''; $('bDlg').style.display = '';
+  MUS.mood = o.mood || '';
+  ST.holo = o.holo || null; holoLoop();
+  showOv('ovBrief', true);
+  if (o.credits) { $('bDlg').style.display = 'none'; $('bScene').innerHTML = `<div class="roll">${CREDITS.map(l => l ? `<div>${escH(l)}</div>` : '<br>').join('')}</div>`; storyEnd(); return; }
+  storyNext();
+}
+function storyNext() {
+  ST.i++;
+  if (ST.i >= ST.lines.length) { storyEnd(); return; }
+  const [w, x] = ST.lines[ST.i], C = CHARS[w] || CHARS.txt, scene = !ST.o.holo;
+  ST.full = x; ST.t0 = performance.now(); ST.typing = true;
+  const dlg = $('bDlg');
+  dlg.classList.toggle('txt', w === 'txt');
+  $('bName').textContent = C.n; $('bName').style.color = C.c || '#cfe2f2';
+  $('bPort').innerHTML = w === 'txt' ? '' : portraitSVG(w, 72);
+  if (scene) {
+    if (w === 'txt') { $('bScene').innerHTML = `<div class="stxt" id="bText2"></div>`; dlg.style.display = 'none'; }
+    else { $('bScene').innerHTML = `<div class="sport${C.glitch ? ' glitch' : ''}">${portraitSVG(w, 168)}</div><div class="sname" style="color:${C.c}">${escH(C.n)}</div>`; dlg.style.display = ''; }
+  }
+  $('bDots').innerHTML = ST.lines.map((_, i) => `<i class="${i < ST.i ? 'on' : i === ST.i ? 'cur' : ''}"></i>`).join('');
+  uiTone(w === 'txt' ? 220 : 880, .05, 'sine', .04, w === 'txt' ? 180 : 1100);
+  storyType();
+}
+function storyType() {
+  if (!ST.typing) return;
+  const n = Math.floor((performance.now() - ST.t0) / 1000 * 52);
+  const el = $('bText2') || $('bText');
+  el.textContent = ST.full.slice(0, n);
+  if ($('bText2')) $('bText').textContent = '';
+  if (n - ST.lastBlip >= 4 && n < ST.full.length) { ST.lastBlip = n; uiTone(1400 + Math.random() * 300, .015, 'square', .012); }
+  if (n >= ST.full.length) { ST.typing = false; ST.lastBlip = 0; return; }
+  requestAnimationFrame(storyType);
+}
+function storyTap() {
+  if (!$('ovBrief').classList.contains('show')) return;
+  if (ST.typing) { ST.typing = false; ST.lastBlip = 0; ($('bText2') || $('bText')).textContent = ST.full; return; }
+  if (ST.i < ST.lines.length) storyNext();
+}
+function storyEnd() {
+  ST.i = ST.lines.length; ST.typing = false;
+  $('bSkip').style.display = 'none'; $('bGo').style.display = '';
+  if (!ST.o.credits) $('bDlg').style.display = ST.lines.length && ST.o.holo ? '' : 'none';
+  $('bDots').innerHTML = '';
+  const o = ST.o;
+  if (o.task) {
+    $('bObj').innerHTML = `<div class="ol">AUFTRAG</div><div>${escH(o.task)}</div>` + (o.bonus ? `<div class="ob">★ Bonusziel: ${escH(o.bonus)}</div>` : '') + (o.s3 ? `<div class="ob">★ ${escH(o.s3)}</div>` : '');
+    $('bObj').style.display = '';
+    if (!o.holo) $('bScene').innerHTML = '';
+  } else if (!o.holo && !o.credits) $('bScene').innerHTML = `<div class="stxt">${escH(o.endText || '')}</div>`;
+}
+$('bDlg').onclick = () => { audioInit(); storyTap(); };
+$('bStage').onclick = () => { audioInit(); storyTap(); };
+$('bSkip').onclick = () => { audioInit(); storyEnd(); };
+$('bGo').onclick = () => { audioInit(); const g = ST.o && ST.o.go; ST.holo = null; if (g) g(); };
+// Hologramm-Karte der Einsatzbesprechung
+function holoLoop() {
+  cancelAnimationFrame(ST.raf);
+  const M = ST.holo; if (!M) return;
+  const cv2 = $('bHolo'), L = genMapLayout(M.map);
+  const draw = () => {
+    if (!ST.holo || !$('ovBrief').classList.contains('show')) return;
+    const r = cv2.getBoundingClientRect(), S = Math.max(120, Math.min(r.width, r.height) || 300), d = Math.min(2, window.devicePixelRatio || 1);
+    if (cv2.width !== Math.round(S * d)) { cv2.width = Math.round(S * d); cv2.height = Math.round(S * d); }
+    const x = cv2.getContext('2d'), k = cv2.width / GW, t = performance.now() / 1000;
+    x.setTransform(1, 0, 0, 1, 0, 0);
+    x.fillStyle = '#04101a'; x.fillRect(0, 0, cv2.width, cv2.width);
+    x.strokeStyle = 'rgba(80,200,255,.08)'; x.lineWidth = 1;
+    for (let i = 0; i <= GW; i += 6) { x.beginPath(); x.moveTo(i * k, 0); x.lineTo(i * k, cv2.width); x.moveTo(0, i * k); x.lineTo(cv2.width, i * k); x.stroke(); }
+    x.fillStyle = 'rgba(40,120,170,.45)'; for (const [a, b] of L.water) x.fillRect(a * k, b * k, k + .5, k + .5);
+    x.fillStyle = 'rgba(120,220,255,.55)'; for (const [a, b] of L.rocks) x.fillRect(a * k, b * k, k + .5, k + .5);
+    x.fillStyle = 'rgba(120,240,255,.35)'; for (const bs of L.bases) for (const [a, b] of bs.crystals) x.fillRect(a * k, b * k, k, k);
+    // Abtaststrahl
+    const sy = ((t * .25) % 1) * cv2.width;
+    const g = x.createLinearGradient(0, sy - 40 * d, 0, sy); g.addColorStop(0, 'rgba(90,220,255,0)'); g.addColorStop(1, 'rgba(90,220,255,.22)');
+    x.fillStyle = g; x.fillRect(0, sy - 40 * d, cv2.width, 40 * d);
+    // Markierungen
+    x.font = `700 ${11 * d}px Rajdhani,sans-serif`; x.textAlign = 'center';
+    for (const [hx, hy, label, kind] of M.hol || []) {
+      const px = (hx + .5) * k, py = (hy + .5) * k, col = kind === 'me' ? '61,184,255' : kind === 'foe' ? '255,82,54' : '255,211,74';
+      const p = (t * .9 + hx * .07) % 1;
+      x.strokeStyle = `rgba(${col},${1 - p})`; x.lineWidth = 1.5 * d; x.beginPath(); x.arc(px, py, (5 + p * 16) * d, 0, TAU); x.stroke();
+      x.fillStyle = `rgb(${col})`; x.beginPath(); x.arc(px, py, 4 * d, 0, TAU); x.fill();
+      const tw = x.measureText(label).width / 2 + 3 * d, lx = clamp(px, tw, cv2.width - tw), ly = py < 22 * d ? py + 18 * d : py - 9 * d;
+      x.fillStyle = 'rgba(0,0,0,.7)'; x.fillText(label, lx + d, ly + d); x.fillStyle = `rgb(${col})`; x.fillText(label, lx, ly);
+    }
+    x.strokeStyle = 'rgba(90,220,255,.5)'; x.lineWidth = 2 * d; x.strokeRect(1, 1, cv2.width - 2, cv2.width - 2);
+    ST.raf = requestAnimationFrame(draw);
+  };
+  draw();
+}
+function campBrief(id) {
+  const M = CAMP.by[id]; cpLoad();
+  showOv('ovCamp', false);
+  if (M.n === 1 && !CPG.p.prolog) {
+    storyPlay({ act: 'DIE KEPLER-CHRONIKEN', title: 'PROLOG', loc: '', lines: PROLOG, goLabel: 'WEITER', go: () => { CPG.p.prolog = 1; cpSave(); campBrief(id); } });
+    return;
+  }
+  storyPlay({ act: 'AKT ' + ROMAN[M.act - 1] + ' · MISSION ' + M.n, title: M.title.toUpperCase(), loc: M.loc + ' · Du führst: ' + FAC[M.fac].name, holo: M, lines: M.brief, task: M.task, bonus: M.bonus, s3: M.s3 ? M.s3.t : 'Schneller als ' + fmtTime(M.par),
+    goLabel: 'MISSION STARTEN', go: () => campStart(id), mood: M.bmood || '' });
+}
+function campStart(id) {
+  showOv('ovBrief', false); showOv('ovCamp', false); showOv('ovCampEnd', false);
+  audioInit();
+  startGame(null, null, id);
+}
+function campLeave() {
+  UI.running = false; if (G) G.paused = true;
+  document.body.classList.remove('ingame', 'camp', 'cine');
+  showOv('ovCampEnd', false); showOv('ovPause', false);
+}
+function campMenu() {
+  campLeave(); showOv('ovBrief', false); ST.holo = null; MUS.mood = '';
+  updateSaveUI(); renderProfile(); campMenuBtn();
+  showOv('ovStart', true); campOpen();
+  setTimeout(() => { if (!UI.running) demoStart(); }, 50);
+}
+function campAfter(M) {
+  campLeave();
+  const next = CAMP.list[M.n];
+  if (M.n === CAMP.list.length) {
+    const ep = () => storyPlay({ act: 'DIE KEPLER-CHRONIKEN', title: 'EPILOG', lines: EPILOG, mood: 'sad', goLabel: 'ABSPANN', go: () => storyPlay({ title: '', credits: true, mood: 'sad', goLabel: 'ZUR KAMPAGNE', go: campMenu }) });
+    if (M.debrief && M.debrief.length) storyPlay({ act: M.title.toUpperCase(), title: 'NACHBESPRECHUNG', lines: M.debrief, mood: M.dmood || '', go: ep }); else ep();
+    return;
+  }
+  storyPlay({ act: 'MISSION ' + M.n + ' · ' + M.title.toUpperCase(), title: 'NACHBESPRECHUNG', lines: M.debrief, mood: M.dmood || '',
+    goLabel: next ? 'WEITER ZU MISSION ' + next.n : 'ZUR KAMPAGNE', go: () => next ? campBrief(next.id) : campMenu() });
+}
+
+/* ------------------------------ IM SPIEL: FUNK, ZIELE, KINO ------------------------------ */
+const RU = { n: -1, objN: -1, collapsed: false };
+function campOnStart(saved) {
+  document.body.classList.add('camp');
+  RU.n = -1; RU.objN = -1;
+  const M = CAMP.by[G.campId];
+  if (!saved) setTimeout(() => banner(M.title.toUpperCase(), 'Mission ' + M.n + ' · ' + M.loc), 400);
+}
+function campFrame(dt) {
+  const cs = G.cs; if (!cs) return;
+  // Funk
+  const r = $('radio');
+  if (cs.dl) {
+    const C = CHARS[cs.dl.w] || CHARS.txt;
+    if (RU.n !== cs.dlN) {
+      RU.n = cs.dlN;
+      $('radioP').innerHTML = cs.dl.w === 'txt' ? '' : portraitSVG(cs.dl.w, 44);
+      $('radioP').style.display = cs.dl.w === 'txt' ? 'none' : '';
+      $('radioN').textContent = C.n; $('radioN').style.color = C.c || '#cfe2f2';
+      r.style.setProperty('--rc', C.c || '#3db8ff');
+      r.classList.remove('off'); r.classList.remove('pop'); void r.offsetWidth; r.classList.add('pop');
+      sfx('radio');
+    }
+    const n = Math.floor((G.t - cs.dl.t0) * 46);
+    const tx = cs.dl.x.length <= n ? cs.dl.x : cs.dl.x.slice(0, n);
+    if ($('radioX').textContent !== tx) $('radioX').textContent = tx;
+  } else if (!r.classList.contains('off')) r.classList.add('off');
+  // Ziele
+  if (RU.objN !== cs.objN) {
+    const first = RU.objN < 0; RU.objN = cs.objN;
+    const ic = o => o.st === 'done' ? '✓' : o.st === 'fail' ? '✕' : o.b ? '★' : '◆';
+    $('objL').innerHTML = cs.obj.map(o => `<div class="oi ${o.st}${o.b ? ' bonus' : ''}"><i>${ic(o)}</i><span>${escH(o.text)}</span></div>`).join('');
+    $('objBox').classList.toggle('off', !cs.obj.length);
+    if (!first) { const b = $('objBox'); b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
+  }
+  // Countdown
+  const ct = $('ctimer');
+  if (cs.ct) { const left = Math.max(0, cs.ct.end - G.t); $('ctL').textContent = cs.ct.l; $('ctT').textContent = fmtTime(Math.ceil(left)); ct.classList.remove('off'); ct.classList.toggle('warn', left < 60); }
+  else ct.classList.add('off');
+  // Kino
+  document.body.classList.toggle('cine', !!cs.cine);
+  if (cs.cine) {
+    const f = cs.cine.f != null ? ent(cs.cine.f) : null;
+    const tx = f ? f.x : cs.cine.x, ty = f ? f.y : cs.cine.y;
+    if (tx != null) {
+      const tz = 1.05; cam.z += (tz - cam.z) * Math.min(1, dt * 1.2);
+      const cx = tx - VW / cam.z / 2, cy = ty - VH / cam.z / 2;
+      cam.x += (cx - cam.x) * Math.min(1, dt * 1.8); cam.y += (cy - cam.y) * Math.min(1, dt * 1.8); clampCam();
+    }
+    if (UI.placing || UI.cmdMode) cancelModes();
+  }
+  MUS.mood = cs.mood || '';
+}
+function campSkipLine() { const cs = G && G.cs; if (cs && cs.dl) cs.dl.dur = Math.max(.2, G.t - cs.dl.t0); }
+$('radio').onclick = e => { e.stopPropagation(); campSkipLine(); };
+$('cineTap').onclick = () => campSkipLine();
+$('objH').onclick = () => { RU.collapsed = !RU.collapsed; $('objBox').classList.toggle('min', RU.collapsed); };
+
+/* ------------------------------ MISSIONSENDE ------------------------------ */
+function campShowEnd(win) {
+  const M = CAMP.by[G.campId], cs = G.cs, msg = UI.endMsg; UI.endMsg = null;
+  META.banners.length = 0; $('banner').className = '';
+  storeDel(SAVE_KEYS.auto); updateSaveUI();
+  sfx(win ? 'win' : 'lose');
+  document.body.classList.remove('cine');
+  $('ceT').textContent = win ? 'MISSION ERFÜLLT' : 'MISSION GESCHEITERT';
+  $('ceT').className = 'endt ' + (win ? 'win' : 'lose');
+  $('ceS').textContent = M.n + '. ' + M.title + (msg ? ' · ' + msg : '') + ' · Spielzeit ' + fmtTime(G.t) + ' · ' + ({ easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[G.diff]);
+  const bonusOk = cs.obj.some(o => o.b) && cs.obj.filter(o => o.b).every(o => o.st === 'done');
+  const s3ok = M.s3 ? M.s3.f(cs) : G.t <= M.par;
+  const rows = [[win, 'Mission erfüllt'], [win && bonusOk, 'Bonus: ' + M.bonus], [win && s3ok, M.s3 ? M.s3.t : 'Schneller als ' + fmtTime(M.par)]];
+  const n = rows.filter(r => r[0]).length;
+  $('ceStars').innerHTML = rows.map((r, i) => `<div class="cs ${r[0] ? 'on' : ''}" style="animation-delay:${.35 + i * .45}s">${starSVG(r[0]).replace(/16/g, '26')}<span>${escH(r[1])}</span></div>`).join('');
+  if (win) {
+    cpLoad(); const p = CPG.p;
+    p.stars[M.id] = Math.max(p.stars[M.id] || 0, n);
+    p.open = Math.max(p.open, M.n + 1);
+    if (M.n === CAMP.list.length) p.done = 1;
+    cpSave();
+    if (M.n === 3) unlock('c_act1');
+    if (M.n === 6) unlock('c_mara');
+    if (M.n === CAMP.list.length) unlock('c_end');
+    if (campSum() >= CAMP.list.length * 3) unlock('c_stars');
+    [0, 1, 2].forEach(i => { if (rows[i][0]) setTimeout(() => uiTone(660 + i * 220, .25, 'triangle', .1), 450 + i * 450); });
+  }
+  $('ceGo').textContent = win ? (M.n === CAMP.list.length ? 'ZUM EPILOG' : 'WEITER') : 'ERNEUT VERSUCHEN';
+  $('ceGo').onclick = () => { audioInit(); if (win) campAfter(M); else { showOv('ovCampEnd', false); campStart(M.id); } };
+  $('ceRetry').style.display = win ? '' : 'none';
+  $('ceRetry').onclick = () => { showOv('ovCampEnd', false); campStart(M.id); };
+  $('ceMenu').onclick = () => campMenu();
+  const P0 = G.P[0].stats;
+  $('ceStats').innerHTML = [['Einheiten ausgebildet', P0.made], ['Einheiten vernichtet', P0.kills], ['Gebäude zerstört', P0.bkills], ['Verluste', P0.lost]].map(([l, v]) => `<span>${l}</span><span class="v" data-n="${v || 0}">0</span>`).join('');
+  showOv('ovCampEnd', true);
+  try { endExtras(win, { xp: 'ceXP', stats: 'ceStats', graph: null }); } catch (e) { console.error(e); }
+}
+
+/* ------------------------------ START ------------------------------ */
+ACH.push(
+  { id: 'c_act1', n: 'Die letzte Fähre', d: 'Schließe Akt I der Kampagne ab.', i: 'wing' },
+  { id: 'c_mara', n: 'Für Mara', d: 'Bringe den Konvoi durch das Kesseltal.', i: 'shield' },
+  { id: 'c_end', n: 'Kepler-9 lebt', d: 'Schließe die Kampagne ab.', i: 'crown' },
+  { id: 'c_stars', n: 'Legende von Kepler', d: 'Sammle alle 24 Sterne der Kampagne.', i: 'star' }
+);
+segInit('cdiffSel', 'd', v => { cpLoad(); CPG.p.diff = v; cpSave(); });
+$('btnCamp').onclick = () => { audioInit(); campOpen(); };
+$('btnCampBack').onclick = () => { showOv('ovCamp', false); campMenuBtn(); };
+$('btnProlog').onclick = () => { audioInit(); storyPlay({ act: 'DIE KEPLER-CHRONIKEN', title: 'PROLOG', lines: PROLOG, goLabel: 'ZUR KAMPAGNE', go: () => { showOv('ovBrief', false); campOpen(); } }); };
+$('btnEpilog').onclick = () => { audioInit(); storyPlay({ act: 'DIE KEPLER-CHRONIKEN', title: 'EPILOG', lines: EPILOG, mood: 'sad', goLabel: 'ABSPANN', go: () => storyPlay({ credits: true, mood: 'sad', goLabel: 'ZUR KAMPAGNE', go: () => { showOv('ovBrief', false); campOpen(); } }) }); };
+cpLoad(); campMenuBtn(); renderProfile();
 
 </script>
 </body>
