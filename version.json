@@ -1,12 +1,9 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "notes": [
-    "Neue dritte Fraktion: Myzel – pilzartiger Schwarm, der sich selbst heilt",
-    "Lufteinheiten für alle Fraktionen (Flugfeld, Schwebedock, Nistturm)",
-    "Bunker: bis zu 4 Fernkampf-Einheiten geschützt einquartieren",
-    "Karte verschieben per Wischen funktioniert jetzt zuverlässig, Zoom-Knöpfe + / −",
-    "Komplett überarbeitete Einheiten-Grafik",
-    "Balancing aller drei Fraktionen über hunderte KI-Testpartien",
-    "Updates direkt im Spiel prüfen und installieren"
+    "Maus: Linksziehen zieht wieder einen Auswahlrahmen, Rechtsziehen verschiebt die Karte",
+    "Karte am Bildschirmrand oder mit WASD/Pfeiltasten verschieben",
+    "Steuergruppen: Strg+1–9 speichert, 1–9 ruft ab, zweimal drücken springt hin",
+    "Handy: Gruppen-Knöpfe 1–3 (gedrückt halten speichert, tippen ruft ab)"
   ]
 }

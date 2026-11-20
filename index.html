@@ -143,6 +143,10 @@ body.ingame .hud{display:flex}
 .st .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .small{font-size:12px;color:var(--dim);text-align:center;margin-top:12px;line-height:1.35}
 #rot{display:none}
+#groups{position:fixed;z-index:6;right:calc(var(--sar) + 8px);bottom:calc(var(--ph) + var(--sab) + 12px);gap:6px}
+.gb{position:relative;width:42px;height:38px;border-radius:9px;border:1px solid var(--line2);background:rgba(9,17,26,.88);font-family:Orbitron,sans-serif;font-weight:800;font-size:15px;color:#7f95aa;touch-action:none;box-shadow:0 3px 10px #0008}
+.gb.has{color:#e9f6ff;border-color:var(--acc)}
+.gb span{position:absolute;right:3px;bottom:1px;font-family:Rajdhani,sans-serif;font-size:11px;color:var(--acc)}
 #zoomBox{position:fixed;z-index:6;right:calc(var(--sar) + 8px);top:calc(var(--sat) + 52px + var(--mm));flex-direction:column;gap:6px}
 #zoomBox button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:rgba(9,17,26,.88);font-size:24px;font-weight:700;line-height:1;display:grid;place-items:center;box-shadow:0 3px 10px #0008}
 #zoomBox button:active{background:#1b3248}
@@ -184,6 +188,7 @@ body.ingame .hud{display:flex}
   <button class="qb" id="qBox" title="Auswahlrahmen"><svg viewBox="0 0 24 24" fill="none" stroke="#cfe8ff" stroke-width="2" stroke-dasharray="3 2"><rect x="4" y="5" width="16" height="14" rx="1"/></svg></button>
   <button class="qb" id="qBase" title="Zur Basis (H)"><svg viewBox="0 0 24 24" fill="none" stroke="#cfe8ff" stroke-width="2" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></button>
 </div>
+<div id="groups" class="hud"><button class="gb" data-g="1" title="Gruppe 1 (Taste 1 · Strg+1 speichert)">1<span id="gN1"></span></button><button class="gb" data-g="2" title="Gruppe 2 (Taste 2 · Strg+2 speichert)">2<span id="gN2"></span></button><button class="gb" data-g="3" title="Gruppe 3 (Taste 3 · Strg+3 speichert)">3<span id="gN3"></span></button></div>
 <div id="mode" class="hud off"><span id="modeT">Ziel wählen</span><button class="ok" id="modeOk">✓ Bauen</button><button id="modeX">✕</button></div>
 <div id="panel" class="hud"><div id="info"></div><div id="cmds"></div></div>
 
@@ -232,11 +237,14 @@ body.ingame .hud{display:flex}
     <li><b>Zoomen</b>: zwei Finger oder die Knöpfe + / − unter der Minimap.</li>
     <li><b>Minimap</b> antippen oder ziehen: Kamera springt dorthin.</li>
     <li>Linke Schnellknöpfe: ganze Armee, untätige Arbeiter, Rahmen-Modus, zur Basis.</li>
+    <li><b>Gruppen 1–3</b> (rechts unten): Einheiten wählen und Knopf <b>gedrückt halten</b> speichert sie. Kurz tippen ruft die Gruppe ab, zweimal tippen springt zu ihr.</li>
     <li><b>Bauen</b>: Arbeiter wählen → Bauen → Gebäude. Auf die Karte tippen, um es zu platzieren, dann ✓.</li>
   </ul>
   <h3>MAUS &amp; TASTATUR</h3>
   <ul>
-    <li>Linksklick: auswählen, Ziehen: Karte verschieben, <kbd>Shift</kbd>+Ziehen: Rahmen, Rechtsklick: Befehl, Mausrad: Zoom.</li>
+    <li>Linksklick: auswählen, Linksziehen: Auswahlrahmen, Rechtsklick: Befehl, Rechtsziehen oder Mausrad gedrückt: Karte verschieben, Mausrad: Zoom.</li>
+    <li>Karte verschieben auch mit <kbd>WASD</kbd>/Pfeiltasten oder Maus an den Bildschirmrand.</li>
+    <li><b>Steuergruppen</b>: <kbd>Strg</kbd>+<kbd>1</kbd>–<kbd>9</kbd> speichert die Auswahl, <kbd>1</kbd>–<kbd>9</kbd> ruft sie ab (zweimal drücken springt hin), <kbd>Shift</kbd>+Zahl ergänzt.</li>
     <li><kbd>WASD</kbd>/Pfeile: Kamera, <kbd>Q</kbd> Armee, <kbd>E</kbd> Arbeiter, <kbd>F</kbd> Basis, <kbd>A</kbd> Angriff, <kbd>H</kbd> Halten, <kbd>S</kbd> Stopp, <kbd>B</kbd> Bauen, <kbd>Leertaste</kbd> Pause, <kbd>Esc</kbd> abbrechen.</li>
   </ul>
   <h3>WIRTSCHAFT</h3>
@@ -1663,7 +1671,7 @@ class AI {
 }
 
 /* =============================== VERSION & SPEICHERN =============================== */
-const VERSION = '1.2.0';
+const VERSION = '1.2.1';
 const SAVE_FORMAT = 1;
 const SAVE_KEYS = { manual: 'novafront_save_manual', auto: 'novafront_save_auto' };
 const SER_SKIP = new Set(['d', 'path', 'pathTgt', 'fake', 'lastAtk']);
@@ -1683,7 +1691,8 @@ function serializeGame() {
     explored: Array.from(G.explored).join(''),
     ents: G.ents.filter(e => !e.dead).map(e => serVal(e, true)),
     ais: G.ais.map(a => ({ o: a.o, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
-    cam: { x: cam.x, y: cam.y, z: cam.z }
+    cam: { x: cam.x, y: cam.y, z: cam.z },
+    groups: Object.fromEntries(Object.entries(G.groups || {}).map(([k, v]) => [k, v.filter(e => !e.dead).map(e => e.id)]))
   };
 }
 function resolveRefs(v, byId) {
@@ -1723,6 +1732,8 @@ function loadGameData(data) {
   for (const b of G.blds) setCells(b.bx, b.by, b.w, b.h, 2);
   for (const d of data.ais || []) { const a = new AI(d.o, d.diff); Object.assign(a, d); a.cfg = AICFG[d.diff] || AICFG.normal; G.ais.push(a); }
   G.P[1].carry = AICFG[G.diff].carry;
+  G.groups = {};
+  for (const [k, ids] of Object.entries(data.groups || {})) G.groups[k] = ids.map(id => byId.get(id)).filter(e => e && e.k !== 'r');
   tallySupply();
   updateFog();
   return data;
@@ -3190,6 +3201,32 @@ function selectArmy() {
   select(army);
   if (same) { const x = army.reduce((s, u) => s + u.x, 0) / army.length, y = army.reduce((s, u) => s + u.y, 0) / army.length; centerOn(x, y); }
 }
+/* ------------------------------ STEUERGRUPPEN ------------------------------ */
+function groupUnits(n) { const g = (G.groups || {})[n] || []; return g.filter(e => e && !e.dead && !e.inside && e.owner === ME); }
+function setGroup(n, add) {
+  G.groups = G.groups || {};
+  const own = selOwn();
+  if (!own.length) { toast('Erst Einheiten oder Gebäude auswählen', 'bad'); return; }
+  const prev = add ? groupUnits(n) : [];
+  G.groups[n] = [...new Set([...prev, ...own])];
+  toast('Gruppe ' + n + (add ? ' ergänzt' : ' gespeichert') + ' · ' + G.groups[n].length, 'good'); sfx('ack'); vib(15);
+  updateGroupBar();
+}
+function recallGroup(n) {
+  const list = groupUnits(n);
+  if (!list.length) { toast('Gruppe ' + n + ' ist leer' + (UI.touch ? ' – gedrückt halten zum Speichern' : ' – Strg+' + n + ' speichert'), ''); return; }
+  const now = performance.now();
+  const same = list.length === G.sel.length && list.every(u => G.sel.includes(u));
+  select(list); sfx('click');
+  if (same && UI.lastGroup && UI.lastGroup.n === n && now - UI.lastGroup.t < 500) {
+    const x = list.reduce((s, u) => s + u.x, 0) / list.length, y = list.reduce((s, u) => s + u.y, 0) / list.length; centerOn(x, y);
+  }
+  UI.lastGroup = { n, t: now };
+}
+function updateGroupBar() {
+  if (!G) return;
+  for (let n = 1; n <= 3; n++) { const el = $('gN' + n); if (!el) continue; const c = groupUnits(n).length; el.textContent = c || ''; el.parentNode.classList.toggle('has', c > 0); }
+}
 function selectIdle() {
   const idle = G.units.filter(u => u.owner === ME && u.d.worker && !u.order && !u.dead);
   if (!idle.length) { toast('Keine untätigen Arbeiter', ''); return; }
@@ -3215,10 +3252,9 @@ cv.addEventListener('pointerdown', e => {
   try { cv.setPointerCapture(e.pointerId); } catch (er) { }
   ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
   if (e.pointerType === 'mouse') {
-    if (e.button === 2) { rightClick(e.clientX, e.clientY); gest = null; return; }
+    if (e.button === 2) { gest = { k: 'rpend', sx: e.clientX, sy: e.clientY, cx: cam.x, cy: cam.y, mouse: true }; return; }
     if (e.button === 1) { gest = { k: 'pan', sx: e.clientX, sy: e.clientY, cx: cam.x, cy: cam.y }; return; }
-    if ((e.shiftKey || UI.boxMode) && !UI.placing) { gest = { k: 'box', sx: e.clientX, sy: e.clientY }; UI.box = { x0: e.clientX, y0: e.clientY, x1: e.clientX, y1: e.clientY }; return; }
-    gest = { k: 'pend', sx: e.clientX, sy: e.clientY, cx: cam.x, cy: cam.y, mouse: true };
+    gest = { k: 'pend', sx: e.clientX, sy: e.clientY, cx: cam.x, cy: cam.y, mouse: true, box: !UI.placing };
     return;
   }
   if (ptrs.size === 1) {
@@ -3237,7 +3273,11 @@ cv.addEventListener('pointermove', e => {
   p.x = e.clientX; p.y = e.clientY;
   if (!gest) return;
   const dx = e.clientX - (gest.sx || 0), dy = e.clientY - (gest.sy || 0);
-  if (gest.k === 'pend' && hyp(dx, dy) > (gest.mouse ? 5 : 8)) gest.k = 'pan';
+  if (gest.k === 'pend' && hyp(dx, dy) > (gest.mouse ? 5 : 8)) {
+    if (gest.mouse && gest.box) { gest.k = 'box'; UI.box = { x0: gest.sx, y0: gest.sy, x1: e.clientX, y1: e.clientY }; }
+    else gest.k = 'pan';
+  }
+  if (gest.k === 'rpend' && hyp(dx, dy) > 6) gest.k = 'pan';
   if (gest.mouse && UI.placing) placeAt(s2w(e.clientX, e.clientY));
   if (gest.k === 'pan') { cam.x = gest.cx - dx / cam.z; cam.y = gest.cy - dy / cam.z; clampCam(); }
   else if (gest.k === 'box') { UI.box.x1 = e.clientX; UI.box.y1 = e.clientY; }
@@ -3254,6 +3294,7 @@ function ptrEnd(e) {
   ptrs.delete(e.pointerId);
   if (!gest || !had) { if (!ptrs.size) gest = null; return; }
   if (e.type === 'pointerup' && gest.k === 'pend') { if (gest.mouse) leftClick(gest.sx, gest.sy); else onTap(gest.sx, gest.sy); }
+  if (e.type === 'pointerup' && gest.k === 'rpend') rightClick(gest.sx, gest.sy);
   if (gest.k === 'box') { if (UI.box) boxSelect(UI.box); UI.box = null; }
   if (gest.k === 'pinch' && ptrs.size === 1) { const [p] = [...ptrs.values()]; gest = { k: 'pan', sx: p.x, sy: p.y, cx: cam.x, cy: cam.y }; return; }
   if (ptrs.size === 0) gest = null; else if (gest.k !== 'pan') gest = { k: 'none' };
@@ -3299,6 +3340,13 @@ window.addEventListener('keydown', e => {
   if (k === 'escape') { if (!cancelModes()) select([]); return; }
   if (G.paused) return;
   if (UI.placing && k === 'enter') { confirmPlace(); return; }
+  const dg = /^Digit([1-9])$/.exec(e.code || '');
+  if (dg) {
+    const n = +dg[1];
+    if (e.ctrlKey || e.metaKey) { e.preventDefault(); return setGroup(n, false); }
+    if (e.shiftKey) { e.preventDefault(); return setGroup(n, true); }
+    return recallGroup(n);
+  }
   if (k === 'q') return selectArmy();
   if (k === 'e') return selectIdle();
   if (k === 'f') return gotoBase();
@@ -3309,9 +3357,18 @@ window.addEventListener('keydown', e => {
 });
 window.addEventListener('keyup', e => keys.delete(e.key.toLowerCase()));
 window.addEventListener('blur', () => keys.clear());
+const mouseAt = { x: -1, y: -1, in: false };
+window.addEventListener('mousemove', e => { mouseAt.x = e.clientX; mouseAt.y = e.clientY; mouseAt.in = true; });
+document.addEventListener('mouseleave', () => { mouseAt.in = false; });
+window.addEventListener('blur', () => { mouseAt.in = false; });
 function keyPan(dt) {
   const s = 900 * dt / cam.z;
   let mx = 0, my = 0;
+  if (mouseAt.in && !gest && document.hasFocus()) {
+    const m = 6;
+    if (mouseAt.x <= m) mx -= 1; else if (mouseAt.x >= VW - m) mx += 1;
+    if (mouseAt.y <= m) my -= 1; else if (mouseAt.y >= VH - m) my += 1;
+  }
   if (keys.has('arrowleft') || (keys.has('a') && !document.querySelector('#cmds .cb[data-hk="a"]'))) mx -= 1;
   if (keys.has('arrowright') || (keys.has('d'))) mx += 1;
   if (keys.has('arrowup') || keys.has('w')) my -= 1;
@@ -3357,6 +3414,15 @@ $('qArmy').onclick = () => { audioInit(); selectArmy(); };
 $('qIdle').onclick = () => { audioInit(); selectIdle(); };
 $('qBox').onclick = () => { UI.boxMode = !UI.boxMode; updateTop(); toast(UI.boxMode ? 'Rahmen-Modus: Ziehen wählt aus' : 'Rahmen-Modus aus: Ziehen verschiebt die Karte'); };
 $('qBase').onclick = () => { audioInit(); gotoBase(); };
+// Gruppen-Knöpfe: Tippen = abrufen (zweimal = hinspringen), Halten = aktuelle Auswahl speichern
+document.querySelectorAll('.gb').forEach(btn => {
+  const n = +btn.dataset.g; let t = null, held = false;
+  btn.addEventListener('pointerdown', e => { e.preventDefault(); audioInit(); held = false; clearTimeout(t); t = setTimeout(() => { held = true; setGroup(n, false); }, 450); });
+  const up = e => { clearTimeout(t); if (e.type === 'pointerup' && !held) recallGroup(n); held = false; };
+  btn.addEventListener('pointerup', up); btn.addEventListener('pointercancel', up); btn.addEventListener('pointerleave', () => clearTimeout(t));
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+});
+window.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') UI.touch = true; }, true);
 $('modeOk').onclick = () => confirmPlace();
 $('modeX').onclick = () => { cancelModes(); };
 $('hintClose').onclick = () => { UI.hints = false; segSet('hintSel', 'v', 0); updateHint(); };
@@ -3446,6 +3512,7 @@ function frame(ts) {
   fr++;
   if (fr % 4 === 0) renderMini();
   if (fr % 6 === 0) { updateTop(); refreshPanel(); if (UI.placing) updateMode(); }
+  if (fr % 20 === 0) updateGroupBar();
   if (fr % 30 === 0) updateHint();
   if (!G.paused && !G.over && G.t - (UI.autoT || 0) >= 60) { UI.autoT = G.t; autoSave(); }
   if (UI.endPending && performance.now() > UI.endPending.at) showEnd();
