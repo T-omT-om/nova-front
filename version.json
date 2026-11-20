@@ -1,1 +1,12 @@
-{"version":"1.1.0"}
+{
+  "version": "1.2.0",
+  "notes": [
+    "Neue dritte Fraktion: Myzel – pilzartiger Schwarm, der sich selbst heilt",
+    "Lufteinheiten für alle Fraktionen (Flugfeld, Schwebedock, Nistturm)",
+    "Bunker: bis zu 4 Fernkampf-Einheiten geschützt einquartieren",
+    "Karte verschieben per Wischen funktioniert jetzt zuverlässig, Zoom-Knöpfe + / −",
+    "Komplett überarbeitete Einheiten-Grafik",
+    "Balancing aller drei Fraktionen über hunderte KI-Testpartien",
+    "Updates direkt im Spiel prüfen und installieren"
+  ]
+}
