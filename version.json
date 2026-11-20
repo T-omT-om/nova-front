@@ -1,7 +1,9 @@
 {
-  "version": "1.3.1",
+  "version": "1.4.0",
   "notes": [
-    "Mehrspieler-Server ist jetzt eingerichtet – Duell und Koop gegen die KI sind spielbar",
-    "Hauptmenü → Mehrspieler → Spiel erstellen und Einladungslink teilen"
+    "Drei neue Karten: Archipel (Inseln mit Landbrücken), Inselreich (reine Inseln, Luftkrieg) und Schlucht (drei Wege)",
+    "Kartenauswahl mit Vorschau im Hauptmenü und in der Mehrspieler-Lobby",
+    "Die KI erkennt Inselkarten und setzt dann auf ihre Luftflotte",
+    "Feinschliff am Balancing der Lufteinheiten"
   ]
 }

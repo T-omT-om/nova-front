@@ -4,11 +4,12 @@ Ein Echtzeit-Strategiespiel für Handy und Browser – eine einzige HTML-Datei, 
 
 **Jetzt spielen:** https://t-omt-om.github.io/nova-front/
 
-Aktuelle Version: **1.3.1**
+Aktuelle Version: **1.4.0**
 
 ## Features
 - Drei Fraktionen: **Allianz** (menschliche Kolonisten), **Kollektiv** (Maschinenintelligenz) und **Myzel** (pilzartiger Schwarm mit Selbstheilung)
 - Boden- und Lufteinheiten, Bunker, Verteidigungstürme
+- Vier Karten: Kepler-Ebene, Archipel, Inselreich, Schlucht
 - Basisbau, Kristall- und Plasma-Abbau, Versorgung, Forschung, Expansionen
 - KI-Gegner in drei Schwierigkeitsstufen
 - Nebel des Krieges, Minimap, Touch-Steuerung (Tippen, Wischen, Pinch-Zoom, Zoom-Knöpfe, Auswahlrahmen)
@@ -43,6 +44,7 @@ Aktuelle Version: **1.3.1**
 Die Datei `version.json` enthält die aktuelle Versionsnummer und die Neuerungen. Im Hauptmenü und im Pausenmenü prüft **Nach Updates suchen** auf eine neue Version, zeigt die Neuerungen und installiert sie per Knopfdruck. Zusätzlich erscheint automatisch ein Hinweis, sobald eine neue Version online ist. Der laufende Spielstand wird vor dem Update gesichert.
 
 ## Änderungen
+- **1.4.0** – Neue Karten Archipel, Inselreich und Schlucht mit Wasser und Felswänden, Kartenauswahl (auch im Mehrspieler), KI für Inselkarten
 - **1.3.1** – Mehrspieler-Server (Cloudflare) angebunden
 - **1.3.0** – Live-Mehrspieler (Duell und Koop gegen KI) über einen Cloudflare-Raumserver, Einladungslinks, KI-Übernahme bei Verbindungsabbruch
 - **1.2.1** – Auswahlrahmen mit der Maus wieder per Linksziehen, Kartenverschieben per Rechtsziehen/Bildschirmrand, Steuergruppen (Tastatur + Handy-Knöpfe)

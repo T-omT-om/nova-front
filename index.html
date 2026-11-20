@@ -143,6 +143,10 @@ body.ingame .hud{display:flex}
 .st .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .small{font-size:12px;color:var(--dim);text-align:center;margin-top:12px;line-height:1.35}
 #rot{display:none}
+.maps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.maps button{border:1px solid var(--line2);background:#0d1924;border-radius:9px;padding:4px;display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:700;font-size:11px;line-height:1.1;min-width:0}
+.maps button img{width:100%;aspect-ratio:1;border-radius:5px;image-rendering:pixelated}
+.maps button.on{border-color:var(--acc);background:#10324a;box-shadow:inset 0 0 10px rgba(61,184,255,.35)}
 .mponly{display:none}
 body.mp .mponly{display:block}
 #netPing{font-size:12px;color:#ffd98a;font-variant-numeric:tabular-nums}
@@ -214,6 +218,9 @@ body.mp .mponly{display:block}
     <button data-f="1"><img id="facImg1" alt=""><span class="fn" style="color:#c9a8ff">KOLLEKTIV</span><span class="fd">Maschinen. Klingendrohnen, Strahlen, Schwebeschiffe.</span></button>
     <button data-f="2"><img id="facImg2" alt=""><span class="fn" style="color:#b8f08a">MYZEL</span><span class="fd">Pilzschwarm. Säure, Panzerkäfer, Heilung aller Einheiten.</span></button>
   </div>
+  <div class="lbl">Karte</div>
+  <div class="maps" id="mapSel"></div>
+  <div class="small" id="mapDesc" style="margin-top:4px;text-align:left"></div>
   <div class="lbl">Gegner</div>
   <div class="seg" id="efacSel"><button data-e="r" class="on">Zufall</button><button data-e="0">Allianz</button><button data-e="1">Kollektiv</button><button data-e="2">Myzel</button></div>
   <div class="lbl">Schwierigkeit</div>
@@ -250,6 +257,8 @@ body.mp .mponly{display:block}
       <div class="lbl">Fraktion der KI</div>
       <div class="seg" id="mpAiFac"><button data-a="r" class="on">Zufall</button><button data-a="0">Allianz</button><button data-a="1">Kollektiv</button><button data-a="2">Myzel</button></div>
     </div>
+    <div class="lbl">Karte</div>
+    <div class="maps" id="mpMapSel"></div>
     <button class="big" id="btnMpCreate">SPIEL ERSTELLEN</button>
     <div class="lbl">Oder beitreten</div>
     <div style="display:flex;gap:6px"><input id="mpJoinCode" maxlength="40" placeholder="Raumcode, z. B. K7Q2XM" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="sec" id="btnMpJoin" style="margin:0;width:auto;padding:0 16px">Beitreten</button></div>
@@ -410,7 +419,7 @@ const UT = {
   grenadier: { name: 'Grenadier', desc: 'Granatwerfer. Bonus gegen gepanzerte Ziele. Nur Bodenziele.', cost: [75, 25], time: 21, hp: 100, armor: 1, dmg: 10, bonusArmored: 7, range: 140, cd: 1.3, speed: 60, sight: 270, supply: 2, r: 11, light: 1, up: 1, gar: 1, shot: 'grenade' },
   walker:    { name: 'Sturmläufer', desc: 'Schwerer Kampfläufer. Bonus gegen leichte Ziele. Nur Bodenziele.', cost: [150, 75], time: 30, hp: 255, armor: 2, dmg: 17, bonusLight: 4, range: 115, cd: 1.05, speed: 56, sight: 280, supply: 3, r: 16, armored: 1, mech: 1, up: 2, shot: 'cannon' },
   artillery: { name: 'Artillerie', desc: 'Große Reichweite, Flächenschaden. Trifft keine nahen Ziele und keine Flieger.', cost: [150, 125], time: 34, hp: 140, armor: 1, dmg: 30, splash: 44, range: 275, minRange: 70, cd: 2.8, speed: 46, sight: 300, supply: 3, r: 15, armored: 1, mech: 1, up: 3, shot: 'shell' },
-  falke:     { name: 'Falke', desc: 'Wendiger Kampfjet mit Raketen. Trifft Boden- und Luftziele.', cost: [125, 75], time: 28, hp: 130, armor: 0, dmg: 10, bonusArmored: 3, range: 150, cd: .8, speed: 110, sight: 300, supply: 2, r: 12, light: 1, mech: 1, air: 1, aa: 1, up: 1, shot: 'missile' },
+  falke:     { name: 'Falke', desc: 'Wendiger Kampfjet mit Raketen. Trifft Boden- und Luftziele.', cost: [125, 75], time: 28, hp: 130, armor: 0, dmg: 10, bonusArmored: 1.5, range: 150, cd: .8, speed: 110, sight: 300, supply: 2, r: 12, light: 1, mech: 1, air: 1, aa: 1, up: 1, shot: 'missile' },
   donner:    { name: 'Donnervogel', desc: 'Schwerer Bomber mit Flächenschaden. Nur Bodenziele.', cost: [225, 150], time: 42, hp: 280, armor: 2, dmg: 28, splash: 42, range: 110, cd: 2.2, speed: 72, sight: 290, supply: 4, r: 19, armored: 1, mech: 1, air: 1, up: 3, shot: 'bomb' },
   // --- Kollektiv
   drone:     { name: 'Sammler', desc: 'Baut Rohstoffe ab, errichtet und repariert Strukturen.', cost: [50, 0], time: 12, hp: 45, armor: 0, dmg: 5, range: 8, cd: 1.5, speed: 78, sight: 210, supply: 1, r: 9, light: 1, worker: 1, mech: 1, shot: 'melee' },
@@ -418,7 +427,7 @@ const UT = {
   strahler:  { name: 'Strahler', desc: 'Laserdrohne. Bonus gegen leichte Ziele. Trifft auch Flieger.', cost: [75, 25], time: 22, hp: 95, armor: 1, dmg: 10, bonusLight: 3, range: 130, cd: .9, speed: 62, sight: 270, supply: 2, r: 11, mech: 1, light: 1, up: 1, aa: 1, gar: 1, shot: 'beam' },
   waechter:  { name: 'Wächter', desc: 'Schwere Kampfplattform. Bonus gegen gepanzerte Ziele. Nur Bodenziele.', cost: [175, 100], time: 34, hp: 325, armor: 2, dmg: 22, bonusArmored: 6, range: 120, cd: 1.5, speed: 50, sight: 280, supply: 4, r: 18, armored: 1, mech: 1, up: 2, shot: 'beam2' },
   pulsar:    { name: 'Pulsar', desc: 'Plasmakugeln mit Flächenschaden. Trifft keine nahen Ziele und keine Flieger.', cost: [150, 100], time: 32, hp: 130, armor: 1, dmg: 28, splash: 46, range: 275, minRange: 60, cd: 2.5, speed: 50, sight: 290, supply: 3, r: 14, armored: 1, mech: 1, up: 3, shot: 'orb' },
-  gleiter:   { name: 'Gleiter', desc: 'Schneller Schwebejäger. Trifft Boden- und Luftziele.', cost: [125, 75], time: 28, hp: 110, armor: 1, dmg: 9, bonusLight: 0, range: 145, cd: .8, speed: 118, sight: 300, supply: 2, r: 12, light: 1, mech: 1, air: 1, aa: 1, up: 1, shot: 'beam' },
+  gleiter:   { name: 'Gleiter', desc: 'Schneller Schwebejäger. Trifft Boden- und Luftziele.', cost: [125, 75], time: 28, hp: 118, armor: 1, dmg: 9.5, bonusLight: 0, range: 145, cd: .8, speed: 118, sight: 300, supply: 2, r: 12, light: 1, mech: 1, air: 1, aa: 1, up: 1, shot: 'beam' },
   lanze:     { name: 'Lanze', desc: 'Schwebendes Schlachtschiff mit Hochenergiestrahl. Nur Bodenziele.', cost: [225, 150], time: 42, hp: 300, armor: 2, dmg: 34, bonusArmored: 10, range: 140, cd: 2.0, speed: 66, sight: 290, supply: 4, r: 20, armored: 1, mech: 1, air: 1, up: 3, shot: 'beam3' },
   // --- Myzel (regenerieren ständig)
   keim:      { name: 'Keimling', desc: 'Baut Rohstoffe ab und lässt Strukturen wachsen.', cost: [50, 0], time: 12, hp: 45, armor: 0, dmg: 5, range: 8, cd: 1.5, speed: 78, sight: 210, supply: 1, r: 9, light: 1, worker: 1, bio: 1, shot: 'melee' },
@@ -426,7 +435,7 @@ const UT = {
   speier:    { name: 'Speier', desc: 'Spuckt Säure. Bonus gegen gepanzerte Ziele. Trifft auch Flieger.', cost: [75, 25], time: 21, hp: 93, armor: 0, dmg: 10, bonusArmored: 3, range: 135, cd: .85, speed: 64, sight: 270, supply: 2, r: 10, light: 1, bio: 1, up: 1, aa: 1, gar: 1, shot: 'spit' },
   kaefer:    { name: 'Panzerkäfer', desc: 'Gepanzerter Rammkäfer mit sehr vielen Lebenspunkten. Nur Bodenziele.', cost: [150, 75], time: 30, hp: 300, armor: 2, dmg: 18, bonusLight: 4, range: 22, cd: 1.2, speed: 60, sight: 260, supply: 3, r: 16, armored: 1, bio: 1, up: 2, shot: 'ram' },
   sporer:    { name: 'Sporenwerfer', desc: 'Schleudert Säureblasen mit Flächenschaden. Trifft keine nahen Ziele und keine Flieger.', cost: [150, 100], time: 32, hp: 130, armor: 1, dmg: 27, splash: 46, range: 265, minRange: 60, cd: 2.6, speed: 48, sight: 290, supply: 3, r: 14, armored: 1, bio: 1, up: 3, shot: 'acid' },
-  schwaermer:{ name: 'Schwärmer', desc: 'Schnelles Flugwesen. Trifft Boden- und Luftziele.', cost: [100, 60], time: 24, hp: 90, armor: 0, dmg: 8, range: 135, cd: .75, speed: 125, sight: 300, supply: 2, r: 11, light: 1, bio: 1, air: 1, aa: 1, up: 1, shot: 'spit' },
+  schwaermer:{ name: 'Schwärmer', desc: 'Schnelles Flugwesen. Trifft Boden- und Luftziele.', cost: [100, 55], time: 24, hp: 96, armor: 0, dmg: 8, range: 135, cd: .75, speed: 125, sight: 300, supply: 2, r: 11, light: 1, bio: 1, air: 1, aa: 1, up: 1, shot: 'spit' },
   galle:     { name: 'Gallenflieger', desc: 'Schwebende Säureblase. Wirft ätzende Bomben. Nur Bodenziele.', cost: [200, 150], time: 40, hp: 300, armor: 1, dmg: 30, splash: 44, range: 100, cd: 2.3, speed: 72, sight: 290, supply: 4, r: 19, armored: 1, bio: 1, air: 1, up: 3, shot: 'acidbomb' }
 };
 /* ------------------------------ GEBÄUDE ------------------------------ */
@@ -468,18 +477,35 @@ const cidx = (cx, cy) => cy * GW + cx;
 function isBlk(cx, cy) { return !inb(cx, cy) || blocked[cy * GW + cx] !== 0; }
 function blkAtW(x, y) { return isBlk(Math.floor(x / CELL), Math.floor(y / CELL)); }
 
-/* ------------------------------ KARTE ------------------------------ */
-// halbe Karte, wird punktgespiegelt
+/* ------------------------------ KARTEN ------------------------------ */
+// Jede Karte wird als Hälfte beschrieben und punktgespiegelt (fair für beide Seiten).
 const BASE_HALF = [
   { cx: 9, cy: 62, dx: -1, dy: 1 },
   { cx: 24, cy: 57, dx: 0, dy: 1 },
   { cx: 8, cy: 39, dx: -1, dy: 0 }
 ];
 const ROCK_HALF = [[16, 27, 2.3], [29, 45, 2.4], [39, 63, 1.8], [40, 40, 1.6], [20, 48, 1.2], [5, 22, 2.0], [50, 66, 1.5]];
+const MAPS = {
+  ebene: { name: 'Kepler-Ebene', desc: 'Offene Ebene mit Felsgruppen. Der Klassiker.',
+    bases: BASE_HALF, rocks: ROCK_HALF },
+  archipel: { name: 'Archipel', desc: 'Inseln, verbunden durch schmale Landbrücken. Flieger kürzen über das Wasser ab.',
+    bases: [{ cx: 9, cy: 62, dx: -1, dy: 1 }, { cx: 24, cy: 57, dx: 0, dy: 1 }, { cx: 9, cy: 35, dx: -1, dy: 0 }],
+    rocks: [[36, 36, 1.4], [31, 40, 1.0]],
+    land: [['c', 12, 58, 11.5], ['c', 24, 57, 8.5], ['c', 9, 35, 8.5], ['l', 9, 43, 10, 50, 2.6], ['c', 36, 36, 7.5], ['l', 28, 51, 32, 41, 2.6], ['l', 16, 35, 29, 36, 2.6]] },
+  inseln: { name: 'Inselreich', desc: 'Jede Seite auf ihrer eigenen Insel – ohne Landweg. Hier entscheidet die Luftflotte.',
+    bases: [{ cx: 9, cy: 62, dx: -1, dy: 1 }, { cx: 24, cy: 57, dx: 0, dy: 1 }, { cx: 9, cy: 38, dx: -1, dy: 0 }],
+    rocks: [[17, 50, 1.3]],
+    land: [['c', 12, 58, 12.5], ['c', 24, 56, 9.5], ['c', 9, 38, 9.5], ['l', 10, 46, 12, 52, 6], ['l', 16, 50, 22, 52, 5], ['c', 36, 36, 4]] },
+  schlucht: { name: 'Schlucht', desc: 'Felswände teilen das Feld in drei Wege. In der Mitte gibt es einen Durchgang.',
+    bases: BASE_HALF, rocks: [[36, 36, 1.5], [20, 30, 1.6], [30, 52, 1.4]],
+    walls: true }
+};
+const MAP_ORDER = ['ebene', 'archipel', 'inseln', 'schlucht'];
 
-function genMapLayout() {
+function genMapLayout(id) {
+  const M = MAPS[id] || MAPS.ebene;
   const bases = [];
-  const half = BASE_HALF.map(b => {
+  const half = M.bases.map(b => {
     const a0 = Math.atan2(b.dy, b.dx);
     const crystals = [];
     const used = new Set();
@@ -498,9 +524,59 @@ function genMapLayout() {
   });
   half.forEach(b => bases.push(b));
   half.forEach(b => bases.push({ cx: GW - 1 - b.cx, cy: GH - 1 - b.cy, crystals: b.crystals.map(([x, y]) => [GW - 1 - x, GH - 1 - y]), gas: b.gas.map(([x, y]) => [GW - 2 - x, GH - 2 - y]) }));
-  const rocks = [];
-  ROCK_HALF.forEach(r => { rocks.push(r); rocks.push([GW - 1 - r[0], GH - 1 - r[1], r[2]]); });
-  return { bases, rocks };
+  const grid = new Uint8Array(NN); // 0 Boden, 1 Fels, 4 Wasser
+  // Wasser: alles, was nicht Land ist
+  if (M.land) {
+    const inShape = (x, y, sh) => {
+      if (sh[0] === 'c') return hyp(x - sh[1], y - sh[2]) <= sh[3];
+      const [, x1, y1, x2, y2, w] = sh; const vx = x2 - x1, vy = y2 - y1, L2 = vx * vx + vy * vy;
+      const t = clamp(((x - x1) * vx + (y - y1) * vy) / L2, 0, 1); return hyp(x - (x1 + vx * t), y - (y1 + vy * t)) <= w;
+    };
+    const land = (x, y) => M.land.some(sh => inShape(x, y, sh));
+    for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) if (!land(x, y) && !land(GW - 1 - x, GH - 1 - y)) grid[cidx(x, y)] = 4;
+  }
+  // Felsen
+  for (const r of M.rocks || []) for (const [rx, ry, rr] of [r, [GW - 1 - r[0], GH - 1 - r[1], r[2]]]) {
+    for (let y = Math.floor(ry - rr); y <= Math.ceil(ry + rr); y++) for (let x = Math.floor(rx - rr); x <= Math.ceil(rx + rr); x++)
+      if (inb(x, y) && hyp(x - rx, y - ry) <= rr && !grid[cidx(x, y)]) grid[cidx(x, y)] = 1;
+  }
+  if (M.walls) {
+    for (let y = 0; y < GH; y++) for (let x = 0; x < GW; x++) {
+      const s = x + y, d = x - y;
+      if (Math.abs(d) > 27 || Math.abs(d) <= 3) continue;
+      if (Math.abs(s - 60) <= 1 || Math.abs(s - 82) <= 1) grid[cidx(x, y)] = 1;
+    }
+  }
+  // Basen und Rohstoffe immer frei halten
+  for (const b of bases) {
+    for (let y = b.cy - 3; y <= b.cy + 3; y++) for (let x = b.cx - 3; x <= b.cx + 3; x++) if (inb(x, y)) grid[cidx(x, y)] = 0;
+    for (const [x, y] of b.crystals) for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) if (inb(x + dx, y + dy) && grid[cidx(x + dx, y + dy)] === 1) grid[cidx(x + dx, y + dy)] = 0;
+    for (const [x, y] of b.crystals) if (inb(x, y)) grid[cidx(x, y)] = 0;
+    for (const [x, y] of b.gas) for (let dy = 0; dy < 2; dy++) for (let dx = 0; dx < 2; dx++) if (inb(x + dx, y + dy)) grid[cidx(x + dx, y + dy)] = 0;
+  }
+  const rocks = [], water = [];
+  for (let i = 0; i < NN; i++) { if (grid[i] === 1) rocks.push([i % GW, (i / GW) | 0]); else if (grid[i] === 4) water.push([i % GW, (i / GW) | 0]); }
+  return { bases, rocks, water };
+}
+// Zusammenhängende Landflächen (für KI: Gibt es einen Landweg?)
+function terrainComponents() {
+  const comp = new Int16Array(NN).fill(-1); let n = 0;
+  const solid = i => G.terrain[i] !== 0;
+  for (let s = 0; s < NN; s++) {
+    if (solid(s) || comp[s] >= 0) continue;
+    const q = [s]; comp[s] = n;
+    while (q.length) { const c = q.pop(), x = c % GW, y = (c / GW) | 0; for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const nx = x + dx, ny = y + dy; if (!inb(nx, ny)) continue; const k = ny * GW + nx; if (!solid(k) && comp[k] < 0) { comp[k] = n; q.push(k); } } }
+    n++;
+  }
+  return comp;
+}
+function compAt(x, y) { const cx = clamp(Math.floor(x / CELL), 0, GW - 1), cy = clamp(Math.floor(y / CELL), 0, GH - 1); return G.comp ? G.comp[cidx(cx, cy)] : 0; }
+function applyTerrain(rocks, water) {
+  G.rocks = rocks; G.water = water || [];
+  G.terrain = new Uint8Array(NN);
+  for (const [x, y] of G.rocks) { blocked[cidx(x, y)] = 1; G.terrain[cidx(x, y)] = 1; }
+  for (const [x, y] of G.water) { blocked[cidx(x, y)] = 4; G.terrain[cidx(x, y)] = 4; }
+  G.comp = terrainComponents();
 }
 
 /* ------------------------------ WEGFINDUNG ------------------------------ */
@@ -733,15 +809,10 @@ function isVisE(e) {
 function newGame(opts) {
   G = { t: 0, nid: 1, ents: [], units: [], blds: [], res: [], proj: [], fx: [], P: [], sel: [], vis: new Uint8Array(NN), explored: new Uint8Array(NN),
     fogT: 0, over: false, paused: false, speed: opts.speed || 1, diff: opts.diff || 'normal', ais: [], alerts: {}, pings: [], reveal: !!opts.reveal,
-    autoplay: !!opts.autoplay, endT: 0, rocks: [], hint: 0, frame: 0 };
+    autoplay: !!opts.autoplay, endT: 0, rocks: [], hint: 0, frame: 0, map: MAPS[opts.map] ? opts.map : 'ebene' };
   blocked.fill(0);
-  const L = genMapLayout(); G.bases = L.bases;
-  for (const [rx, ry, rr] of L.rocks) {
-    for (let y = Math.floor(ry - rr); y <= Math.ceil(ry + rr); y++) for (let x = Math.floor(rx - rr); x <= Math.ceil(rx + rr); x++) {
-      if (!inb(x, y)) continue;
-      if (hyp(x - rx, y - ry) <= rr) { blocked[cidx(x, y)] = 1; G.rocks.push([x, y]); }
-    }
-  }
+  const L = genMapLayout(G.map); G.bases = L.bases;
+  applyTerrain(L.rocks, L.water);
   for (const b of G.bases) {
     for (const [x, y] of b.crystals) mkRes('crystal', x, y);
     for (const [x, y] of b.gas) mkRes('gas', x, y);
@@ -1054,7 +1125,15 @@ function approach(u, tg, reach, dt) {
   if (!u.path || u.pathTgt !== tg) { u.path = findPath(u, tg.x, tg.y); u.pi = 0; u.pathTgt = tg; u.apT = 0; }
   if (moveAlong(u, dt)) {
     u.path = null; u.apFail++;
-    if (u.apFail > 4) { u.apFail = 0; return true; }
+    if (u.apFail > 4) {
+      u.apFail = 0;
+      if (edgeDist(u, tg) > reach + 40 && !u.d.air) {
+        const wasBuild = u.order && u.order.t === 'build';
+        ownerToast(u.owner, wasBuild ? 'Bauplatz nicht erreichbar – Kosten erstattet' : 'Ziel ist zu Fuß nicht erreichbar', 'bad');
+        clearOrder(u); return false;
+      }
+      return true;
+    }
   }
   return false;
 }
@@ -1527,6 +1606,11 @@ class AI {
     const workers = units.filter(u => u.d.worker), army = units.filter(u => !u.d.worker && !u.inside && !(u.order && u.order.t === 'enter'));
     const hqs = blds.filter(b => b.type === 'hq'), doneHQ = hqs.filter(b => b.done);
     this.main = doneHQ[0] || hqs[0] || blds[0];
+    if (this.airOnly === undefined && this.main) {
+      const myC = compAt(this.main.x, this.main.y);
+      this.myComp = myC;
+      this.airOnly = !G.blds.some(b => foe(b.owner, o) && b.type === 'hq' && compAt(b.x, b.y) === myC);
+    }
     const pend = t => workers.filter(w => w.order && w.order.t === 'build' && !w.order.site && w.order.type === t).length;
     const cnt = t => blds.filter(b => b.type === t).length + pend(t);
     const dn = t => blds.filter(b => b.type === t && b.done).length;
@@ -1561,7 +1645,9 @@ class AI {
     this.needAA = eAir > 0 && myAA < eAir * 1.3 + 2;
     if (cnt('turret') < cfg.turret + (eAir >= 6 ? 1 : 0) && G.t > 330 && dn('barracks')) this.build('turret');
     if (cnt('bunker') < cfg.bunker && G.t > 600 && dn('barracks')) this.build('bunker');
-    if (cnt('airbase') < 1 && G.t > cfg.air && dn('factory')) this.build('airbase');
+    if (cnt('airbase') < 1 && (G.t > cfg.air || this.airOnly) && dn('factory')) this.build('airbase');
+    if (this.airOnly && cnt('airbase') < 2 && dn('airbase') && P.cr > 250 && G.t > 300) this.build('airbase');
+    if (this.airOnly && cnt('extractor') < 2 && dn('barracks') && G.t > 150) this.build('extractor');
     if (G.t > cfg.expand && cnt('hq') < 2 && workers.length >= 16) this.build('hq');
     if (G.t > cfg.expand + 120 && cnt('extractor') < 4 && dn('hq') >= 2) this.build('extractor');
     if (G.t > cfg.expand + 200 && cnt('factory') < 2 && P.cr > 300) this.build('factory');
@@ -1574,7 +1660,9 @@ class AI {
     if ((!this.saving || P.cr > this.saving + 150) && !(cfg.lazy && Math.random() < cfg.lazy)) {
       for (const b of blds) {
         if (!b.done || b.queue.length >= 1) continue;
-        if (b.type === 'barracks') { const [a, c] = F.prod.barracks; let t = (P.gas >= 25 && (P.gas > 150 || Math.random() < .55)) ? c : a; if (this.needAA) t = F.aa; if (train(b, t) !== 'ok') train(b, a); }
+        if (this.airOnly && b.type === 'factory') continue;
+        if (this.airOnly && b.type === 'barracks' && (army.filter(u => !u.d.air).reduce((s, u) => s + u.d.supply, 0) >= (G.t > 600 ? 12 : 8) || (dn('airbase') && Math.random() < .5))) continue;
+        if (b.type === 'barracks') { const [a, c] = F.prod.barracks; let t = (P.gas >= 25 && (P.gas > 150 || Math.random() < .55)) ? c : a; if (this.needAA || this.airOnly) t = F.aa; if (train(b, t) !== 'ok' && !this.airOnly) train(b, a); }
         else if (b.type === 'factory') { const [a, c] = F.prod.factory; const nA = army.filter(u => u.type === a).length, nC = army.filter(u => u.type === c).length; train(b, nC * 1.6 < nA ? c : a); }
         else if (b.type === 'airbase') { const [f, h] = F.prod.airbase; const nF = army.filter(u => u.type === f).length, nH = army.filter(u => u.type === h).length; train(b, (this.needAA || (nF < nH * 1.5 + 1 && P.gas < 400)) ? f : h); }
       }
@@ -1588,7 +1676,7 @@ class AI {
         if (c.length) cmdEnter(c, bk);
       }
     }
-    this.control(army.filter(u => !u.inside && !(u.order && u.order.t === 'enter')), blds);
+    this.control(army.filter(u => !u.inside && !(u.order && u.order.t === 'enter') && (!this.airOnly || u.d.air)), blds);
   }
   balance(hqs, workers) {
     const counts = hqs.map(h => workers.filter(w => w.order && w.order.t === 'harvest' && w.order.tgt.k === 'r' && hyp(w.order.tgt.x - h.x, w.order.tgt.y - h.y) < 330).length);
@@ -1673,7 +1761,7 @@ class AI {
   }
   expoSpot() {
     const h = G.home[this.o];
-    const cands = G.bases.filter(b => canPlace('hq', b.cx - 1, b.cy - 1, this.o, false) && !G.units.some(w => w.order && w.order.t === 'build' && w.order.type === 'hq' && w.order.bx === b.cx - 1))
+    const cands = G.bases.filter(b => canPlace('hq', b.cx - 1, b.cy - 1, this.o, false) && compAt((b.cx + .5) * CELL, (b.cy + .5) * CELL) === compAt(h.x, h.y) && !G.units.some(w => w.order && w.order.t === 'build' && w.order.type === 'hq' && w.order.bx === b.cx - 1))
       .sort((a, b) => hyp(a.cx * CELL - h.x, a.cy * CELL - h.y) - hyp(b.cx * CELL - h.x, b.cy * CELL - h.y));
     const b = cands[0];
     if (!b || hyp(b.cx * CELL - h.x, b.cy * CELL - h.y) > 1500) return null;
@@ -1713,7 +1801,7 @@ class AI {
         + G.blds.reduce((s, b) => s + (foe(b.owner, o) && b.type === 'turret' && b.done ? 3 : 0), 0);
       const gathered = army.filter(u => hyp(u.x - gx, u.y - gy) < 420).reduce((s, u) => s + u.d.supply, 0);
       const ratio = this.cfg.ratio * Math.max(.45, 1 - Math.max(0, G.t - this.cfg.first) / 700);
-      if (G.t >= this.cfg.first && G.t > this.cool && ((sup >= need && sup >= eSup * ratio) || sup >= 64) && gathered >= sup * .7) {
+      if (G.t >= this.cfg.first && G.t > this.cool && ((sup >= need && (this.airOnly || sup >= eSup * ratio)) || sup >= 64) && gathered >= sup * .7) {
         this.attacking = true; this.waveSup = sup; this.waveN++;
         const vs = Math.min(...army.map(u => unitSpeed(u)));
         for (const u of army) u.gs = vs;
@@ -1749,7 +1837,7 @@ class AI {
 }
 
 /* =============================== VERSION & SPEICHERN =============================== */
-const VERSION = '1.3.1';
+const VERSION = '1.4.0';
 const SAVE_FORMAT = 1;
 const SAVE_KEYS = { manual: 'novafront_save_manual', auto: 'novafront_save_auto' };
 const SER_SKIP = new Set(['d', 'path', 'pathTgt', 'fake', 'lastAtk']);
@@ -1765,7 +1853,7 @@ function serializeGame() {
   return {
     format: SAVE_FORMAT, version: VERSION, at: Date.now(),
     t: G.t, nid: G.nid, diff: G.diff, speed: G.speed, hint: G.hint || 0, mode: G.mode, team: G.team,
-    P: G.P, home: G.home, bases: G.bases, rocks: G.rocks,
+    P: G.P, home: G.home, bases: G.bases, rocks: G.rocks, water: G.water, map: G.map,
     explored: Array.from(G.explored).join(''),
     ents: G.ents.filter(e => !e.dead).map(e => serVal(e, true)),
     ais: G.ais.map(a => ({ o: a.o, coop: !!a.coop, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
@@ -1784,10 +1872,10 @@ function loadGameData(data) {
   if (!data || data.format !== SAVE_FORMAT) throw new Error('Speicherstand ist nicht kompatibel');
   G = { t: data.t, nid: data.nid, ents: [], units: [], blds: [], res: [], proj: [], fx: [], P: data.P, sel: [], vis: new Uint8Array(NN), explored: new Uint8Array(NN),
     fogT: 0, over: false, paused: false, speed: data.speed || 1, diff: data.diff || 'normal', ais: [], alerts: {}, pings: [], reveal: false,
-    autoplay: false, endT: 0, rocks: data.rocks, hint: data.hint || 0, frame: 0, home: data.home, bases: data.bases, mode: data.mode || 'single', team: data.team || [0, 1], humans: [0] };
+    autoplay: false, endT: 0, rocks: data.rocks, hint: data.hint || 0, frame: 0, home: data.home, bases: data.bases, mode: data.mode || 'single', team: data.team || [0, 1], humans: [0], map: data.map || 'ebene' };
   ME = 0;
   blocked.fill(0);
-  for (const [x, y] of G.rocks) blocked[cidx(x, y)] = 1;
+  applyTerrain(data.rocks || [], data.water || []);
   const ex = data.explored || '';
   for (let i = 0; i < NN && i < ex.length; i++) G.explored[i] = ex.charCodeAt(i) === 49 ? 1 : 0;
   const byId = new Map();
@@ -1899,6 +1987,28 @@ function genTerrain() {
     c.fillStyle = g; c.beginPath(); c.arc(x, y, r, 0, TAU); c.fill();
     c.strokeStyle = 'rgba(190,200,210,.10)'; c.lineWidth = 2; c.beginPath(); c.arc(x, y, r * .92, Math.PI * .1, Math.PI * 1.0); c.stroke();
   }
+  // Wasser: Strand, Brandung, Tiefe
+  const wt = G.water || [];
+  if (wt.length) {
+    const W2 = R;
+    c.fillStyle = '#4a4535';
+    for (const [x, y] of wt) { c.beginPath(); c.arc((x + .5) * CELL, (y + .5) * CELL, 30, 0, TAU); c.fill(); }
+    c.fillStyle = 'rgba(150,215,225,.55)';
+    for (const [x, y] of wt) { c.beginPath(); c.arc((x + .5) * CELL, (y + .5) * CELL, 26.5, 0, TAU); c.fill(); }
+    c.fillStyle = '#123a52';
+    for (const [x, y] of wt) { c.beginPath(); c.arc((x + .5) * CELL, (y + .5) * CELL, 24, 0, TAU); c.fill(); }
+    // Tiefe: Zellen, deren Nachbarn alle Wasser sind, werden dunkler
+    const isW = new Uint8Array(NN); for (const [x, y] of wt) isW[cidx(x, y)] = 1;
+    for (const [x, y] of wt) {
+      let deep = 0; for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const nx = x + dx, ny = y + dy; if (!inb(nx, ny) || isW[cidx(nx, ny)]) deep++; }
+      if (deep >= 25) { const g = c.createRadialGradient((x + .5) * CELL, (y + .5) * CELL, 0, (x + .5) * CELL, (y + .5) * CELL, 34); g.addColorStop(0, 'rgba(4,16,30,.30)'); g.addColorStop(1, 'rgba(4,16,30,0)'); c.fillStyle = g; c.fillRect(x * CELL - 18, y * CELL - 18, CELL + 36, CELL + 36); }
+    }
+    c.strokeStyle = 'rgba(190,235,255,.10)'; c.lineWidth = 1.4;
+    for (let i = 0; i < wt.length * .9; i++) {
+      const [x, y] = wt[Math.floor(W2() * wt.length)]; const px = (x + W2()) * CELL, py = (y + W2()) * CELL, l = 6 + W2() * 14;
+      c.beginPath(); c.moveTo(px - l, py); c.quadraticCurveTo(px, py - 3, px + l, py); c.stroke();
+    }
+  }
   // Basis-Plattformen
   for (const b of G.bases) {
     const x0 = (b.cx - 3) * CELL, y0 = (b.cy - 3) * CELL, s = 7 * CELL;
@@ -1940,6 +2050,7 @@ function genTerrain() {
   miniTerr = document.createElement('canvas'); miniTerr.width = 144; miniTerr.height = 144;
   const m = miniTerr.getContext('2d'); m.drawImage(terr, 0, 0, 144, 144);
   m.fillStyle = '#4b5057'; for (const [x, y] of rk) m.fillRect(x * 2, y * 2, 2, 2);
+  m.fillStyle = '#16405a'; for (const [x, y] of (G.water || [])) m.fillRect(x * 2, y * 2, 2, 2);
 }
 function decal(x, y, r) {
   if (G && G.netHost && NET.peer) NET.fxq.push({ k: 'decalE', x: Math.round(x), y: Math.round(y), r: Math.round(r) });
@@ -2341,6 +2452,15 @@ function iconURL(kind, type, owner, fac) {
   else if (kind === 'b') { const d = BT[type]; const W = d.w * CELL, H = d.h * CELL; const s = 58 / Math.max(W, H); x.translate(32 - W * s / 2, 32 - H * s / 2); x.scale(s, s); drawBldShape(x, type, fac, owner, W, H, { anim: 1.2, done: true, ang: -Math.PI / 2 }); }
   else if (kind === 'r') { x.translate(32, 32); x.scale(1.4, 1.4); if (type === 'crystal') drawCrystal(x, { x: 0, y: 6, amount: 1, max: 1, var: 0, id: 0 }, 0); else drawGeyser(x, { x: 0, y: 0, amount: 1, max: 1, id: 0 }, 0); }
   return iconURL.cache[key] = c.toDataURL();
+}
+
+function mapPreview(id, size) {
+  const L = genMapLayout(id), c = document.createElement('canvas'); c.width = c.height = size; const x = c.getContext('2d'), k = size / GW;
+  x.fillStyle = '#2a3036'; x.fillRect(0, 0, size, size);
+  x.fillStyle = '#1d5a7a'; for (const [a, b] of L.water) x.fillRect(a * k, b * k, k + .5, k + .5);
+  x.fillStyle = '#6b6f75'; for (const [a, b] of L.rocks) x.fillRect(a * k, b * k, k + .5, k + .5);
+  L.bases.forEach((b, i) => { x.fillStyle = '#62efff'; for (const [a, c2] of b.crystals) x.fillRect(a * k, c2 * k, k, k); x.fillStyle = i === 0 ? '#3db8ff' : i === 3 ? '#ff5236' : '#c9d3dc'; x.fillRect((b.cx - 1) * k, (b.cy - 1) * k, 3 * k, 3 * k); });
+  return c.toDataURL();
 }
 
 /* =============================== EINHEITEN-GRAFIK (v1.2) =============================== */
@@ -2762,7 +2882,7 @@ function drawMyzelBld(c, type, owner, W, H, b) {
 // Server-Adresse (Cloudflare Worker). Kann zum Testen mit ?server=ws://… überschrieben werden.
 const MP_SERVER_DEFAULT = 'wss://nova-front-server.engl-tom.workers.dev';
 const NET = { mode: null, ws: null, room: '', slot: -1, peer: false, ping: 0, inGame: false, setup: null, lastSnap: 0, fxq: [], prq: [], sndq: [], noteq: [],
-  peerInfo: null, my: { fac: 0 }, opts: { mode: 'versus', diff: 'normal', aifac: 'r' }, reconnect: 0, closing: false, retryT: null, pingT: null, lastMsg: 0, takeover: null };
+  peerInfo: null, my: { fac: 0 }, opts: { mode: 'versus', diff: 'normal', aifac: 'r', map: 'ebene' }, reconnect: 0, closing: false, retryT: null, pingT: null, lastMsg: 0, takeover: null };
 function mpServer() {
   try { const q = new URLSearchParams(location.search).get('server'); if (q) return q.replace(/\/$/, ''); } catch (e) { }
   return MP_SERVER_DEFAULT;
@@ -3083,15 +3203,15 @@ function netHostStart() {
   let facs;
   if (o.mode === 'versus') facs = [NET.my.fac, NET.peerInfo.fac];
   else { let af = o.aifac; af = af === 'r' ? Math.floor(Math.random() * 3) : +af; facs = [NET.my.fac, NET.peerInfo.fac, af]; }
-  NET.setup = { mode: o.mode, facs, diff: o.mode === 'coop' ? o.diff : 'normal' };
+  NET.setup = { mode: o.mode, facs, diff: o.mode === 'coop' ? o.diff : 'normal', map: o.map || 'ebene' };
   NET.guestO = 1;
   netSend({ t: 'start', setup: NET.setup });
-  startGame(null, { mode: o.mode, facs, diff: NET.setup.diff, me: 0, net: 'host' });
+  startGame(null, { mode: o.mode, facs, diff: NET.setup.diff, me: 0, net: 'host', map: NET.setup.map });
 }
 function netGuestStart(setup, rejoin) {
   NET.setup = setup;
   if (rejoin && NET.inGame && G && G.mode === setup.mode) { toast('Wieder verbunden', 'good'); return; }
-  startGame(null, { mode: setup.mode, facs: setup.facs, diff: setup.diff, me: 1, net: 'guest' });
+  startGame(null, { mode: setup.mode, facs: setup.facs, diff: setup.diff, me: 1, net: 'guest', map: setup.map });
 }
 function netAfterSim() {
   if (NET.mode !== 'host' || !NET.inGame || !G) return;
@@ -3114,7 +3234,7 @@ function mpUpdateLobby() {
   $('mpLinkBox').style.display = host ? '' : 'none';
   $('mpLinkTxt').textContent = mpLink();
   const o = NET.opts || {};
-  $('mpModeTxt').textContent = o.mode === 'coop' ? 'Zu zweit gegen die KI (' + ({ easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[o.diff] || 'Normal') + ')' : 'Duell 1 gegen 1';
+  $('mpModeTxt').textContent = (o.mode === 'coop' ? 'Zu zweit gegen die KI (' + ({ easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[o.diff] || 'Normal') + ')' : 'Duell 1 gegen 1') + ' · Karte: ' + (MAPS[o.map] || MAPS.ebene).name;
   const pn = NET.peerInfo ? FAC[NET.peerInfo.fac].name : '–';
   $('mpPlayers').innerHTML = `<div><b>Du</b> · ${FAC[NET.my.fac].name}${host ? ' (Gastgeber)' : ''}</div><div><b>${host ? 'Mitspieler' : 'Gastgeber'}</b> · ${NET.peer ? pn : '<i>nicht verbunden</i>'}</div>`;
   $('btnMpStart').style.display = host ? '' : 'none';
@@ -3217,7 +3337,7 @@ function sfx(name, src) {
 
 /* =============================== UI-ZUSTAND =============================== */
 const UI = { placing: null, box: null, cmdMode: null, menu: 'main', boxMode: false, dirty: true, sig: '', hints: true, running: false, lastTap: null, idleIdx: 0, baseIdx: 0, endShown: false,
-  opts: { fac: 0, diff: 'normal', speed: 1 } };
+  opts: { fac: 0, diff: 'normal', speed: 1, map: 'ebene' } };
 const $ = id => document.getElementById(id);
 function uiDirty() { UI.dirty = true; }
 function selOwn() { return G.sel.filter(e => !e.dead && e.owner === ME); }
@@ -3330,7 +3450,7 @@ function buildPanel() {
   if (!sel.length) {
     const nW = G.units.filter(u => u.owner === ME && u.d.worker).length, nA = G.units.filter(u => u.owner === ME && !u.d.worker).length;
     info.innerHTML = `<div class="ititle"><span class="nm">${F.name}</span><span class="sub">Kommando</span></div>
-      <div class="empty">Tippe auf eine Einheit oder ein Gebäude. Gedrückt halten und ziehen für einen Auswahlrahmen.</div>
+      <div class="empty">Tippe auf eine Einheit oder ein Gebäude. Mehrere Einheiten: Rahmen-Knopf links (Maus: Linksziehen).</div>
       <div class="stats">Arbeiter <b>${nW}</b> · Armee <b>${nA}</b> · Upgrades W<b>${P.wl}</b>/P<b>${P.al}</b></div>`;
     return;
   }
@@ -3921,7 +4041,7 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('pagehide', () => autoSave());
 function startGame(saved, mp) {
   if (mp) {
-    newGame({ mode: mp.mode, facs: mp.facs, diff: mp.diff, me: mp.me, speed: 1 });
+    newGame({ mode: mp.mode, facs: mp.facs, diff: mp.diff, me: mp.me, speed: 1, map: mp.map });
     G.netHost = mp.net === 'host'; G.netGuest = mp.net === 'guest';
     if (G.netGuest) G.ais = [];
     NET.inGame = true; NET.endSent = false; NET.lastSnap = 0; NET.fxq = []; NET.prq = []; NET.noteq = [];
@@ -3933,7 +4053,7 @@ function startGame(saved, mp) {
     if (NET.mode) netLeave();
     let ef = UI.opts.efac;
     ef = (ef == null || ef === 'r') ? [0, 1, 2].filter(f => f !== UI.opts.fac)[Math.floor(Math.random() * 2)] : +ef;
-    newGame({ fac: UI.opts.fac, efac: ef, diff: UI.opts.diff, speed: UI.opts.speed });
+    newGame({ fac: UI.opts.fac, efac: ef, diff: UI.opts.diff, speed: UI.opts.speed, map: UI.opts.map });
   }
   genTerrain();
   UI.autoT = G.t;
@@ -4018,6 +4138,14 @@ function frame(ts) {
 }
 window.addEventListener('resize', () => { if (G) resize(); });
 window.addEventListener('orientationchange', () => setTimeout(() => { if (G) resize(); }, 250));
+function buildMapPicker(elId, cur, onPick) {
+  const el = $(elId); if (!el) return;
+  el.innerHTML = MAP_ORDER.map(id => `<button data-m="${id}" class="${id === cur ? 'on' : ''}"><img src="${mapPreview(id, 72)}" alt=""><span>${MAPS[id].name}</span></button>`).join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => { el.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); audioInit(); sfx('click'); onPick(b.dataset.m); });
+}
+buildMapPicker('mapSel', UI.opts.map, m => { UI.opts.map = m; $('mapDesc').textContent = MAPS[m].desc; });
+$('mapDesc').textContent = MAPS[UI.opts.map].desc;
+buildMapPicker('mpMapSel', 'ebene', m => { NET.opts.map = m; });
 mpInitUI();
 // Version & Update-Prüfung
 $('verStart').textContent = 'VERSION ' + VERSION; $('verPause').textContent = 'NOVA FRONT · VERSION ' + VERSION;
