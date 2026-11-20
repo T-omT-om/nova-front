@@ -1,0 +1,13 @@
+{
+  "name": "nova-front-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Raum-Server für Nova Front Mehrspieler",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

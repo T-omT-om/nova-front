@@ -143,6 +143,17 @@ body.ingame .hud{display:flex}
 .st .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .small{font-size:12px;color:var(--dim);text-align:center;margin-top:12px;line-height:1.35}
 #rot{display:none}
+.mponly{display:none}
+body.mp .mponly{display:block}
+#netPing{font-size:12px;color:#ffd98a;font-variant-numeric:tabular-nums}
+#mpJoinCode{flex:1;min-width:0;border:1px solid var(--line2);background:#0b1520;border-radius:10px;padding:11px;color:var(--txt);font:700 17px Rajdhani,sans-serif;letter-spacing:.12em;text-transform:uppercase;user-select:text;-webkit-user-select:text}
+.mpcode{font-family:Orbitron,sans-serif;font-weight:900;font-size:34px;letter-spacing:.18em;text-align:center;color:#ffd98a;user-select:text;-webkit-user-select:text}
+.mplink{font-size:12px;color:#c4d4e2;background:#0b1520;border:1px solid var(--line2);border-radius:8px;padding:8px;word-break:break-all;user-select:text;-webkit-user-select:text}
+.mpplayers{display:flex;flex-direction:column;gap:4px;font-size:15px;background:#0b1520;border:1px solid var(--line2);border-radius:10px;padding:10px}
+.mpplayers i{color:var(--dim)}
+.mpst{margin-top:10px;min-height:20px;font-weight:600;font-size:14px;text-align:center;color:#a8ffd0}
+.mpst.bad{color:#ffb3a3}
+.big:disabled{opacity:.4;filter:grayscale(.6)}
 #groups{position:fixed;z-index:6;right:calc(var(--sar) + 8px);bottom:calc(var(--ph) + var(--sab) + 12px);gap:6px}
 .gb{position:relative;width:42px;height:38px;border-radius:9px;border:1px solid var(--line2);background:rgba(9,17,26,.88);font-family:Orbitron,sans-serif;font-weight:800;font-size:15px;color:#7f95aa;touch-action:none;box-shadow:0 3px 10px #0008}
 .gb.has{color:#e9f6ff;border-color:var(--acc)}
@@ -176,6 +187,7 @@ body.ingame .hud{display:flex}
   <div class="res" id="resGas"><svg viewBox="0 0 16 16"><circle cx="8" cy="9" r="6" fill="#2a6b23"/><circle cx="8" cy="9" r="3.6" fill="#86ff70"/><circle cx="6.6" cy="7.6" r="1.2" fill="#e6ffde"/></svg><span id="rGas">0</span></div>
   <div class="res" id="resSup"><svg viewBox="0 0 16 16"><rect x="2" y="5" width="12" height="9" rx="2" fill="#3db8ff"/><rect x="5" y="2" width="6" height="4" rx="1" fill="#a8e2ff"/></svg><span id="rSup">0/0</span></div>
   <div id="clock">00:00</div>
+  <div id="netPing" class="mponly"></div>
   <button id="btnMenu" aria-label="Menü">☰</button>
 </div>
 <canvas id="mini" class="hud"></canvas>
@@ -215,11 +227,50 @@ body.ingame .hud{display:flex}
     <div class="small" id="loadInfo" style="margin-top:4px;display:none"></div>
   </div>
   <button class="big" id="btnStart">NEUES SPIEL</button>
+  <button class="big" id="btnMP" style="background:linear-gradient(#ffd98a,#e09a2a)">MEHRSPIELER</button>
   <button class="sec" id="btnHelp">Anleitung &amp; Steuerung</button>
   <div class="small">Zerstöre alle gegnerischen Gebäude, um zu gewinnen.<br>Am besten im Querformat oder Vollbild spielen.</div>
   <button class="sec" id="btnUpd1">Nach Updates suchen</button>
   <div class="updbox" id="updBox1"></div>
   <div class="ver" id="verStart"></div>
+</div></div>
+
+<!-- Mehrspieler -->
+<div class="ov" id="ovMP"><div class="card">
+  <div class="logo" style="font-size:26px">MEHRSPIELER</div>
+  <div class="tag">Live über das Internet</div>
+  <div class="lbl">Deine Fraktion</div>
+  <div class="seg" id="mpFac"><button data-f="0" class="on">Allianz</button><button data-f="1">Kollektiv</button><button data-f="2">Myzel</button></div>
+  <div id="mpSetup">
+    <div class="lbl">Spiel erstellen</div>
+    <div class="seg" id="mpMode"><button data-m="versus" class="on">Duell 1 gegen 1</button><button data-m="coop">Zu zweit gegen KI</button></div>
+    <div id="mpCoopOpts" style="display:none">
+      <div class="lbl">Schwierigkeit der KI</div>
+      <div class="seg" id="mpDiff"><button data-d="easy">Leicht</button><button data-d="normal" class="on">Normal</button><button data-d="hard">Schwer</button></div>
+      <div class="lbl">Fraktion der KI</div>
+      <div class="seg" id="mpAiFac"><button data-a="r" class="on">Zufall</button><button data-a="0">Allianz</button><button data-a="1">Kollektiv</button><button data-a="2">Myzel</button></div>
+    </div>
+    <button class="big" id="btnMpCreate">SPIEL ERSTELLEN</button>
+    <div class="lbl">Oder beitreten</div>
+    <div style="display:flex;gap:6px"><input id="mpJoinCode" maxlength="40" placeholder="Raumcode, z. B. K7Q2XM" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="sec" id="btnMpJoin" style="margin:0;width:auto;padding:0 16px">Beitreten</button></div>
+  </div>
+  <div id="mpLobby" style="display:none">
+    <div class="lbl">Raumcode</div>
+    <div class="mpcode" id="mpCode">––––––</div>
+    <div class="small" id="mpModeTxt" style="margin-top:4px"></div>
+    <div id="mpLinkBox">
+      <div class="lbl">Einladungslink</div>
+      <div class="mplink" id="mpLinkTxt" tabindex="0"></div>
+      <div style="display:flex;gap:6px"><button class="sec" id="btnMpCopy">Link kopieren</button><button class="sec" id="btnMpShare">Teilen …</button></div>
+    </div>
+    <div class="lbl">Spieler</div>
+    <div class="mpplayers" id="mpPlayers"></div>
+    <button class="big" id="btnMpStart" disabled>SPIEL STARTEN</button>
+    <button class="sec" id="btnMpLeave">Raum verlassen</button>
+  </div>
+  <div class="mpst" id="mpStatus"></div>
+  <div class="small">Verbindung: <span id="mpPing">–</span></div>
+  <button class="sec" id="btnMpBack">Zurück</button>
 </div></div>
 
 <!-- Help -->
@@ -261,6 +312,7 @@ body.ingame .hud{display:flex}
     <li>Forschung im Labor/Archiv verbessert Waffen und Panzerung aller Einheiten.</li>
     <li>Arbeiter von Allianz und Kollektiv können Gebäude und Fahrzeuge kostenlos <b>reparieren</b>. Das Myzel heilt sich stattdessen selbst.</li>
     <li><b>Lufteinheiten</b> fliegen über Felsen. Nur Einheiten mit Luftabwehr können sie treffen: Ranger, Strahler, Speier, alle Jäger und die Verteidigungstürme.</li>
+    <li><b>Mehrspieler</b>: Im Hauptmenü „Mehrspieler“ → Spiel erstellen und den Einladungslink schicken. Duell 1 gegen 1 oder zu zweit gemeinsam gegen die KI. Im Mehrspieler läuft das Spiel ohne Pause weiter.</li>
     <li><b>Bunker</b>: Fernkampf-Einheiten wählen und auf den eigenen Bunker tippen. Bis zu 4 Einheiten passen hinein, sind geschützt und schießen weiter.</li>
   </ul>
   <button class="big" id="btnHelpBack">VERSTANDEN</button>
@@ -269,6 +321,7 @@ body.ingame .hud{display:flex}
 <!-- Pause -->
 <div class="ov" id="ovPause"><div class="card">
   <div class="logo" style="font-size:26px">PAUSE</div>
+  <div class="small" id="mpPauseNote" style="display:none;margin:4px 0 0;color:#ffd98a">Mehrspieler: Das Spiel läuft im Hintergrund weiter.</div>
   <div class="lbl">Ton</div>
   <div class="seg" id="sndSel"><button data-v="1" class="on">An</button><button data-v="0">Aus</button></div>
   <div class="lbl">Hinweise</div>
@@ -333,11 +386,19 @@ const FAC_DESC = [
   'Erwachte Maschinenintelligenz. Klingendrohnen, Strahlenwaffen und schwebende Lanzen.',
   'Pilzartiger Schwarmorganismus. Schnelle Kreaturen, Säure und Selbstheilung aller Einheiten und Gebäude.'
 ];
-// Farben pro Spieler (0 = du, 1 = Gegner)
-const OC = [
-  { m: '#3db8ff', d: '#123f63', l: '#c4ecff', g: '61,184,255' },
-  { m: '#ff5236', d: '#5e1a10', l: '#ffc6b8', g: '255,82,54' }
-];
+// Farben: eigene Einheiten blau, Verbündete grün, Gegner rot (aus Sicht des jeweiligen Geräts)
+const COL_ME = { m: '#3db8ff', d: '#123f63', l: '#c4ecff', g: '61,184,255' };
+const COL_ALLY = { m: '#4fe08a', d: '#145a33', l: '#c8ffdc', g: '79,224,138' };
+const COL_FOE = { m: '#ff5236', d: '#5e1a10', l: '#ffc6b8', g: '255,82,54' };
+const OC = [COL_ME, COL_FOE];
+function teamOf(o) { return G && G.team ? G.team[o] : o; }
+function foe(a, b) { return a >= 0 && b >= 0 && teamOf(a) !== teamOf(b); }
+function friendly(o) { return o >= 0 && teamOf(o) === teamOf(ME); }
+function setupColors() {
+  OC.length = 0;
+  for (let o = 0; o < G.P.length; o++) OC.push(o === ME ? COL_ME : friendly(o) ? COL_ALLY : COL_FOE);
+  if (typeof iconURL === 'function') iconURL.cache = {};
+}
 const REGEN_U = 1.0, REGEN_B = 2.5;
 
 /* ------------------------------ EINHEITEN ------------------------------ */
@@ -400,7 +461,7 @@ function canHit(d, t) {
 
 /* ------------------------------ ZUSTAND ------------------------------ */
 let G = null;          // Spielzustand
-const ME = 0;          // menschlicher Spieler
+let ME = 0;            // Spieler an diesem Gerät
 let blocked = new Uint8Array(GW * GH);   // 0 frei, 1 Fels, 2 Gebäude, 3 Rohstoff
 const inb = (cx, cy) => cx >= 0 && cy >= 0 && cx < GW && cy < GH;
 const cidx = (cx, cy) => cy * GW + cx;
@@ -549,7 +610,7 @@ function newPlayer(fac) {
 }
 function mkUnit(type, owner, x, y) {
   const d = UT[type];
-  const u = { id: G.nid++, k: 'u', type, d, owner, x, y, r: d.r, hp: d.hp, maxhp: d.hp, ang: owner === 0 ? -Math.PI / 4 : Math.PI * .75,
+  const u = { id: G.nid++, k: 'u', type, d, owner, x, y, r: d.r, hp: d.hp, maxhp: d.hp, ang: teamOf(owner) === 0 ? -Math.PI / 4 : Math.PI * .75,
     cd: Math.random() * .3, order: null, path: null, pi: 0, carry: 0, carryT: null, anim: Math.random() * 10, lastHit: -99, scanT: Math.random() * .3,
     repT: 0, stuckT: 0, lastD: 1e9, moving: false, mining: false, lastHarv: null, fired: 0, inside: null };
   G.ents.push(u); G.units.push(u);
@@ -560,7 +621,7 @@ function mkBld(type, owner, bx, by, done) {
   const d = BT[type];
   const b = { id: G.nid++, k: 'b', type, d, owner, bx, by, w: d.w, h: d.h, x: (bx + d.w / 2) * CELL, y: (by + d.h / 2) * CELL, r: Math.max(d.w, d.h) * CELL / 2,
     hp: done ? d.hp : d.hp * .1, maxhp: d.hp, done: !!done, prog: done ? 1 : 0, queue: [], rally: null, cd: 0, research: null, lastHit: -99, builder: null,
-    ang: owner ? Math.PI * .75 : -Math.PI / 4, anim: Math.random() * 10, seen: owner === ME, scanT: 0, target: null, miner: null, blockedMsg: 0, cargo: [] };
+    ang: teamOf(owner) ? Math.PI * .75 : -Math.PI / 4, anim: Math.random() * 10, seen: friendly(owner), scanT: 0, target: null, miner: null, blockedMsg: 0, cargo: [] };
   setCells(bx, by, d.w, d.h, 2);
   if (type === 'extractor') { const g = G.res.find(r => r.type === 'gas' && r.bx === bx && r.by === by); b.geyser = g; if (g) g.ex = b; }
   G.ents.push(b); G.blds.push(b);
@@ -614,7 +675,7 @@ function canPlace(type, bx, by, owner, strict) {
   }
   // keine gegnerischen Einheiten auf dem Bauplatz
   const x0 = bx * CELL, y0 = by * CELL, x1 = x0 + d.w * CELL, y1 = y0 + d.h * CELL;
-  for (const u of G.units) if (u.owner !== owner && u.x > x0 - u.r && u.x < x1 + u.r && u.y > y0 - u.r && u.y < y1 + u.r) return false;
+  for (const u of G.units) if (foe(u.owner, owner) && !u.d.air && u.x > x0 - u.r && u.x < x1 + u.r && u.y > y0 - u.r && u.y < y1 + u.r) return false;
   return true;
 }
 function pushOutOfRect(x0, y0, x1, y1) {
@@ -649,7 +710,7 @@ function updateFog() {
   G.fogStamp = (G.fogStamp || 0) + 1;
   const vis = G.vis; vis.fill(0);
   for (const e of G.ents) {
-    if (e.owner !== ME || e.dead) continue;
+    if (!friendly(e.owner) || e.dead) continue;
     const sr = Math.round((e.k === 'b' ? (e.done ? e.d.sight : 120) : e.d.sight) / CELL);
     const cx = Math.floor(e.x / CELL), cy = Math.floor(e.y / CELL);
     const cc = circleCells(sr);
@@ -662,7 +723,7 @@ function updateFog() {
 function isVis(x, y) { const cx = Math.floor(x / CELL), cy = Math.floor(y / CELL); return inb(cx, cy) && G.vis[cy * GW + cx] === 1; }
 function isVisE(e) {
   if (G.reveal) return true;
-  if (e.owner === ME) return true;
+  if (friendly(e.owner)) return true;
   if (e.k === 'u') return isVis(e.x, e.y);
   for (let y = e.by; y < e.by + e.h; y++) for (let x = e.bx; x < e.bx + e.w; x++) if (G.vis[y * GW + x]) return true;
   return false;
@@ -685,11 +746,15 @@ function newGame(opts) {
     for (const [x, y] of b.crystals) mkRes('crystal', x, y);
     for (const [x, y] of b.gas) mkRes('gas', x, y);
   }
-  G.P[0] = newPlayer(opts.fac || 0);
-  G.P[1] = newPlayer(opts.efac != null ? opts.efac : ((opts.fac || 0) === 0 ? 1 : 0));
-  const starts = [G.bases[0], G.bases[3]];
+  // Spieler & Teams: single = Du vs KI, versus = Mensch vs Mensch, coop = 2 Menschen vs KI
+  G.mode = opts.mode || 'single';
+  const facs = opts.facs || [opts.fac || 0, opts.efac != null ? opts.efac : ((opts.fac || 0) === 0 ? 1 : 0)];
+  G.team = G.mode === 'coop' ? [0, 0, 1] : [0, 1];
+  G.humans = G.mode === 'single' ? [0] : G.mode === 'versus' ? [0, 1] : [0, 1];
+  facs.forEach((f, o) => G.P[o] = newPlayer(f));
+  const starts = G.mode === 'coop' ? [G.bases[0], G.bases[2], G.bases[3]] : [G.bases[0], G.bases[3]];
   G.home = [];
-  for (let o = 0; o < 2; o++) {
+  for (let o = 0; o < G.P.length; o++) {
     const b = starts[o];
     const hq = mkBld('hq', o, b.cx - 1, b.cy - 1, true);
     G.home[o] = { x: hq.x, y: hq.y };
@@ -701,9 +766,20 @@ function newGame(opts) {
       sendHarvest(u);
     }
   }
-  G.ais.push(new AI(1, G.diff));
-  G.P[1].carry = AICFG[G.diff].carry;
+  if (G.mode === 'coop') {
+    // KI gegen zwei Spieler: zweite Basis von Beginn an
+    const b = G.bases[4], o = 2, F = FAC[G.P[o].fac];
+    const hq = mkBld('hq', o, b.cx - 1, b.cy - 1, true);
+    for (let i = 0; i < 6; i++) { const c = b.crystals[i + 1]; const a = Math.atan2((c[1] + .5) * CELL - hq.y, (c[0] + .5) * CELL - hq.x); const u = mkUnit(F.worker, o, hq.x + Math.cos(a) * 66, hq.y + Math.sin(a) * 66); sendHarvest(u); }
+    const ai = new AI(2, G.diff); ai.coop = true; G.ais.push(ai);
+    G.P[2].carry = AICFG[G.diff].carry;
+  } else if (G.mode === 'single') {
+    G.ais.push(new AI(1, G.diff));
+    G.P[1].carry = AICFG[G.diff].carry;
+  }
   if (G.autoplay) { G.ais.push(new AI(0, opts.diff0 || 'normal')); G.P[0].carry = AICFG[opts.diff0 || 'normal'].carry; }
+  ME = opts.me || 0;
+  setupColors();
   tallySupply();
   updateFog();
   return G;
@@ -890,12 +966,12 @@ function spawnFrom(b, type) {
   G.P[b.owner].stats.made++;
   const re = b.rally && b.rally.ent;
   if (re && !re.dead && u.d.worker && ((re.k === 'r' && re.type === 'crystal') || (re.k === 'b' && re.type === 'extractor' && re.owner === b.owner))) cmdHarvest([u], re);
-  else if (re && !re.dead && re.k !== 'r' && re.owner !== b.owner && re.owner >= 0) cmdAttack([u], re);
+  else if (re && !re.dead && re.k !== 'r' && foe(re.owner, b.owner)) cmdAttack([u], re);
   else if (re && !re.dead && re.type === 'bunker' && re.owner === b.owner && canGarrison(u, re) && re.cargo.length < re.d.cargo) cmdEnter([u], re);
   else if (b.rally) cmdMove([u], b.rally.x, b.rally.y, !u.d.worker);
   else if (u.d.worker) sendHarvest(u);
   else cmdMove([u], px + Math.cos(a) * 34, py + Math.sin(a) * 34, true);
-  if (b.owner === ME) { sfx('ready', b); }
+  ownerSfx(b.owner, 'ready', b);
   return u;
 }
 function finishWorker(u) {
@@ -906,6 +982,7 @@ function finishWorker(u) {
 function onBuilt(b) {
   const P = G.P[b.owner];
   if (b.owner === ME) { toast(entName(b) + ' fertiggestellt', 'good'); sfx('done', b); }
+  else ownerSfx(b.owner, 'done');
   const u = b.builder;
   if (u && !u.dead) {
     if (b.type === 'extractor') { clearOrder(u); cmdHarvest([u], b); }
@@ -920,14 +997,14 @@ function onBuilt(b) {
   }
 }
 function tallySupply() {
-  for (let o = 0; o < 2; o++) { G.P[o].supUsed = 0; G.P[o].supCap = 0; }
+  for (let o = 0; o < G.P.length; o++) { G.P[o].supUsed = 0; G.P[o].supCap = 0; }
   for (const u of G.units) if (!u.dead) G.P[u.owner].supUsed += u.d.supply;
   for (const b of G.blds) {
     if (b.dead) continue;
     if (b.done && b.d.supply) G.P[b.owner].supCap += b.d.supply;
     if (b.queue.length && b.queue[0].started) G.P[b.owner].supUsed += UT[b.queue[0].type].supply;
   }
-  for (let o = 0; o < 2; o++) { const P = G.P[o]; P.supCap = Math.min(P.supCap, 150); P.wl = (P.up.w1 ? 1 : 0) + (P.up.w2 ? 1 : 0); P.al = (P.up.a1 ? 1 : 0) + (P.up.a2 ? 1 : 0); }
+  for (let o = 0; o < G.P.length; o++) { const P = G.P[o]; P.supCap = Math.min(P.supCap, 150); P.wl = (P.up.w1 ? 1 : 0) + (P.up.w2 ? 1 : 0); P.al = (P.up.a1 ? 1 : 0) + (P.up.a2 ? 1 : 0); }
 }
 
 /* =============================== BEWEGUNG =============================== */
@@ -998,20 +1075,20 @@ function findTarget(x, y, owner, range, minRange, self) {
   const sr = self && self.k === 'u' ? self.r : 0;
   const ad = self && self.d ? self.d : null;
   queryUnits(x, y, range + 30, e => {
-    if (e.dead || e.owner === owner || e.inside) return;
+    if (e.dead || !foe(e.owner, owner) || e.inside) return;
     if (e.d.air && !(ad && ad.aa)) return;
     const d = hyp(e.x - x, e.y - y) - e.r - sr;
     if (d > range || d < minRange) return;
-    if (owner === ME && !G.reveal && !isVis(e.x, e.y)) return;
+    if (friendly(owner) && !G.reveal && !isVis(e.x, e.y) && !G.netHost) return;
     const s = d + (e.d.worker ? 70 : 0) + (e.d.dmg ? 0 : 120);
     if (s < bs) { bs = s; best = e; }
   });
   const pt = self || { k: 'p', x, y };
   for (const b of G.blds) {
-    if (b.dead || b.owner === owner) continue;
+    if (b.dead || !foe(b.owner, owner)) continue;
     if (Math.abs(b.x - x) > range + 100 || Math.abs(b.y - y) > range + 100) continue;
     const d = edgeDist(pt, b); if (d > range || d < minRange) continue;
-    if (owner === ME && !G.reveal && !isVisE(b)) continue;
+    if (friendly(owner) && !G.reveal && !isVisE(b) && !G.netHost) continue;
     const s = d + (b.type === 'turret' && b.done ? 30 : 240);
     if (s < bs) { bs = s; best = b; }
   }
@@ -1055,17 +1132,17 @@ function fire(src, t) {
 function applyDmg(t, dmg, src) {
   if (t.dead || t.k === 'r') return;
   t.hp -= dmg; t.lastHit = G.t; t.lastAtk = src;
-  if (t.owner === ME) underAttack(t);
+  ownerAttacked(t);
   if (t.hp <= 0) kill(t, src);
 }
 function splash(x, y, rad, d, owner, src) {
   queryUnits(x, y, rad + 20, e => {
-    if (e.dead || e.owner === owner || e.d.air || e.inside) return;
+    if (e.dead || !foe(e.owner, owner) || e.d.air || e.inside) return;
     const dd = hyp(e.x - x, e.y - y) - e.r; if (dd > rad) return;
     applyDmg(e, calcDmg(d, owner, e) * (1 - .5 * clamp(dd / rad, 0, 1)), src);
   });
   for (const b of G.blds) {
-    if (b.dead || b.owner === owner) continue;
+    if (b.dead || !foe(b.owner, owner)) continue;
     const dd = edgeDist({ k: 'p', x, y }, b); if (dd > rad) continue;
     applyDmg(b, calcDmg(d, owner, b) * (1 - .5 * clamp(dd / rad, 0, 1)), src);
   }
@@ -1093,7 +1170,7 @@ function kill(e, src) {
     decal(e.x, e.y, e.w * CELL * .55);
     sfx('bigboom', e);
     if (e.builder && !e.builder.dead && e.builder.order && e.builder.order.site === e) finishWorker(e.builder);
-    if (e.owner === ME) toast(entName(e) + ' zerstört', 'bad');
+    ownerToast(e.owner, entName(e) + ' zerstört', 'bad');
   } else if (e.k === 'r') {
     setCells(e.bx, e.by, e.w, e.h, 0);
   }
@@ -1150,8 +1227,8 @@ function doAttack(u, dt, o) {
   const t = o.tgt;
   if (!t || t.dead || !canHit(u.d, t) || (u.d.worker && t.k === 'u' && t.d.air)) { resumeOrNull(u, o); return; }
   // Sicht verloren?
-  if (u.owner === ME && !G.reveal && !isVisE(t)) { resumeOrNull(u, o); return; }
-  if (u.owner !== ME && hyp(t.x - u.x, t.y - u.y) > u.d.sight + 120) { resumeOrNull(u, o); return; }
+  if (u.owner === ME && !G.reveal && !G.netHost && !isVisE(t)) { resumeOrNull(u, o); return; }
+  if ((u.owner !== ME || G.netHost) && hyp(t.x - u.x, t.y - u.y) > u.d.sight + 120) { resumeOrNull(u, o); return; }
   if (o.auto) {
     if (o.ox === undefined) { o.ox = u.x; o.oy = u.y; }
     // Leine: automatisch gewählte Ziele nicht endlos verfolgen
@@ -1246,7 +1323,7 @@ function doBuild(u, dt, o) {
       if (u.owner === ME) sfx('place', b);
     } else {
       refund(u.owner, d.cost); o.site = null;
-      if (u.owner === ME) toast('Bauplatz blockiert – Kosten erstattet', 'bad');
+      ownerToast(u.owner, 'Bauplatz blockiert – Kosten erstattet', 'bad');
       u.order = null; finishWorker(u);
     }
   }
@@ -1278,7 +1355,7 @@ function updBld(b, dt) {
     const it = b.queue[0];
     if (!it.started) {
       if (supplyOk(b.owner, it.type)) { it.started = true; G.P[b.owner].supUsed += UT[it.type].supply; }
-      else if (b.owner === ME && G.t - (G.alerts.sup || -99) > 14) { G.alerts.sup = G.t; toast('Versorgung reicht nicht – baue ein ' + FAC[G.P[ME].fac].bn.habitat, 'bad'); sfx('err'); }
+      else if (G.humans && G.humans.includes(b.owner) && G.t - (G.alerts['sup' + b.owner] || -99) > 14) { G.alerts['sup' + b.owner] = G.t; ownerToast(b.owner, 'Versorgung reicht nicht – baue ein ' + FAC[G.P[b.owner].fac].bn.habitat, 'bad'); ownerSfx(b.owner, 'err'); }
     }
     if (it.started) { it.t += dt; if (it.t >= UT[it.type].time) { b.queue.shift(); spawnFrom(b, it.type); uiDirty(); } }
   }
@@ -1287,7 +1364,7 @@ function updBld(b, dt) {
     const R = RS[b.research.key];
     if (b.research.t >= R.time) {
       const P = G.P[b.owner]; P.up[b.research.key] = true; P.resq[b.research.key] = false;
-      if (b.owner === ME) { toast('Forschung abgeschlossen: ' + R.name, 'good'); sfx('done', b); }
+      ownerToast(b.owner, 'Forschung abgeschlossen: ' + R.name, 'good'); ownerSfx(b.owner, 'done', b);
       b.research = null; uiDirty();
     }
   }
@@ -1313,8 +1390,8 @@ function updBld(b, dt) {
 }
 
 /* =============================== PROJEKTILE / FX =============================== */
-function addFx(f) { f.t = 0; if (G.fx.length < 700) G.fx.push(f); }
-function sparks(x, y, n, c) { for (let i = 0; i < n; i++) { const a = Math.random() * TAU, s = 40 + Math.random() * 160; addFx({ k: 'spark', x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: .3 + Math.random() * .5, c }); } }
+function addFx(f) { f.t = 0; if (G.fx.length < 700) G.fx.push(f); if (G.netHost && f.k !== 'spark') hostCaptureFx(f); }
+function sparks(x, y, n, c) { if (G.netHost && NET.peer) NET.fxq.push({ k: 'sparksE', x: Math.round(x), y: Math.round(y), n, c }); for (let i = 0; i < n; i++) { const a = Math.random() * TAU, s = 40 + Math.random() * 160; addFx({ k: 'spark', x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: .3 + Math.random() * .5, c }); } }
 function updProj(dt) {
   for (const p of G.proj) {
     if (p.k === 'grenade' || p.k === 'spit' || p.k === 'missile') {
@@ -1422,10 +1499,12 @@ function simStep(dt) {
 }
 function checkEnd() {
   if (G.over) return;
-  for (let o = 0; o < 2; o++) {
-    if (!G.blds.some(b => b.owner === o && !b.dead)) {
-      G.over = true; G.winner = 1 - o; G.endT = 0;
-      if (typeof onGameOver === 'function') onGameOver(G.winner === ME);
+  const alive = new Set();
+  for (const b of G.blds) if (!b.dead) alive.add(teamOf(b.owner));
+  for (const t of [0, 1]) {
+    if (!alive.has(t)) {
+      G.over = true; G.winTeam = 1 - t; G.winner = G.P.findIndex((p, o) => teamOf(o) === 1 - t); G.endT = 0;
+      if (typeof onGameOver === 'function') onGameOver(G.winTeam === teamOf(ME));
       return;
     }
   }
@@ -1463,7 +1542,7 @@ class AI {
     if (doneHQ.length > 1 && G.frame % 3 === 0) this.balance(doneHQ, workers);
     // Arbeiter ausbilden
     const queuedW = hqs.reduce((s, h) => s + h.queue.length, 0);
-    const wantW = Math.min(cfg.maxW * Math.max(1, doneHQ.length) + 6, 58);
+    const wantW = Math.min(cfg.maxW * Math.max(1, doneHQ.length) + 6, this.coop ? 70 : 58);
     for (const hq of doneHQ) if (hq.queue.length < 1 && workers.length + queuedW < wantW) train(hq, F.worker);
     // Versorgung
     const prodN = blds.filter(b => b.done && (b.type === 'barracks' || b.type === 'factory' || b.type === 'airbase' || b.type === 'hq')).length;
@@ -1477,8 +1556,7 @@ class AI {
     if (cnt('extractor') < 2 && G.t > cfg.gas2 && dn('barracks')) this.build('extractor');
     if (cfg.research && cnt('lab') < 1 && dn('factory') >= 1) this.build('lab');
     // Luftbedrohung einschätzen
-    const e = 1 - o;
-    const eAir = G.units.reduce((s, u) => s + (u.owner === e && !u.dead && u.d.air ? u.d.supply : 0), 0);
+    const eAir = G.units.reduce((s, u) => s + (foe(u.owner, o) && !u.dead && u.d.air ? u.d.supply : 0), 0);
     const myAA = units.reduce((s, u) => s + (!u.d.worker && u.d.aa ? u.d.supply : 0), 0);
     this.needAA = eAir > 0 && myAA < eAir * 1.3 + 2;
     if (cnt('turret') < cfg.turret + (eAir >= 6 ? 1 : 0) && G.t > 330 && dn('barracks')) this.build('turret');
@@ -1602,7 +1680,7 @@ class AI {
     return [b.cx - 1, b.cy - 1];
   }
   control(army, blds) {
-    const o = this.o, e = 1 - o;
+    const o = this.o;
     const sup = army.reduce((s, u) => s + u.d.supply, 0);
     const m = this.main; if (!m) return;
     const toC = Math.atan2(WH / 2 - m.y, WW / 2 - m.x);
@@ -1610,14 +1688,14 @@ class AI {
     // Bedrohung an eigenen Gebäuden?
     let threat = null, tN = 0;
     for (const u of G.units) {
-      if (u.owner !== e || u.dead || u.inside) continue;
+      if (!foe(u.owner, o) || u.dead || u.inside) continue;
       for (const b of blds) if (hyp(u.x - b.x, u.y - b.y) < 480) { threat = threat || u; tN += u.d.supply; break; }
     }
     if (threat && (!this.attacking || tN >= sup * .5)) {
       if (this.attacking && tN >= sup * .5) this.attacking = false;
       // Gruppe des nächsten Bedrohers sammeln: Schwerpunkt aller nahen Gegner
       let tx = 0, ty = 0, tn = 0;
-      for (const u of G.units) if (u.owner === e && !u.dead && hyp(u.x - threat.x, u.y - threat.y) < 400) { tx += u.x; ty += u.y; tn++; }
+      for (const u of G.units) if (foe(u.owner, o) && !u.dead && hyp(u.x - threat.x, u.y - threat.y) < 400) { tx += u.x; ty += u.y; tn++; }
       tx /= tn; ty /= tn;
       const def = army.filter(u => {
         if (u.order && u.order.t === 'attack' && u.order.tgt && !u.order.tgt.dead && u.order.tgt.k === 'u') return false;
@@ -1630,9 +1708,9 @@ class AI {
     }
     if (!this.attacking) {
       for (const u of army) if (!u.order && hyp(u.x - gx, u.y - gy) > 160) cmdMove([u], gx + (Math.random() - .5) * 90, gy + (Math.random() - .5) * 90, true);
-      const need = this.cfg.base + this.waveN * this.cfg.inc;
-      const eSup = G.units.reduce((s, u) => s + (u.owner === e && !u.dead && !u.d.worker ? u.d.supply : 0), 0)
-        + G.blds.reduce((s, b) => s + (b.owner === e && b.type === 'turret' && b.done ? 3 : 0), 0);
+      const need = (this.cfg.base + this.waveN * this.cfg.inc) * (this.coop ? 1.4 : 1);
+      const eSup = G.units.reduce((s, u) => s + (foe(u.owner, o) && !u.dead && !u.d.worker ? u.d.supply : 0), 0)
+        + G.blds.reduce((s, b) => s + (foe(b.owner, o) && b.type === 'turret' && b.done ? 3 : 0), 0);
       const gathered = army.filter(u => hyp(u.x - gx, u.y - gy) < 420).reduce((s, u) => s + u.d.supply, 0);
       const ratio = this.cfg.ratio * Math.max(.45, 1 - Math.max(0, G.t - this.cfg.first) / 700);
       if (G.t >= this.cfg.first && G.t > this.cool && ((sup >= need && sup >= eSup * ratio) || sup >= 64) && gathered >= sup * .7) {
@@ -1647,8 +1725,8 @@ class AI {
       const ax = army.reduce((s, u) => s + u.x, 0) / army.length, ay = army.reduce((s, u) => s + u.y, 0) / army.length;
       let retreat = sup < this.waveSup * .3;
       if (this.cfg.smart && !retreat) {
-        let near = 0; for (const u of G.units) if (u.owner === e && !u.dead && !u.d.worker && hyp(u.x - ax, u.y - ay) < 520) near += u.d.supply;
-        for (const b of G.blds) if (b.owner === e && b.type === 'turret' && b.done && hyp(b.x - ax, b.y - ay) < 520) near += 3;
+        let near = 0; for (const u of G.units) if (foe(u.owner, o) && !u.dead && !u.d.worker && hyp(u.x - ax, u.y - ay) < 520) near += u.d.supply;
+        for (const b of G.blds) if (foe(b.owner, o) && b.type === 'turret' && b.done && hyp(b.x - ax, b.y - ay) < 520) near += 3;
         const mine = army.filter(u => hyp(u.x - ax, u.y - ay) < 520).reduce((s, u) => s + u.d.supply, 0);
         if (near > mine * 1.35 && mine < sup * .9 + 1) retreat = true;
       }
@@ -1660,7 +1738,7 @@ class AI {
       // geschlossen vorrücken: Vorauseilende warten
       for (const u of army) if (u.gs && G.t - this.launch > 40) u.gs = 0;
       let tgt = null, bd = 1e9;
-      for (const b of G.blds) if (b.owner === e && !b.dead) { const d = hyp(b.x - ax, b.y - ay); if (d < bd) { bd = d; tgt = b; } }
+      for (const b of G.blds) if (foe(b.owner, o) && !b.dead) { const d = hyp(b.x - ax, b.y - ay); if (d < bd) { bd = d; tgt = b; } }
       if (!tgt) return;
       const idle = army.filter(u => !u.order || u.order.t === 'move');
       if (idle.length) cmdMove(idle, tgt.x, tgt.y, true);
@@ -1671,7 +1749,7 @@ class AI {
 }
 
 /* =============================== VERSION & SPEICHERN =============================== */
-const VERSION = '1.2.1';
+const VERSION = '1.3.0';
 const SAVE_FORMAT = 1;
 const SAVE_KEYS = { manual: 'novafront_save_manual', auto: 'novafront_save_auto' };
 const SER_SKIP = new Set(['d', 'path', 'pathTgt', 'fake', 'lastAtk']);
@@ -1686,11 +1764,11 @@ function serVal(v, top) {
 function serializeGame() {
   return {
     format: SAVE_FORMAT, version: VERSION, at: Date.now(),
-    t: G.t, nid: G.nid, diff: G.diff, speed: G.speed, hint: G.hint || 0,
+    t: G.t, nid: G.nid, diff: G.diff, speed: G.speed, hint: G.hint || 0, mode: G.mode, team: G.team,
     P: G.P, home: G.home, bases: G.bases, rocks: G.rocks,
     explored: Array.from(G.explored).join(''),
     ents: G.ents.filter(e => !e.dead).map(e => serVal(e, true)),
-    ais: G.ais.map(a => ({ o: a.o, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
+    ais: G.ais.map(a => ({ o: a.o, coop: !!a.coop, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
     cam: { x: cam.x, y: cam.y, z: cam.z },
     groups: Object.fromEntries(Object.entries(G.groups || {}).map(([k, v]) => [k, v.filter(e => !e.dead).map(e => e.id)]))
   };
@@ -1706,7 +1784,8 @@ function loadGameData(data) {
   if (!data || data.format !== SAVE_FORMAT) throw new Error('Speicherstand ist nicht kompatibel');
   G = { t: data.t, nid: data.nid, ents: [], units: [], blds: [], res: [], proj: [], fx: [], P: data.P, sel: [], vis: new Uint8Array(NN), explored: new Uint8Array(NN),
     fogT: 0, over: false, paused: false, speed: data.speed || 1, diff: data.diff || 'normal', ais: [], alerts: {}, pings: [], reveal: false,
-    autoplay: false, endT: 0, rocks: data.rocks, hint: data.hint || 0, frame: 0, home: data.home, bases: data.bases };
+    autoplay: false, endT: 0, rocks: data.rocks, hint: data.hint || 0, frame: 0, home: data.home, bases: data.bases, mode: data.mode || 'single', team: data.team || [0, 1], humans: [0] };
+  ME = 0;
   blocked.fill(0);
   for (const [x, y] of G.rocks) blocked[cidx(x, y)] = 1;
   const ex = data.explored || '';
@@ -1731,7 +1810,8 @@ function loadGameData(data) {
   for (const r of G.res) setCells(r.bx, r.by, r.w, r.h, 3);
   for (const b of G.blds) setCells(b.bx, b.by, b.w, b.h, 2);
   for (const d of data.ais || []) { const a = new AI(d.o, d.diff); Object.assign(a, d); a.cfg = AICFG[d.diff] || AICFG.normal; G.ais.push(a); }
-  G.P[1].carry = AICFG[G.diff].carry;
+  for (const a of G.ais) G.P[a.o].carry = AICFG[a.diff].carry;
+  setupColors();
   G.groups = {};
   for (const [k, ids] of Object.entries(data.groups || {})) G.groups[k] = ids.map(id => byId.get(id)).filter(e => e && e.k !== 'r');
   tallySupply();
@@ -1742,7 +1822,7 @@ function storeGet(key) { try { const s = localStorage.getItem(key); return s ? J
 function storeSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }
 function storeDel(key) { try { localStorage.removeItem(key); } catch (e) { } }
 function saveGame(slot) {
-  if (!G || G.over || G.autoplay) return false;
+  if (!G || G.over || G.autoplay || G.mode !== 'single') return false;
   const ok = storeSet(SAVE_KEYS[slot], serializeGame());
   updateSaveUI();
   return ok;
@@ -1862,6 +1942,7 @@ function genTerrain() {
   m.fillStyle = '#4b5057'; for (const [x, y] of rk) m.fillRect(x * 2, y * 2, 2, 2);
 }
 function decal(x, y, r) {
+  if (G && G.netHost && NET.peer) NET.fxq.push({ k: 'decalE', x: Math.round(x), y: Math.round(y), r: Math.round(r) });
   if (!terrCtx) return;
   const g = terrCtx.createRadialGradient(x, y, 0, x, y, r * 1.4);
   g.addColorStop(0, 'rgba(8,6,4,.55)'); g.addColorStop(.6, 'rgba(10,8,6,.25)'); g.addColorStop(1, 'rgba(0,0,0,0)');
@@ -2079,7 +2160,7 @@ function render(now) {
   const selSet = new Set(G.sel);
   for (const e of G.sel) {
     if (e.dead || e.k === 'r') continue;
-    const c = e.owner === ME ? '93,255,154' : '255,90,60';
+    const c = friendly(e.owner) ? '93,255,154' : '255,90,60';
     ctx.strokeStyle = `rgba(${c},.95)`; ctx.lineWidth = 1.6;
     if (e.k === 'u') { ctx.beginPath(); ctx.ellipse(e.x, e.y + 2, e.r + 4, e.r + 2, 0, 0, TAU); ctx.stroke(); }
     else { ctx.beginPath(); ctx.roundRect(e.bx * CELL - 3, e.by * CELL - 3, e.w * CELL + 6, e.h * CELL + 6, 10); ctx.stroke(); }
@@ -2087,7 +2168,7 @@ function render(now) {
   // Gebäude
   for (const b of G.blds) {
     if (b.dead || !inView(b.x, b.y, 120)) continue;
-    if (b.owner !== ME && !G.reveal && !b.seen) continue;
+    if (!friendly(b.owner) && !G.reveal && !b.seen) continue;
     const W = b.w * CELL, H = b.h * CELL;
     ctx.save(); ctx.translate(b.bx * CELL, b.by * CELL);
     if (!b.done) ctx.globalAlpha = .45 + .55 * b.prog;
@@ -2103,14 +2184,14 @@ function render(now) {
   // Abbaustrahlen
   for (const u of G.units) {
     if (!u.mining || u.dead || !inView(u.x, u.y, 40)) continue;
-    if (u.owner !== ME && !isVis(u.x, u.y) && !G.reveal) continue;
-    if (Math.random() < .3) { const a = u.ang; addFx({ k: 'spark', x: u.x + Math.cos(a) * (u.r + 6), y: u.y + Math.sin(a) * (u.r + 6), vx: (Math.random() - .5) * 50, vy: (Math.random() - .5) * 50, life: .25, c: u.order && u.order.t === 'harvest' && u.order.tgt.k === 'r' ? '120,240,255' : '255,220,120' }); }
+    if (!friendly(u.owner) && !isVis(u.x, u.y) && !G.reveal) continue;
+    if (Math.random() < .3) { const a = u.ang; addFx({ k: 'spark', x: u.x + Math.cos(a) * (u.r + 6), y: u.y + Math.sin(a) * (u.r + 6), vx: (Math.random() - .5) * 50, vy: (Math.random() - .5) * 50, life: .25, c: u.order && u.order.t === 'harvest' && u.order.tgt && u.order.tgt.k === 'r' ? '120,240,255' : '255,220,120' }); }
   }
   // Bodeneinheiten
   const airU = [];
   for (const u of G.units) {
     if (u.dead || u.inside || !inView(u.x, u.y, 50)) continue;
-    if (u.owner !== ME && !G.reveal && !isVis(u.x, u.y)) continue;
+    if (!friendly(u.owner) && !G.reveal && !isVis(u.x, u.y)) continue;
     if (u.d.air) { airU.push(u); continue; }
     ctx.save(); ctx.translate(u.x, u.y);
     drawUnitShape(ctx, u.type, u.owner, u.ang, u.anim, u);
@@ -2171,7 +2252,7 @@ function render(now) {
     if (e.dead || e.k === 'r' || e.inside || !inView(e.x, e.y, 60)) continue;
     const sel = selSet.has(e);
     if (!sel && e.hp >= e.maxhp && (e.k !== 'b' || e.done)) continue;
-    if (e.owner !== ME && !G.reveal && !isVisE(e)) continue;
+    if (!friendly(e.owner) && !G.reveal && !isVisE(e)) continue;
     const w = e.k === 'u' ? Math.max(18, e.r * 2.2) : e.w * CELL * .8;
     const x = e.x - w / 2, y = e.k === 'u' ? e.y - e.r - 9 - (e.d.air ? 7 : 0) : e.by * CELL - 9;
     const f = clamp(e.hp / e.maxhp, 0, 1);
@@ -2237,14 +2318,14 @@ function renderMini() {
   for (const r of G.res) { if (r.dead || (!G.explored[cidx(r.bx, r.by)] && !G.reveal)) continue; mctx.fillStyle = r.type === 'gas' ? '#86ff70' : '#62efff'; mctx.fillRect(r.bx * CELL * s, r.by * CELL * s, Math.max(2, r.w * CELL * s), Math.max(2, r.h * CELL * s)); }
   if (!G.reveal) { mctx.globalAlpha = .8; mctx.drawImage(fogC, 0, 0, GW, GH, 0, 0, W, W); mctx.globalAlpha = 1; }
   for (const b of G.blds) {
-    if (b.dead || (b.owner !== ME && !b.seen && !G.reveal)) continue;
-    mctx.fillStyle = b.owner === ME ? '#3db8ff' : '#ff5236';
+    if (b.dead || (!friendly(b.owner) && !b.seen && !G.reveal)) continue;
+    mctx.fillStyle = b.owner === ME ? '#3db8ff' : friendly(b.owner) ? '#4fe08a' : '#ff5236';
     mctx.fillRect(b.bx * CELL * s - 1, b.by * CELL * s - 1, b.w * CELL * s + 2, b.h * CELL * s + 2);
   }
   const us = Math.max(2, 2.2 * DPR);
   for (const u of G.units) {
-    if (u.dead || u.inside || (u.owner !== ME && !G.reveal && !isVis(u.x, u.y))) continue;
-    mctx.fillStyle = u.owner === ME ? (G.sel.includes(u) ? '#ffffff' : '#7fd4ff') : '#ff7a5c';
+    if (u.dead || u.inside || (!friendly(u.owner) && !G.reveal && !isVis(u.x, u.y))) continue;
+    mctx.fillStyle = u.owner === ME ? (G.sel.includes(u) ? '#ffffff' : '#7fd4ff') : friendly(u.owner) ? '#8dffb8' : '#ff7a5c';
     mctx.fillRect(u.x * s - us / 2, u.y * s - us / 2, us, us);
   }
   for (const p of G.pings) { const k = p.t % 1; mctx.strokeStyle = `rgba(255,80,50,${1 - k})`; mctx.lineWidth = 2 * DPR; mctx.beginPath(); mctx.arc(p.x * s, p.y * s, (4 + k * 14) * DPR, 0, TAU); mctx.stroke(); }
@@ -2677,6 +2758,402 @@ function drawMyzelBld(c, type, owner, W, H, b) {
   if (b.research || (b.queue && b.queue.length && b.queue[0].started)) glowDot(c, W - 10, 10, 6, '170,255,90', (Math.sin(t * 8) + 1) / 2);
 }
 
+/* =============================== MEHRSPIELER =============================== */
+// Server-Adresse (Cloudflare Worker). Kann zum Testen mit ?server=ws://… überschrieben werden.
+const MP_SERVER_DEFAULT = '';
+const NET = { mode: null, ws: null, room: '', slot: -1, peer: false, ping: 0, inGame: false, setup: null, lastSnap: 0, fxq: [], prq: [], sndq: [], noteq: [],
+  peerInfo: null, my: { fac: 0 }, opts: { mode: 'versus', diff: 'normal', aifac: 'r' }, reconnect: 0, closing: false, retryT: null, pingT: null, lastMsg: 0, takeover: null };
+function mpServer() {
+  try { const q = new URLSearchParams(location.search).get('server'); if (q) return q.replace(/\/$/, ''); } catch (e) { }
+  return MP_SERVER_DEFAULT;
+}
+function mpOn() { return !!NET.mode; }
+function guestOwner() { return 1; }
+
+/* ------------------------------ BEFEHLE ------------------------------ */
+const idsOf = list => list.filter(e => e && !e.dead).map(e => e.id);
+function issue(c) {
+  if (NET.mode === 'guest') { netSend({ t: 'cmd', c }); return; }
+  execCmd(ME, c);
+}
+function execCmd(owner, c) {
+  const map = new Map(); for (const e of G.ents) if (!e.dead) map.set(e.id, e);
+  const own = ids => (ids || []).map(id => map.get(id)).filter(e => e && e.owner === owner);
+  const tgt = c.tid != null ? map.get(c.tid) || null : null;
+  const units = own(c.ids).filter(e => e.k === 'u');
+  const blds = own(c.bids).filter(e => e.k === 'b');
+  switch (c.c) {
+    case 'move': cmdMove(units, +c.x || 0, +c.y || 0, !!c.a); break;
+    case 'atk': if (tgt && foe(tgt.owner, owner)) cmdAttack(units, tgt); break;
+    case 'harv': if (tgt && (tgt.k === 'r' || (tgt.type === 'extractor' && tgt.owner === owner))) cmdHarvest(units, tgt); break;
+    case 'rep': if (tgt && tgt.owner === owner) cmdRepair(units, tgt); break;
+    case 'res': if (tgt && tgt.owner === owner && tgt.k === 'b' && !tgt.done) cmdResume(units, tgt); break;
+    case 'enter': if (tgt && tgt.owner === owner && tgt.type === 'bunker') cmdEnter(units, tgt); break;
+    case 'stop': cmdStop(units); break;
+    case 'hold': cmdHold(units); break;
+    case 'unload': blds.forEach(unloadBunker); break;
+    case 'train': {
+      if (!UT[c.type] || !FAC[G.P[owner].fac].prod[(blds[0] || {}).type] || !FAC[G.P[owner].fac].prod[blds[0].type].includes(c.type)) break;
+      const cand = blds.filter(x => x.done).sort((p, q) => p.queue.length - q.queue.length)[0];
+      if (cand) train(cand, c.type);
+      break;
+    }
+    case 'cq': { const b = blds[0]; if (b) cancelQueue(b, c.i | 0); break; }
+    case 'rs': { if (!RS[c.key] || !FAC[G.P[owner].fac].research.includes(c.key)) break; const lab = blds.find(x => x.type === 'lab' && x.done && !x.research); if (lab) startResearch(lab, c.key); break; }
+    case 'crs': { const b = blds[0]; if (b) cancelResearch(b); break; }
+    case 'cb': blds.filter(x => !x.done).forEach(cancelBuilding); break;
+    case 'rally': for (const b of blds) if (FAC[G.P[owner].fac].prod[b.type]) b.rally = { x: +c.x || b.x, y: +c.y || b.y, ent: tgt && tgt !== b ? tgt : null }; break;
+    case 'build': {
+      const d = BT[c.type]; const w = own([c.wid])[0];
+      if (!d || !w || w.k !== 'u' || !w.d.worker) break;
+      if (!reqMet(owner, c.type) || !afford(owner, d.cost)) break;
+      if (!canPlace(c.type, c.bx | 0, c.by | 0, owner === ME ? ME : owner, false)) break;
+      pay(owner, d.cost); clearOrder(w);
+      w.order = { t: 'build', type: c.type, bx: c.bx | 0, by: c.by | 0, site: null };
+      break;
+    }
+  }
+}
+
+/* ------------------------------ BENACHRICHTIGUNGEN ------------------------------ */
+function ownerToast(owner, msg, cls) {
+  if (owner === ME) toast(msg, cls);
+  else if (NET.mode === 'host' && owner === NET.guestO && NET.peer) NET.noteq.push({ k: 'toast', m: msg, c: cls || '' });
+}
+function ownerSfx(owner, name, src) {
+  if (owner === ME) sfx(name, src);
+  else if (NET.mode === 'host' && owner === NET.guestO && NET.peer) NET.noteq.push({ k: 'sfx', n: name });
+}
+function ownerAttacked(t) {
+  if (t.owner === ME) underAttack(t);
+  else if (NET.mode === 'host' && t.owner === NET.guestO && NET.peer) {
+    if (G.t - (NET.atkT || -99) < 10) return; NET.atkT = G.t;
+    NET.noteq.push({ k: 'atk', x: t.x | 0, y: t.y | 0, b: t.k === 'b' ? 1 : 0, w: t.d.worker ? 1 : 0 });
+  }
+}
+
+/* ------------------------------ SNAPSHOT (Gastgeber) ------------------------------ */
+const r1 = v => Math.round(v * 10) / 10;
+function makeSnapshot() {
+  const s = { t: 's', tm: r1(G.t), P: G.P.map(p => [p.cr | 0, p.gas | 0, p.supUsed, p.supCap, Object.keys(p.up).join(','), Object.keys(p.resq).filter(k => p.resq[k]).join(','), p.stats]), u: [], b: [], r: [], fx: NET.fxq, pr: NET.prq, nt: NET.noteq };
+  NET.fxq = []; NET.prq = []; NET.noteq = [];
+  for (const u of G.units) {
+    if (u.dead) continue;
+    const o = u.order;
+    let ot = '', tid = 0, ex = '';
+    if (o) { ot = o.t; const tg = o.tgt || o.site; tid = tg && tg.id ? tg.id : 0; ex = o.t === 'build' ? o.type : o.t === 'harvest' ? o.ph : ''; }
+    const fl = (u.moving ? 1 : 0) | (u.mining ? 2 : 0) | (u.fired > 0 ? 4 : 0) | (u.carryT === 'gas' ? 8 : 0);
+    s.u.push([u.id, u.type, u.owner, Math.round(u.x), Math.round(u.y), Math.round(u.ang * 100), Math.ceil(u.hp), fl, ot, tid, ex, u.carry, u.inside ? u.inside.id : 0]);
+  }
+  for (const b of G.blds) {
+    if (b.dead) continue;
+    s.b.push([b.id, b.type, b.owner, b.bx, b.by, Math.ceil(b.hp), b.done ? 1 : 0, Math.round(b.prog * 1000), b.queue.map(q => [q.type, r1(q.t), q.started ? 1 : 0]),
+      b.research ? [b.research.key, r1(b.research.t)] : 0, b.rally ? [Math.round(b.rally.x), Math.round(b.rally.y), b.rally.ent ? b.rally.ent.id : 0] : 0, b.cargo.map(c => c.id), Math.round(b.ang * 100), b.fired > 0 ? 1 : 0]);
+  }
+  for (const r of G.res) if (!r.dead) s.r.push([r.id, r.amount]);
+  return s;
+}
+function hostCaptureFx(f) {
+  if (NET.mode !== 'host' || !NET.peer || NET.fxq.length > 250) return;
+  if (f.k === 'mark') return;
+  const c = {}; for (const k in f) { const v = f[k]; c[k] = typeof v === 'number' ? Math.round(v * 100) / 100 : v; }
+  NET.fxq.push(c);
+}
+function hostCaptureProj(p) {
+  if (NET.mode !== 'host' || !NET.peer) return;
+  if (p.tgt) NET.prq.push({ k: p.k, x: Math.round(p.x), y: Math.round(p.y), tid: p.tgt.id, lx: Math.round(p.lx), ly: Math.round(p.ly), sp: p.sp, o: p.owner });
+  else NET.prq.push({ k: p.k, sx: Math.round(p.sx), sy: Math.round(p.sy), tx: Math.round(p.tx), ty: Math.round(p.ty), dur: r1(p.dur * 100) / 100, drop: p.drop ? 1 : 0, o: p.owner, sp: p.d.splash || 30 });
+}
+function hostCaptureSfx(name, src) {
+  if (NET.mode !== 'host' || !NET.peer || NET.sndq.length > 30) return;
+  if (!src || src.x == null) return;
+  NET.fxq.push({ k: 'snd', n: name, x: Math.round(src.x), y: Math.round(src.y), t: 0, life: 0 });
+}
+
+/* ------------------------------ SNAPSHOT (Gast) ------------------------------ */
+function applySnapshot(s) {
+  const map = new Map(); for (const e of G.ents) map.set(e.id, e);
+  const prevT = G.t;
+  G.t = s.tm;
+  s.P.forEach((a, o) => {
+    const P = G.P[o]; if (!P) return;
+    P.cr = a[0]; P.gas = a[1]; P.supUsed = a[2]; P.supCap = a[3];
+    P.up = {}; if (a[4]) a[4].split(',').forEach(k => P.up[k] = true);
+    P.resq = {}; if (a[5]) a[5].split(',').forEach(k => P.resq[k] = true);
+    P.wl = (P.up.w1 ? 1 : 0) + (P.up.w2 ? 1 : 0); P.al = (P.up.a1 ? 1 : 0) + (P.up.a2 ? 1 : 0);
+    if (a[6]) P.stats = a[6];
+  });
+  const seen = new Set();
+  // Gebäude zuerst (Ziele für Einheiten)
+  for (const a of s.b) {
+    const [id, type, owner, bx, by, hp, done, prog, queue, rs, rally, cargo, ang, fired] = a;
+    let b = map.get(id);
+    if (!b || b.k !== 'b') {
+      if (b) { b.dead = true; }
+      const keepNid = G.nid; b = mkBld(type, owner, bx, by, !!done); G.nid = keepNid; b.id = id; map.set(id, b);
+      b.seen = friendly(owner);
+    }
+    seen.add(id);
+    const wasDone = b.done;
+    b.hp = hp; b.done = !!done; b.prog = prog / 1000; b.ang = ang / 100; b.fired = fired ? .1 : 0;
+    b.queue = queue.map(q => ({ type: q[0], t: q[1], started: !!q[2] }));
+    b.research = rs ? { key: rs[0], t: rs[1] } : null;
+    b.rallyRaw = rally;
+    b.cargoIds = cargo;
+    if (!wasDone && b.done && owner === ME) { toast(entName(b) + ' fertiggestellt', 'good'); sfx('done', b); }
+  }
+  for (const a of s.u) {
+    const [id, type, owner, x, y, ang, hp, fl, ot, tid, ex, carry, ins] = a;
+    let u = map.get(id);
+    if (!u || u.k !== 'u') {
+      const keepNid = G.nid; u = mkUnit(type, owner, x, y); G.nid = keepNid; u.id = id; map.set(id, u);
+      u.ox = u.nx = x; u.oy = u.ny = y; u.it = 1;
+      if (owner === ME && G.t > 1) sfx('ready', u);
+    }
+    seen.add(id);
+    const jump = hyp(x - u.x, y - u.y) > 160;
+    u.ox = jump ? x : u.x; u.oy = jump ? y : u.y; u.nx = x; u.ny = y; u.it = jump ? 1 : 0;
+    u.oang = u.ang; u.nang = ang / 100;
+    if (owner === ME && hp < u.hp - .5) underAttack(u);
+    u.hp = hp; u.moving = !!(fl & 1); u.mining = !!(fl & 2); if (fl & 4) u.fired = .12;
+    u.carry = carry; u.carryT = fl & 8 ? 'gas' : 'cr';
+    u.inside = ins ? map.get(ins) || null : null;
+    if (u.inside) { u.x = u.ox = u.nx = u.inside.x; u.y = u.oy = u.ny = u.inside.y; }
+    if (!ot) u.order = null;
+    else { const tg = tid ? map.get(tid) || null : null; u.order = { t: ot, tgt: tg, site: ot === 'build' ? tg : null, type: ot === 'build' ? ex : undefined, ph: ot === 'harvest' ? ex : undefined }; }
+  }
+  for (const b of G.blds) {
+    if (!seen.has(b.id)) continue;
+    b.cargo = (b.cargoIds || []).map(id => map.get(id)).filter(Boolean);
+    const r = b.rallyRaw; b.rally = r ? { x: r[0], y: r[1], ent: r[2] ? map.get(r[2]) || null : null } : null;
+  }
+  // verschwundene Einheiten/Gebäude entfernen
+  for (const e of G.ents) {
+    if (e.k === 'r' || e.dead) continue;
+    if (!seen.has(e.id)) {
+      if (e.k === 'b') { if (e.owner === ME) toast(entName(e) + ' zerstört', 'bad'); removeBld(e); }
+      e.dead = true;
+    }
+  }
+  const rs = new Map(s.r);
+  for (const r of G.res) { if (r.dead) continue; if (!rs.has(r.id)) { r.dead = true; setCells(r.bx, r.by, r.w, r.h, 0); } else r.amount = rs.get(r.id); }
+  G.ents = G.ents.filter(e => !e.dead); G.units = G.units.filter(e => !e.dead); G.blds = G.blds.filter(e => !e.dead); G.res = G.res.filter(e => !e.dead);
+  if (G.sel.some(e => e.dead)) { G.sel = G.sel.filter(e => !e.dead); uiDirty(); }
+  // Effekte, Projektile, Hinweise
+  for (const f of s.fx) {
+    if (f.k === 'snd') { sfx(f.n, { x: f.x, y: f.y }); continue; }
+    if (f.k === 'sparksE') { sparks(f.x, f.y, f.n, f.c); continue; }
+    if (f.k === 'decalE') { decal(f.x, f.y, f.r); continue; }
+    f.t = 0; if (G.fx.length < 700) G.fx.push(f);
+  }
+  for (const p of s.pr) {
+    if (p.tid) { const t = map.get(p.tid); G.proj.push({ k: p.k, x: p.x, y: p.y, tgt: t || null, lx: p.lx, ly: p.ly, sp: p.sp, owner: p.o, d: { splash: 0 }, vis: 1 }); }
+    else G.proj.push({ k: p.k, x: p.sx, y: p.sy, sx: p.sx, sy: p.sy, tx: p.tx, ty: p.ty, t: 0, dur: p.dur, drop: p.drop, owner: p.o, d: { splash: p.sp }, vis: 1 });
+  }
+  for (const n of s.nt) {
+    if (n.k === 'toast') toast(n.m, n.c);
+    else if (n.k === 'sfx') sfx(n.n);
+    else if (n.k === 'atk') { const fake = { x: n.x, y: n.y, k: n.b ? 'b' : 'u', d: { worker: n.w } }; underAttack(fake); }
+  }
+  NET.snapGap = clamp(G.t - prevT, .05, .4);
+}
+function guestStep(dt) {
+  G.t += dt; G.frame++;
+  const span = NET.snapGap || .1;
+  for (const u of G.units) {
+    u.anim += dt; if (u.fired > 0) u.fired -= dt;
+    if (u.it < 1) { u.it = Math.min(1, u.it + dt / span); u.x = lerp(u.ox, u.nx, u.it); u.y = lerp(u.oy, u.ny, u.it); u.ang = u.oang + angDiff(u.oang, u.nang) * u.it; }
+    else if (u.nang !== undefined) u.ang = u.nang;
+  }
+  for (const b of G.blds) { b.anim += dt; if (b.fired > 0) b.fired -= dt; }
+  // Projektile nur als Bild
+  for (const p of G.proj) {
+    if (p.tgt !== undefined && p.tx === undefined) {
+      if (p.tgt && !p.tgt.dead) { p.lx = p.tgt.x; p.ly = p.tgt.y; }
+      const dx = p.lx - p.x, dy = p.ly - p.y, d = hyp(dx, dy), s = p.sp * dt;
+      if (d <= s + 4) p.done = true; else { p.x += dx / d * s; p.y += dy / d * s; p.a = Math.atan2(dy, dx); }
+      if (p.k === 'missile') { p.trailT = (p.trailT || 0) - dt; if (p.trailT <= 0) { p.trailT = .03; addFx({ k: 'smoke', x: p.x, y: p.y, life: .4, r: 3 }); } }
+    } else {
+      p.t += dt; const k = Math.min(1, p.t / p.dur);
+      p.x = lerp(p.sx, p.tx, k); p.y = lerp(p.sy, p.ty, k);
+      p.h = p.drop ? (1 - k) * 26 : Math.sin(k * Math.PI) * (p.k === 'shell' ? 70 : p.k === 'acid' ? 55 : 18);
+      if (k >= 1) p.done = true;
+    }
+  }
+  G.proj = G.proj.filter(p => !p.done);
+  updFx(dt);
+  G.fogT -= dt; if (G.fogT <= 0) { G.fogT = .15; updateFog(); }
+  for (const p of G.pings) p.t += dt; G.pings = G.pings.filter(p => p.t < 3);
+}
+
+/* ------------------------------ VERBINDUNG ------------------------------ */
+function netSend(obj) { if (NET.ws && NET.ws.readyState === 1) { try { NET.ws.send(JSON.stringify(obj)); } catch (e) { } } }
+function genCode() { const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; const r = new Uint32Array(6); (crypto.getRandomValues ? crypto.getRandomValues(r) : r.forEach((v, i) => r[i] = Math.random() * 1e9)); for (let i = 0; i < 6; i++) s += A[r[i] % A.length]; return s; }
+function netConnect(role, room) {
+  const srv = mpServer();
+  if (!srv) { mpStatus('Der Mehrspieler-Server ist noch nicht eingerichtet.', 'bad'); return; }
+  NET.closing = false; NET.mode = role; NET.room = room;
+  try { if (NET.ws) { NET.ws.onclose = null; NET.ws.close(); } } catch (e) { }
+  mpStatus(NET.reconnect ? 'Verbinde erneut …' : 'Verbinde mit Server …');
+  let ws;
+  try { ws = new WebSocket(srv.replace(/^http/, 'ws') + '/ws?room=' + encodeURIComponent(room) + '&role=' + (role === 'host' ? 'host' : 'guest')); }
+  catch (e) { mpStatus('Verbindung fehlgeschlagen.', 'bad'); return; }
+  NET.ws = ws;
+  ws.onopen = () => { NET.reconnect = 0; NET.lastMsg = Date.now(); clearInterval(NET.pingT); NET.pingT = setInterval(() => { netSend({ t: 'ping', ts: Date.now() }); if (Date.now() - NET.lastMsg > 9000 && NET.ws) { try { NET.ws.close(); } catch (e) { } } }, 2000); };
+  ws.onmessage = ev => { NET.lastMsg = Date.now(); let m; try { m = JSON.parse(ev.data); } catch (e) { return; } netMsg(m); };
+  ws.onclose = () => {
+    clearInterval(NET.pingT);
+    if (NET.closing || !NET.mode) return;
+    NET.peer = false; mpUpdateLobby();
+    if (NET.reconnect++ < 40) { mpStatus('Verbindung unterbrochen – verbinde erneut …', 'bad'); if (NET.inGame) toast('Verbindung unterbrochen – verbinde erneut …', 'alert'); clearTimeout(NET.retryT); NET.retryT = setTimeout(() => netConnect(NET.mode, NET.room), 1500); }
+    else { mpStatus('Keine Verbindung zum Server.', 'bad'); if (NET.inGame) netGameLost('Verbindung zum Server verloren.'); }
+  };
+}
+function netLeave() {
+  NET.closing = true; clearInterval(NET.pingT); clearTimeout(NET.retryT);
+  try { if (NET.ws) NET.ws.close(); } catch (e) { }
+  NET.ws = null; NET.mode = null; NET.peer = false; NET.inGame = false; NET.peerInfo = null; NET.takeover = null;
+  if (G) { G.netHost = false; G.netGuest = false; }
+  try { if (location.hash.startsWith('#raum-')) history.replaceState(null, '', location.pathname + location.search); } catch (e) { }
+}
+function netMsg(m) {
+  switch (m.t) {
+    case 'pong': NET.ping = Date.now() - m.ts; mpPing(); return;
+    case 'welcome':
+      NET.slot = m.slot; NET.peer = !!m.peer;
+      mpStatus(NET.mode === 'host' ? (NET.peer ? 'Mitspieler verbunden.' : 'Warte auf Mitspieler …') : (NET.peer ? 'Verbunden – warte auf den Gastgeber …' : 'Warte auf den Gastgeber …'));
+      if (NET.mode === 'guest') netSend({ t: 'hello', fac: NET.my.fac, ver: VERSION });
+      if (NET.mode === 'host' && NET.peer) netSend({ t: 'lobby', opts: NET.opts, fac: NET.my.fac, ver: VERSION, inGame: NET.inGame });
+      mpUpdateLobby();
+      return;
+    case 'peer_join':
+      NET.peer = true;
+      if (NET.mode === 'host') {
+        netSend({ t: 'lobby', opts: NET.opts, fac: NET.my.fac, ver: VERSION, inGame: NET.inGame });
+        if (NET.inGame && G && !G.over) { netSend({ t: 'start', setup: NET.setup, rejoin: true }); netEndTakeover(); toast('Mitspieler ist wieder da', 'good'); }
+      } else { netSend({ t: 'hello', fac: NET.my.fac, ver: VERSION }); }
+      mpStatus(NET.mode === 'host' ? 'Mitspieler verbunden.' : 'Gastgeber verbunden.');
+      mpUpdateLobby();
+      return;
+    case 'peer_left':
+      NET.peer = false; mpUpdateLobby();
+      if (NET.mode === 'host') {
+        mpStatus('Mitspieler hat die Verbindung verloren. Warte …', 'bad');
+        if (NET.inGame && G && !G.over) { toast('Mitspieler getrennt – die KI übernimmt, bis er zurück ist', 'alert'); netStartTakeover(); }
+      } else {
+        mpStatus('Gastgeber hat die Verbindung verloren. Warte …', 'bad');
+        if (NET.inGame) toast('Gastgeber getrennt – warte auf Rückkehr …', 'alert');
+        NET.hostGoneT = setTimeout(() => { if (!NET.peer && NET.inGame) netGameLost('Der Gastgeber ist nicht zurückgekehrt.'); }, 60000);
+      }
+      return;
+    case 'hello': // beim Gastgeber
+      NET.peerInfo = { fac: m.fac | 0, ver: m.ver };
+      if (m.ver !== VERSION) mpStatus('Unterschiedliche Versionen (du ' + VERSION + ', Mitspieler ' + m.ver + '). Bitte beide aktualisieren.', 'bad');
+      mpUpdateLobby();
+      return;
+    case 'lobby': // beim Gast
+      NET.peerInfo = { fac: m.fac | 0, ver: m.ver }; NET.opts = m.opts;
+      if (m.ver !== VERSION) mpStatus('Unterschiedliche Versionen (du ' + VERSION + ', Gastgeber ' + m.ver + '). Bitte beide aktualisieren.', 'bad');
+      mpUpdateLobby();
+      return;
+    case 'start': if (NET.mode === 'guest') netGuestStart(m.setup, m.rejoin); return;
+    case 's': if (NET.mode === 'guest' && NET.inGame && G) { clearTimeout(NET.hostGoneT); applySnapshot(m); } return;
+    case 'cmd': if (NET.mode === 'host' && NET.inGame && G && !G.over && m.c) { try { execCmd(NET.guestO, m.c); } catch (e) { console.error(e); } } return;
+    case 'end': if (NET.mode === 'guest' && G) { G.over = true; G.winTeam = m.winTeam; onGameOver(m.winTeam === teamOf(ME)); } return;
+    case 'chat': toast((NET.mode === 'host' ? 'Mitspieler' : 'Gastgeber') + ': ' + String(m.m).slice(0, 80), ''); return;
+  }
+}
+function netStartTakeover() {
+  if (NET.takeover || !G) return;
+  const ai = new AI(NET.guestO, 'normal'); ai.takeover = true; G.ais.push(ai); NET.takeover = ai;
+}
+function netEndTakeover() {
+  if (!NET.takeover || !G) return;
+  G.ais = G.ais.filter(a => a !== NET.takeover); NET.takeover = null;
+}
+function netGameLost(msg) {
+  if (!G || G.over) return;
+  toast(msg, 'alert');
+  G.over = true; UI.endPending = { win: false, at: performance.now() + 500, msg };
+}
+function netHostStart() {
+  if (NET.mode !== 'host' || !NET.peer || !NET.peerInfo) return;
+  if (NET.peerInfo.ver !== VERSION) { mpStatus('Versionen unterschiedlich – bitte beide aktualisieren.', 'bad'); return; }
+  const o = NET.opts;
+  let facs;
+  if (o.mode === 'versus') facs = [NET.my.fac, NET.peerInfo.fac];
+  else { let af = o.aifac; af = af === 'r' ? Math.floor(Math.random() * 3) : +af; facs = [NET.my.fac, NET.peerInfo.fac, af]; }
+  NET.setup = { mode: o.mode, facs, diff: o.mode === 'coop' ? o.diff : 'normal' };
+  NET.guestO = 1;
+  netSend({ t: 'start', setup: NET.setup });
+  startGame(null, { mode: o.mode, facs, diff: NET.setup.diff, me: 0, net: 'host' });
+}
+function netGuestStart(setup, rejoin) {
+  NET.setup = setup;
+  if (rejoin && NET.inGame && G && G.mode === setup.mode) { toast('Wieder verbunden', 'good'); return; }
+  startGame(null, { mode: setup.mode, facs: setup.facs, diff: setup.diff, me: 1, net: 'guest' });
+}
+function netAfterSim() {
+  if (NET.mode !== 'host' || !NET.inGame || !G) return;
+  if (G.over && !NET.endSent) { NET.endSent = true; netSend({ t: 'end', winTeam: G.winTeam }); }
+  if (!NET.peer) { NET.fxq = []; NET.prq = []; NET.noteq = []; return; }
+  if (G.t - NET.lastSnap >= .1) { NET.lastSnap = G.t; netSend(makeSnapshot()); }
+}
+
+/* ------------------------------ LOBBY-OBERFLÄCHE ------------------------------ */
+function mpStatus(txt, cls) { const el = $('mpStatus'); if (el) { el.textContent = txt; el.className = 'mpst ' + (cls || ''); } }
+function mpPing() { const el = $('mpPing'); if (el) el.textContent = NET.ping ? NET.ping + ' ms' : ''; const p2 = $('netPing'); if (p2) p2.textContent = NET.ping ? NET.ping + ' ms' : ''; }
+function mpLink() { return location.origin + location.pathname + '#raum-' + NET.room; }
+function mpUpdateLobby() {
+  if (!$('mpLobby')) return;
+  const host = NET.mode === 'host';
+  $('mpSetup').style.display = NET.mode ? 'none' : '';
+  $('mpLobby').style.display = NET.mode ? '' : 'none';
+  if (!NET.mode) return;
+  $('mpCode').textContent = NET.room;
+  $('mpLinkBox').style.display = host ? '' : 'none';
+  $('mpLinkTxt').textContent = mpLink();
+  const o = NET.opts || {};
+  $('mpModeTxt').textContent = o.mode === 'coop' ? 'Zu zweit gegen die KI (' + ({ easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[o.diff] || 'Normal') + ')' : 'Duell 1 gegen 1';
+  const pn = NET.peerInfo ? FAC[NET.peerInfo.fac].name : '–';
+  $('mpPlayers').innerHTML = `<div><b>Du</b> · ${FAC[NET.my.fac].name}${host ? ' (Gastgeber)' : ''}</div><div><b>${host ? 'Mitspieler' : 'Gastgeber'}</b> · ${NET.peer ? pn : '<i>nicht verbunden</i>'}</div>`;
+  $('btnMpStart').style.display = host ? '' : 'none';
+  $('btnMpStart').disabled = !(NET.peer && NET.peerInfo && NET.peerInfo.ver === VERSION);
+}
+function mpOpen(joinCode) {
+  showOv('ovStart', false); showOv('ovMP', true);
+  if (joinCode) { $('mpJoinCode').value = joinCode; mpStatus('Einladung zu Raum ' + joinCode + ' – wähle deine Fraktion und tippe auf „Beitreten“.'); }
+  else if (!NET.mode) mpStatus(mpServer() ? '' : 'Der Mehrspieler-Server ist noch nicht eingerichtet.', mpServer() ? '' : 'bad');
+  mpUpdateLobby();
+}
+function mpInitUI() {
+  segInit('mpFac', 'f', v => { NET.my.fac = +v; if (NET.mode === 'guest') netSend({ t: 'hello', fac: NET.my.fac, ver: VERSION }); if (NET.mode === 'host' && NET.peer) netSend({ t: 'lobby', opts: NET.opts, fac: NET.my.fac, ver: VERSION }); mpUpdateLobby(); });
+  segInit('mpMode', 'm', v => { NET.opts.mode = v; $('mpCoopOpts').style.display = v === 'coop' ? '' : 'none'; });
+  segInit('mpDiff', 'd', v => { NET.opts.diff = v; });
+  segInit('mpAiFac', 'a', v => { NET.opts.aifac = v; });
+  $('btnMP').onclick = () => { audioInit(); mpOpen(); };
+  $('btnMpCreate').onclick = () => { audioInit(); if (!mpServer()) { mpStatus('Der Mehrspieler-Server ist noch nicht eingerichtet.', 'bad'); return; } NET.peerInfo = null; netConnect('host', genCode()); mpUpdateLobby(); };
+  $('btnMpJoin').onclick = () => {
+    audioInit();
+    const code = ($('mpJoinCode').value || '').trim().toUpperCase().replace(/^.*#RAUM-/, '').replace(/[^A-Z0-9]/g, '');
+    if (code.length < 4) { mpStatus('Bitte einen gültigen Raumcode eingeben.', 'bad'); return; }
+    NET.peerInfo = null; netConnect('guest', code); mpUpdateLobby();
+  };
+  $('btnMpLeave').onclick = () => { netLeave(); mpStatus(''); mpUpdateLobby(); };
+  $('btnMpBack').onclick = () => { if (NET.mode && !NET.inGame) netLeave(); showOv('ovMP', false); showOv('ovStart', true); };
+  $('btnMpStart').onclick = () => { audioInit(); netHostStart(); };
+  $('btnMpCopy').onclick = () => {
+    const t = mpLink();
+    const ok = () => { $('btnMpCopy').textContent = 'Kopiert ✓'; setTimeout(() => $('btnMpCopy').textContent = 'Link kopieren', 1500); };
+    try { navigator.clipboard.writeText(t).then(ok, () => { $('mpLinkTxt').focus(); }); } catch (e) { }
+  };
+  $('btnMpShare').style.display = navigator.share ? '' : 'none';
+  $('btnMpShare').onclick = () => { try { navigator.share({ title: 'Nova Front', text: 'Spiel mit mir Nova Front! Raumcode ' + NET.room, url: mpLink() }).catch(() => { }); } catch (e) { } };
+  // Einladungslink #raum-CODE
+  const h = (location.hash || '').toUpperCase();
+  if (h.startsWith('#RAUM-')) setTimeout(() => mpOpen(h.slice(6).replace(/[^A-Z0-9]/g, '')), 50);
+}
+
 /* =============================== AUDIO =============================== */
 const AU = { ctx: null, on: true, last: {}, master: null, noise: null };
 function audioInit() {
@@ -2705,6 +3182,7 @@ function noise(dur, vol, freq, ftype = 'lowpass', delay = 0) {
 }
 const GLOBAL_SFX = new Set(['alert', 'done', 'ready', 'err', 'click', 'ack', 'place', 'win', 'lose']);
 function sfx(name, src) {
+  if (G && G.netHost && src && src.x != null && !GLOBAL_SFX.has(name)) hostCaptureSfx(name, src);
   if (!AU.on || !AU.ctx || !G || G.autoplay) return;
   if (src && src.x != null && !GLOBAL_SFX.has(name) && !onScreen(src, 60)) return;
   const now = AU.ctx.currentTime;
@@ -2836,12 +3314,12 @@ function statusText(u) {
   switch (o.t) {
     case 'move': return 'Bewegt sich';
     case 'amove': return 'Angriffsbewegung';
-    case 'attack': return 'Greift an: ' + entName(o.tgt);
+    case 'attack': return 'Greift an' + (o.tgt ? ': ' + entName(o.tgt) : '');
     case 'hold': return 'Hält Position';
-    case 'harvest': return o.ph === 'ret' ? (u.carryT === 'gas' ? 'Bringt Plasma zurück' : 'Bringt Kristalle zurück') : (o.tgt.k === 'b' ? 'Baut Plasma ab' : 'Baut Kristalle ab');
+    case 'harvest': return o.ph === 'ret' ? (u.carryT === 'gas' ? 'Bringt Plasma zurück' : 'Bringt Kristalle zurück') : (o.tgt && o.tgt.k === 'b' ? 'Baut Plasma ab' : 'Baut Kristalle ab');
     case 'build': return 'Baut: ' + FAC[G.P[ME].fac].bn[o.type];
-    case 'repair': return 'Repariert: ' + entName(o.tgt);
-    case 'enter': return 'Steigt ein: ' + entName(o.tgt);
+    case 'repair': return 'Repariert' + (o.tgt ? ': ' + entName(o.tgt) : '');
+    case 'enter': return 'Steigt ein' + (o.tgt ? ': ' + entName(o.tgt) : '');
   }
   return '';
 }
@@ -2864,13 +3342,13 @@ function buildPanel() {
       info.innerHTML = title(iconURL('r', e.type, -1, 0), e.d.name, 'Rohstoff') + `<div class="stats">Verbleibend: <b id="dynRes">${e.amount}</b></div><div class="empty">${e.type === 'gas' ? 'Baue einen Extraktor darauf, um Plasma zu gewinnen.' : 'Arbeiter auswählen und hier antippen zum Abbauen.'}</div>`;
     } else if (e.k === 'u') {
       const d = e.d, rng = d.range > 20 ? unitRange(e) : 'Nahkampf';
-      const sub = (e.owner === ME ? '' : 'Gegner · ') + (d.armored ? 'Gepanzert' : 'Leicht') + (d.mech ? ' · Mechanisch' : '');
+      const sub = (e.owner === ME ? '' : friendly(e.owner) ? 'Verbündeter · ' : 'Gegner · ') + (d.armored ? 'Gepanzert' : 'Leicht') + (d.mech ? ' · Mechanisch' : '');
       info.innerHTML = title(iconURL('u', e.type, e.owner), d.name, sub) +
         `<div class="irow"><div class="bar"><i id="dynHp"></i></div><span class="stats" id="dynHpT"></span></div>
          <div class="stats">Schaden <b>${d.dmg + (d.up || 0) * G.P[e.owner].wl}${d.splash ? ' (Fläche)' : ''}</b> · Rüstung <b>${d.armor + G.P[e.owner].al}</b> · Reichw. <b>${rng}</b></div>
          <div class="stats" id="dynSt"></div>`;
     } else {
-      const sub = e.owner === ME ? (e.done ? (e.d.supply ? '+' + e.d.supply + ' Versorgung' : 'Gebäude') : 'Im Bau') : 'Gegnerisches Gebäude';
+      const sub = e.owner === ME ? (e.done ? (e.d.supply ? '+' + e.d.supply + ' Versorgung' : 'Gebäude') : 'Im Bau') : friendly(e.owner) ? 'Verbündetes Gebäude' : 'Gegnerisches Gebäude';
       let html = title(iconURL('b', e.type, e.owner, G.P[e.owner].fac), entName(e), sub) + `<div class="irow"><div class="bar"><i id="dynHp"></i></div><span class="stats" id="dynHpT"></span></div>`;
       if (e.owner === ME && !e.done) html += `<div class="irow"><div class="bar prog"><i id="dynPr"></i></div><span class="stats" id="dynPrT"></span></div>`;
       if (e.owner === ME && e.done && e.queue.length) html += `<div class="queue" id="queue">` + e.queue.map((q, i) => `<button class="qi" data-i="${i}"><img src="${iconURL('u', q.type, ME)}" alt="">${i === 0 ? '<i class="pb" id="dynQ"></i>' : ''}</button>`).join('') + `</div>`;
@@ -2878,8 +3356,8 @@ function buildPanel() {
       if (e.type === 'bunker' && e.cargo) html += `<div class="queue">` + e.cargo.map(u => `<span class="qi nox"><img src="${iconURL('u', u.type, u.owner)}" alt=""></span>`).join('') + Array.from({ length: Math.max(0, e.d.cargo - e.cargo.length) }, () => '<span class="qi nox" style="opacity:.35"></span>').join('') + `</div>`;
       else if (e.owner === ME && e.done && !e.queue.length && !e.research) html += `<div class="stats">${e.d.desc}</div>`;
       info.innerHTML = html;
-      const q = $('queue'); if (q) q.querySelectorAll('.qi').forEach(btn => btn.onclick = () => { cancelQueue(e, +btn.dataset.i); sfx('click'); uiDirty(); });
-      const rc = $('rsCancel'); if (rc) rc.onclick = () => { cancelResearch(e); sfx('click'); uiDirty(); };
+      const q = $('queue'); if (q) q.querySelectorAll('.qi').forEach(btn => btn.onclick = () => { issue({ c: 'cq', bids: [e.id], i: +btn.dataset.i }); sfx('click'); uiDirty(); });
+      const rc = $('rsCancel'); if (rc) rc.onclick = () => { issue({ c: 'crs', bids: [e.id] }); sfx('click'); uiDirty(); };
     }
   } else {
     const groups = new Map();
@@ -2914,22 +3392,22 @@ function buildPanel() {
     if (army.length) {
       mkBtn({ svg: SVG.atk, label: 'Angriff', hk: 'A', cls: UI.cmdMode === 'amove' ? 'sel' : '', on: () => setCmdMode('amove') });
       mkBtn({ svg: SVG.move, label: 'Bewegen', hk: 'M', cls: UI.cmdMode === 'move' ? 'sel' : '', on: () => setCmdMode('move') });
-      mkBtn({ svg: SVG.hold, label: 'Halten', hk: 'H', on: () => { cmdHold(selOwn()); sfx('ack'); } });
+      mkBtn({ svg: SVG.hold, label: 'Halten', hk: 'H', on: () => { issue({ c: 'hold', ids: idsOf(selOwn()) }); sfx('ack'); } });
     }
     if (workers.length) {
       mkBtn({ svg: SVG.build, label: 'Bauen', hk: 'B', on: () => { UI.menu = 'build'; uiDirty(); } });
       if (F.repair) mkBtn({ svg: SVG.repair, label: 'Reparatur', hk: 'R', on: () => setCmdMode('repair') });
       if (!army.length) mkBtn({ svg: SVG.move, label: 'Bewegen', hk: 'M', on: () => setCmdMode('move') });
     }
-    mkBtn({ svg: SVG.stop, label: 'Stopp', hk: 'S', on: () => { cmdStop(selOwn()); sfx('ack'); } });
+    mkBtn({ svg: SVG.stop, label: 'Stopp', hk: 'S', on: () => { issue({ c: 'stop', ids: idsOf(selOwn()) }); sfx('ack'); } });
     return;
   }
   if (blds.length) {
     const b = blds[0];
     const same = blds.filter(x => x.type === b.type);
-    if (!b.done) { mkBtn({ svg: SVG.cancel, label: 'Abbrechen', cls: 'danger', hk: 'Esc', title: '75 % der Kosten zurück', on: () => { same.filter(x => !x.done).forEach(cancelBuilding); select([]); } }); return; }
+    if (!b.done) { mkBtn({ svg: SVG.cancel, label: 'Abbrechen', cls: 'danger', hk: 'Esc', title: '75 % der Kosten zurück', on: () => { issue({ c: 'cb', bids: idsOf(same.filter(x => !x.done)) }); select([]); } }); return; }
     if (b.type === 'bunker') {
-      mkBtn({ svg: SVG.cancel.replace('#ff7a5c', '#8affb9'), label: 'Ausladen', hk: 'U', title: 'Alle Einheiten aussteigen lassen', on: () => { same.forEach(unloadBunker); sfx('ack'); uiDirty(); } });
+      mkBtn({ svg: SVG.cancel.replace('#ff7a5c', '#8affb9'), label: 'Ausladen', hk: 'U', title: 'Alle Einheiten aussteigen lassen', on: () => { issue({ c: 'unload', bids: idsOf(same) }); sfx('ack'); uiDirty(); } });
     }
     const prod = F.prod[b.type];
     if (prod) {
@@ -2937,7 +3415,8 @@ function buildPanel() {
         const d = UT[t];
         mkBtn({ img: iconURL('u', t, ME), label: d.name, cost: d.cost, title: d.name + ': ' + d.desc + ' (' + d.supply + ' Versorgung)', on: () => {
           const cand = same.filter(x => x.done && !x.dead).sort((p, q) => p.queue.length - q.queue.length)[0];
-          const r = cand ? train(cand, t) : 'notdone';
+          const r = !cand ? 'notdone' : cand.queue.length >= 5 ? 'full' : !afford(ME, d.cost) ? (G.P[ME].cr < d.cost[0] ? 'cr' : 'gas') : 'ok';
+          if (r === 'ok') issue({ c: 'train', bids: idsOf(same), type: t });
           if (r === 'cr') { toast('Nicht genug Kristalle', 'bad'); sfx('err'); }
           else if (r === 'gas') { toast('Nicht genug Plasma', 'bad'); sfx('err'); }
           else if (r === 'full') { toast('Warteschlange voll', 'bad'); sfx('err'); }
@@ -2956,7 +3435,8 @@ function buildPanel() {
           if (lock) { toast(P.resq[k] ? 'Wird bereits erforscht' : 'Voraussetzung fehlt: ' + (R.req && !P.up[R.req] ? RS[R.req].name : F.bn[R.reqB]), 'bad'); sfx('err'); return; }
           const lab = same.find(x => x.done && !x.research);
           if (!lab) { toast('Labor ist beschäftigt', 'bad'); sfx('err'); return; }
-          const r = startResearch(lab, k);
+          const r = !afford(ME, R.cost) ? (P.cr < R.cost[0] ? 'cr' : 'gas') : 'ok';
+          if (r === 'ok') issue({ c: 'rs', bids: idsOf(same), key: k });
           if (r === 'cr') { toast('Nicht genug Kristalle', 'bad'); sfx('err'); } else if (r === 'gas') { toast('Nicht genug Plasma', 'bad'); sfx('err'); }
           uiDirty();
         } });
@@ -3059,8 +3539,7 @@ function confirmPlace() {
   if (!ws.length) ws = G.units.filter(u => u.owner === ME && u.d.worker && !u.dead);
   const w = ws.sort((a, b) => (a.order && a.order.t === 'build' ? 1e5 : 0) + hyp(a.x - cx, a.y - cy) - (b.order && b.order.t === 'build' ? 1e5 : 0) - hyp(b.x - cx, b.y - cy))[0];
   if (!w) { toast('Kein Arbeiter verfügbar', 'bad'); return; }
-  pay(ME, d.cost); clearOrder(w);
-  w.order = { t: 'build', type: p.type, bx: p.bx, by: p.by, site: null };
+  issue({ c: 'build', wid: w.id, type: p.type, bx: p.bx, by: p.by });
   addFx({ k: 'mark', x: cx, y: cy, life: .5, c: '93,255,154' });
   sfx('place');
   UI.placing = null; UI.menu = 'main'; updateMode(); uiDirty();
@@ -3077,13 +3556,13 @@ function pick(w) {
   const rad = 15 / cam.z;
   let best = null, bd = 1e9;
   for (const u of G.units) {
-    if (u.dead || u.inside || (u.owner !== ME && !G.reveal && !isVis(u.x, u.y))) continue;
+    if (u.dead || u.inside || (!friendly(u.owner) && !G.reveal && !isVis(u.x, u.y))) continue;
     const d = hyp(u.x - w.x, u.y - (w.y + (u.d.air ? 6 : 0))) - u.r - (u.d.air ? 2 : 0);
     if (d < rad && d < bd) { bd = d; best = u; }
   }
   if (best) return best;
   for (const b of G.blds) {
-    if (b.dead || (b.owner !== ME && !G.reveal && !b.seen)) continue;
+    if (b.dead || (!friendly(b.owner) && !G.reveal && !b.seen)) continue;
     if (w.x >= b.bx * CELL - 4 && w.x <= (b.bx + b.w) * CELL + 4 && w.y >= b.by * CELL - 4 && w.y <= (b.by + b.h) * CELL + 4) return b;
   }
   for (const r of G.res) {
@@ -3096,19 +3575,19 @@ function pick(w) {
 function mark(x, y, c) { addFx({ k: 'mark', x, y, life: .45, c }); }
 function setRally(blds, w, hit) {
   const prods = blds.filter(b => FAC[G.P[ME].fac].prod[b.type]);
-  for (const b of prods) b.rally = { x: hit ? hit.x : w.x, y: hit ? hit.y : w.y, ent: hit && hit !== b ? hit : null };
+  if (prods.length) issue({ c: 'rally', bids: idsOf(prods), x: Math.round(hit ? hit.x : w.x), y: Math.round(hit ? hit.y : w.y), tid: hit ? hit.id : null });
   if (prods.length) { mark(w.x, w.y, '93,255,154'); sfx('ack'); }
 }
 function commandAt(w, hit) {
   const own = selOwn(); const units = own.filter(e => e.k === 'u'); const blds = own.filter(e => e.k === 'b');
   const workers = units.filter(u => u.d.worker);
-  const isEnemy = hit && hit.owner >= 0 && hit.owner !== ME;
+  const isEnemy = hit && foe(hit.owner, ME);
   if (UI.cmdMode) {
     const m = UI.cmdMode; UI.cmdMode = null; updateMode(); uiDirty();
-    if (m === 'amove') { if (isEnemy) { cmdAttack(units, hit); mark(hit.x, hit.y, '255,90,60'); } else { cmdMove(units, w.x, w.y, true); mark(w.x, w.y, '255,120,90'); } }
-    else if (m === 'move') { cmdMove(units, w.x, w.y, false); mark(w.x, w.y, '93,255,154'); }
+    if (m === 'amove') { if (isEnemy) { issue({ c: 'atk', ids: idsOf(units), tid: hit.id }); mark(hit.x, hit.y, '255,90,60'); } else { issue({ c: 'move', ids: idsOf(units), x: w.x, y: w.y, a: 1 }); mark(w.x, w.y, '255,120,90'); } }
+    else if (m === 'move') { issue({ c: 'move', ids: idsOf(units), x: w.x, y: w.y, a: 0 }); mark(w.x, w.y, '93,255,154'); }
     else if (m === 'repair') {
-      if (hit && hit.owner === ME && ((hit.k === 'b' && hit.done) || (hit.k === 'u' && hit.d.mech)) && hit.hp < hit.maxhp) { cmdRepair(workers, hit); mark(hit.x, hit.y, '255,220,120'); }
+      if (hit && hit.owner === ME && ((hit.k === 'b' && hit.done) || (hit.k === 'u' && hit.d.mech)) && hit.hp < hit.maxhp) { issue({ c: 'rep', ids: idsOf(workers), tid: hit.id }); mark(hit.x, hit.y, '255,220,120'); }
       else { toast('Ziel: beschädigtes eigenes Gebäude oder Fahrzeug', 'bad'); sfx('err'); return true; }
     }
     else if (m === 'rally') setRally(blds, w, hit);
@@ -3116,19 +3595,20 @@ function commandAt(w, hit) {
   }
   if (units.length) {
     const army = units.filter(u => !u.d.worker);
-    if (hit && hit.k === 'r' && hit.type === 'crystal' && workers.length) { cmdHarvest(workers, hit); if (army.length) cmdMove(army, w.x, w.y, true); mark(hit.x, hit.y, '120,240,255'); }
-    else if (hit && hit.k === 'b' && hit.owner === ME && hit.type === 'extractor' && hit.done && workers.length) { cmdHarvest(workers, hit); if (army.length) cmdMove(army, w.x, w.y, true); mark(hit.x, hit.y, '120,255,100'); }
-    else if (hit && hit.k === 'b' && hit.owner === ME && !hit.done && workers.length) { cmdResume(workers, hit); mark(hit.x, hit.y, '255,220,120'); }
+    if (hit && hit.k === 'r' && hit.type === 'crystal' && workers.length) { issue({ c: 'harv', ids: idsOf(workers), tid: hit.id }); if (army.length) issue({ c: 'move', ids: idsOf(army), x: w.x, y: w.y, a: 1 }); mark(hit.x, hit.y, '120,240,255'); }
+    else if (hit && hit.k === 'b' && hit.owner === ME && hit.type === 'extractor' && hit.done && workers.length) { issue({ c: 'harv', ids: idsOf(workers), tid: hit.id }); if (army.length) issue({ c: 'move', ids: idsOf(army), x: w.x, y: w.y, a: 1 }); mark(hit.x, hit.y, '120,255,100'); }
+    else if (hit && hit.k === 'b' && hit.owner === ME && !hit.done && workers.length) { issue({ c: 'res', ids: idsOf(workers), tid: hit.id }); mark(hit.x, hit.y, '255,220,120'); }
     else if (hit && hit.k === 'b' && hit.owner === ME && hit.type === 'bunker' && hit.done && units.some(u => canGarrison(u, hit))) {
-      const n = cmdEnter(units, hit); const rest = units.filter(u => !u.order || u.order.t !== 'enter');
-      if (rest.length) cmdMove(rest, hit.x, hit.y + 70, true);
+      const gar = units.filter(u => canGarrison(u, hit)), rest = units.filter(u => !canGarrison(u, hit));
+      issue({ c: 'enter', ids: idsOf(gar), tid: hit.id });
+      if (rest.length) issue({ c: 'move', ids: idsOf(rest), x: hit.x, y: hit.y + 70, a: 1 });
       if (hit.cargo.length >= hit.d.cargo) toast(entName(hit) + ' ist voll', 'bad');
       mark(hit.x, hit.y, '93,255,154');
     }
-    else if (isEnemy) { cmdAttack(units, hit); mark(hit.x, hit.y, '255,90,60'); }
+    else if (isEnemy) { issue({ c: 'atk', ids: idsOf(units), tid: hit.id }); mark(hit.x, hit.y, '255,90,60'); }
     else {
-      if (army.length) cmdMove(army, w.x, w.y, true);
-      if (workers.length) cmdMove(workers, w.x, w.y, false);
+      if (army.length) issue({ c: 'move', ids: idsOf(army), x: w.x, y: w.y, a: 1 });
+      if (workers.length) issue({ c: 'move', ids: idsOf(workers), x: w.x, y: w.y, a: 0 });
       mark(w.x, w.y, army.length ? '255,120,90' : '93,255,154');
     }
     sfx('ack'); return true;
@@ -3401,7 +3881,7 @@ $('btnMenu').onclick = () => togglePause(true);
 $('btnResume').onclick = () => togglePause(false);
 $('btnRestart').onclick = () => { showOv('ovPause', false); startGame(); };
 $('btnQuit').onclick = () => { showOv('ovPause', false); toMenu(); };
-$('btnAgain').onclick = () => { showOv('ovEnd', false); startGame(); };
+$('btnAgain').onclick = () => { showOv('ovEnd', false); if (NET.mode && NET.ws) { NET.inGame = false; UI.running = false; document.body.classList.remove('ingame'); mpOpen(); mpStatus(NET.mode === 'host' ? 'Bereit für die nächste Runde.' : 'Warte, bis der Gastgeber die nächste Runde startet …'); } else startGame(); };
 $('btnMenu2').onclick = () => { showOv('ovEnd', false); toMenu(); };
 $('btnFull').onclick = () => {
   try {
@@ -3428,17 +3908,29 @@ $('modeX').onclick = () => { cancelModes(); };
 $('hintClose').onclick = () => { UI.hints = false; segSet('hintSel', 'v', 0); updateHint(); };
 function togglePause(force) {
   if (!G || G.over) return;
-  const p = force === undefined ? !G.paused : force;
-  G.paused = p;
+  const p = force === undefined ? !$('ovPause').classList.contains('show') : force;
+  G.paused = NET.inGame ? false : p;
+  $('mpPauseNote').style.display = NET.inGame ? '' : 'none';
   segSet('spdSel2', 's', G.speed);
   showOv('ovPause', p);
 }
-document.addEventListener('visibilitychange', () => { if (document.hidden && G && UI.running && !G.over) { autoSave(); togglePause(true); } });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && G && UI.running && !G.over && !NET.inGame) { autoSave(); togglePause(true); }
+  if (!document.hidden && NET.mode && (!NET.ws || NET.ws.readyState > 1)) { NET.reconnect = 0; netConnect(NET.mode, NET.room); }
+});
 window.addEventListener('pagehide', () => autoSave());
-function startGame(saved) {
-  if (saved) {
+function startGame(saved, mp) {
+  if (mp) {
+    newGame({ mode: mp.mode, facs: mp.facs, diff: mp.diff, me: mp.me, speed: 1 });
+    G.netHost = mp.net === 'host'; G.netGuest = mp.net === 'guest';
+    if (G.netGuest) G.ais = [];
+    NET.inGame = true; NET.endSent = false; NET.lastSnap = 0; NET.fxq = []; NET.prq = []; NET.noteq = [];
+    showOv('ovMP', false);
+  } else if (saved) {
+    if (NET.mode) netLeave();
     try { loadGameData(saved); } catch (e) { console.error(e); toast('Speicherstand konnte nicht geladen werden', 'bad'); return; }
   } else {
+    if (NET.mode) netLeave();
     let ef = UI.opts.efac;
     ef = (ef == null || ef === 'r') ? [0, 1, 2].filter(f => f !== UI.opts.fac)[Math.floor(Math.random() * 2)] : +ef;
     newGame({ fac: UI.opts.fac, efac: ef, diff: UI.opts.diff, speed: UI.opts.speed });
@@ -3458,7 +3950,9 @@ function startGame(saved) {
   segSet('spdSel2', 's', G.speed);
   updateTop(); refreshPanel(true); updateHint(); updateMode();
   if (saved) toast('Spielstand geladen · ' + fmtTime(G.t), 'good');
-  else toast('Mission: Zerstöre alle Gebäude des ' + FAC[G.P[1].fac].name + 's', '');
+  document.body.classList.toggle('mp', !!mp);
+  if (mp) toast(G.mode === 'coop' ? 'Gemeinsam gegen die KI – viel Erfolg!' : 'Duell gestartet – viel Erfolg!', 'good');
+  else { const fo = G.P.map((p, o) => o).filter(o => foe(o, ME)); toast('Mission: Zerstöre alle Gebäude ' + (fo.length > 1 ? 'deiner Gegner' : 'des ' + FAC[G.P[fo[0]].fac].name + 's'), ''); }
 }
 function updateSaveUI() {
   const a = saveInfo('auto'), m = saveInfo('manual');
@@ -3471,9 +3965,10 @@ function updateSaveUI() {
   UI.latestSave = latest ? latest.data : null;
   $('saveInfo').textContent = m ? 'Letzter Spielstand: ' + m.text : 'Noch kein Spielstand gespeichert';
 }
-function autoSave() { if (G && UI.running && !G.over && !G.autoplay) saveGame('auto'); }
+function autoSave() { if (G && UI.running && !G.over && !G.autoplay && G.mode === 'single') saveGame('auto'); }
 function toMenu() {
   autoSave();
+  if (NET.mode) { netLeave(); document.body.classList.remove('mp'); }
   updateSaveUI();
   UI.running = false; G.paused = true;
   document.body.classList.remove('ingame');
@@ -3481,16 +3976,18 @@ function toMenu() {
 }
 function onGameOver(win) { UI.endPending = { win, at: performance.now() + 2600 }; }
 function showEnd() {
-  const win = UI.endPending.win; UI.endPending = null; UI.endShown = true;
+  const win = UI.endPending.win; UI.endMsg = UI.endPending.msg || null; UI.endPending = null; UI.endShown = true;
   storeDel(SAVE_KEYS.auto); updateSaveUI();
   sfx(win ? 'win' : 'lose');
   $('endT').textContent = win ? 'SIEG' : 'NIEDERLAGE';
   $('endT').className = 'endt ' + (win ? 'win' : 'lose');
   const dn = { easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[G.diff];
-  $('endS').textContent = (win ? 'Alle gegnerischen Gebäude wurden zerstört.' : 'Deine Basis ist gefallen.') + ' Spielzeit ' + fmtTime(G.t) + ' · ' + dn;
-  const a = G.P[ME].stats, b = G.P[1].stats;
-  const rows = [['Einheiten ausgebildet', a.made, b.made], ['Einheiten vernichtet', a.kills, b.kills], ['Gebäude zerstört', a.bkills, b.bkills], ['Verluste', a.lost, b.lost], ['Kristalle abgebaut', a.mined, b.mined], ['Plasma abgebaut', a.gas, b.gas]];
-  $('endStats').innerHTML = `<span class="h"></span><span class="h v">Du</span><span class="h v">${FAC[G.P[1].fac].name}</span>` + rows.map(r => `<span>${r[0]}</span><span class="v">${r[1]}</span><span class="v">${r[2]}</span>`).join('');
+  $('endS').textContent = (UI.endMsg ? UI.endMsg + ' ' : win ? 'Alle gegnerischen Gebäude wurden zerstört. ' : (G.mode === 'coop' ? 'Eure Basen sind gefallen. ' : 'Deine Basis ist gefallen. ')) + 'Spielzeit ' + fmtTime(G.t) + (G.mode === 'versus' ? '' : ' · ' + dn);
+  UI.endMsg = null;
+  const cols = G.P.map((p, o) => ({ name: o === ME ? 'Du' : friendly(o) ? 'Partner' : (G.mode === 'versus' ? 'Gegner' : FAC[p.fac].name), s: p.stats }));
+  const keys = [['Einheiten ausgebildet', 'made'], ['Einheiten vernichtet', 'kills'], ['Gebäude zerstört', 'bkills'], ['Verluste', 'lost'], ['Kristalle abgebaut', 'mined'], ['Plasma abgebaut', 'gas']];
+  $('endStats').style.gridTemplateColumns = '1fr' + ' auto'.repeat(cols.length);
+  $('endStats').innerHTML = '<span class="h"></span>' + cols.map(c => `<span class="h v">${c.name}</span>`).join('') + keys.map(([l, k]) => `<span>${l}</span>` + cols.map(c => `<span class="v">${c.s[k]}</span>`).join('')).join('');
   showOv('ovEnd', true);
 }
 
@@ -3501,11 +3998,13 @@ function frame(ts) {
   requestAnimationFrame(frame);
   const dt = Math.min(.1, lastTs ? (ts - lastTs) / 1000 : 0); lastTs = ts;
   if (!G || !UI.running) return;
-  if (!G.paused) {
+  if (G.netGuest) guestStep(dt);
+  else if (!G.paused) {
     acc += dt * G.speed;
     let n = 0;
     while (acc >= STEP && n < 6) { simStep(STEP); acc -= STEP; n++; }
     if (n >= 6) acc = 0;
+    if (G.netHost) netAfterSim();
   }
   keyPan(dt);
   render(ts);
@@ -3519,6 +4018,7 @@ function frame(ts) {
 }
 window.addEventListener('resize', () => { if (G) resize(); });
 window.addEventListener('orientationchange', () => setTimeout(() => { if (G) resize(); }, 250));
+mpInitUI();
 // Version & Update-Prüfung
 $('verStart').textContent = 'VERSION ' + VERSION; $('verPause').textContent = 'NOVA FRONT · VERSION ' + VERSION;
 function cmpVer(a, b) { const x = a.split('.').map(Number), y = b.split('.').map(Number); for (let i = 0; i < 3; i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0); } return 0; }

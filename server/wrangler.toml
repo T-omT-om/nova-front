@@ -1,0 +1,12 @@
+# Nova Front – Mehrspieler-Server (Cloudflare Workers + Durable Objects, Gratis-Tarif)
+name = "nova-front-server"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room"]

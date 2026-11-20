@@ -1,9 +1,9 @@
 {
-  "version": "1.2.1",
+  "version": "1.3.0",
   "notes": [
-    "Maus: Linksziehen zieht wieder einen Auswahlrahmen, Rechtsziehen verschiebt die Karte",
-    "Karte am Bildschirmrand oder mit WASD/Pfeiltasten verschieben",
-    "Steuergruppen: Strg+1–9 speichert, 1–9 ruft ab, zweimal drücken springt hin",
-    "Handy: Gruppen-Knöpfe 1–3 (gedrückt halten speichert, tippen ruft ab)"
+    "Neu: Live-Mehrspieler über das Internet – Duell 1 gegen 1 oder zu zweit gegen die KI",
+    "Spiel erstellen, Einladungslink teilen, Mitspieler tritt mit einem Tipp bei",
+    "Bei Verbindungsabbruch übernimmt die KI, bis der Mitspieler zurück ist",
+    "Verbündete werden grün angezeigt, gemeinsame Sicht im Koop"
   ]
 }
