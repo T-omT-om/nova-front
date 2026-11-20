@@ -7,6 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Nova Front – Echtzeit-Strategie</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1l5 5-5 9-5-9z' fill='%233db8ff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -139,6 +140,12 @@ body.ingame .hud{display:flex}
 .st .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .small{font-size:12px;color:var(--dim);text-align:center;margin-top:12px;line-height:1.35}
 #rot{display:none}
+.ver{text-align:center;margin-top:12px;font-size:11px;letter-spacing:.12em;color:#5d7389;font-weight:700}
+.ver a{color:var(--acc)}
+#upd{position:fixed;z-index:30;left:50%;transform:translateX(-50%);top:calc(var(--sat) + 8px);display:none;align-items:center;gap:10px;background:#0f3b22;border:1px solid #2bbf73;border-radius:20px;padding:6px 8px 6px 14px;font-weight:700;font-size:14px;white-space:nowrap;box-shadow:0 4px 18px #000a}
+#upd.show{display:flex}
+#upd button{border:0;border-radius:14px;padding:5px 12px;font-weight:700;background:#2bbf73;color:#001}
+#upd .x{background:none;color:#9fd;padding:4px}
 @media (orientation:portrait){
   #panel{flex-direction:column;gap:4px}
   #panel #info{flex:none;height:var(--ih)}
@@ -148,6 +155,7 @@ body.ingame .hud{display:flex}
 </head>
 <body>
 <canvas id="cv"></canvas>
+<div id="upd"><span id="updT">Neue Version verfügbar</span><button id="updGo">Aktualisieren</button><button class="x" id="updX">✕</button></div>
 
 <div id="top" class="hud">
   <div class="res" id="resCr"><svg viewBox="0 0 16 16"><path d="M8 1l5 5-5 9-5-9z" fill="#62efff"/><path d="M8 1l5 5H3z" fill="#c8fbff"/></svg><span id="rCr">0</span></div>
@@ -181,9 +189,16 @@ body.ingame .hud{display:flex}
   <div class="seg" id="diffSel"><button data-d="easy">Leicht</button><button data-d="normal" class="on">Normal</button><button data-d="hard">Schwer</button></div>
   <div class="lbl">Spieltempo</div>
   <div class="seg" id="spdSel"><button data-s="1" class="on">Normal</button><button data-s="1.4">Schnell</button></div>
-  <button class="big" id="btnStart">SPIEL STARTEN</button>
+  <div id="contBox" style="display:none">
+    <button class="big" id="btnContinue" style="background:linear-gradient(#8affb9,#25b86a)">WEITERSPIELEN</button>
+    <div class="small" id="contInfo" style="margin-top:6px"></div>
+    <button class="sec" id="btnLoad" style="display:none">Gespeichertes Spiel laden</button>
+    <div class="small" id="loadInfo" style="margin-top:4px;display:none"></div>
+  </div>
+  <button class="big" id="btnStart">NEUES SPIEL</button>
   <button class="sec" id="btnHelp">Anleitung &amp; Steuerung</button>
   <div class="small">Zerstöre alle gegnerischen Gebäude, um zu gewinnen.<br>Am besten im Querformat oder Vollbild spielen.</div>
+  <div class="ver" id="verStart"></div>
 </div></div>
 
 <!-- Help -->
@@ -234,10 +249,13 @@ body.ingame .hud{display:flex}
   <div class="lbl">Spieltempo</div>
   <div class="seg" id="spdSel2"><button data-s="1" class="on">Normal</button><button data-s="1.4">Schnell</button></div>
   <button class="big" id="btnResume">WEITER</button>
+  <button class="sec" id="btnSave">Spiel speichern</button>
+  <div class="small" id="saveInfo" style="margin-top:4px"></div>
   <button class="sec" id="btnFull">Vollbild umschalten</button>
   <button class="sec" id="btnHelp2">Anleitung</button>
   <button class="sec" id="btnRestart">Neu starten</button>
-  <button class="sec" id="btnQuit">Hauptmenü</button>
+  <button class="sec" id="btnQuit">Speichern &amp; Hauptmenü</button>
+  <div class="ver" id="verPause"></div>
 </div></div>
 
 <!-- End -->
@@ -1286,7 +1304,7 @@ const AICFG = {
   hard:   { think: 0.6, carry: 6, first: 270, base: 12, inc: 5, maxW: 21, expand: 390, research: true, rax: 3, turret: 2, gas2: 250, ratio: 1.15, smart: true }
 };
 class AI {
-  constructor(o, diff) { this.o = o; this.cfg = AICFG[diff] || AICFG.normal; this.next = 1 + o * .3; this.waveN = 0; this.attacking = false; this.waveSup = 0; this.cool = 0; }
+  constructor(o, diff) { this.o = o; this.diff = diff; this.cfg = AICFG[diff] || AICFG.normal; this.next = 1 + o * .3; this.waveN = 0; this.attacking = false; this.waveSup = 0; this.cool = 0; }
   tick() { if (G.t < this.next || G.over) return; this.next = G.t + this.cfg.think; try { this.think(); } catch (e) { console.error(e); } }
   think() {
     const o = this.o, P = G.P[o], F = FAC[P.fac], cfg = this.cfg;
@@ -1496,6 +1514,87 @@ class AI {
       for (const u of army) if (u.order && u.order.t === 'amove' && hyp(u.order.x - tgt.x, u.order.y - tgt.y) > 200 && hyp(u.x - ax, u.y - ay) > 600) cmdMove([u], tgt.x, tgt.y, true);
     }
   }
+}
+
+/* =============================== VERSION & SPEICHERN =============================== */
+const VERSION = '1.1.0';
+const SAVE_FORMAT = 1;
+const SAVE_KEYS = { manual: 'novafront_save_manual', auto: 'novafront_save_auto' };
+const SER_SKIP = new Set(['d', 'path', 'pathTgt', 'fake', 'lastAtk']);
+function serVal(v, top) {
+  if (v === null || typeof v !== 'object') return v;
+  if (!top && (v.k === 'u' || v.k === 'b' || v.k === 'r') && typeof v.id === 'number') return { $r: v.id };
+  if (Array.isArray(v)) return v.map(x => serVal(x, false));
+  const o = {};
+  for (const k in v) { if (SER_SKIP.has(k)) continue; const x = v[k]; if (typeof x === 'function' || x === undefined) continue; o[k] = serVal(x, false); }
+  return o;
+}
+function serializeGame() {
+  return {
+    format: SAVE_FORMAT, version: VERSION, at: Date.now(),
+    t: G.t, nid: G.nid, diff: G.diff, speed: G.speed, hint: G.hint || 0,
+    P: G.P, home: G.home, bases: G.bases, rocks: G.rocks,
+    explored: Array.from(G.explored).join(''),
+    ents: G.ents.filter(e => !e.dead).map(e => serVal(e, true)),
+    ais: G.ais.map(a => ({ o: a.o, diff: a.diff, next: a.next, waveN: a.waveN, attacking: a.attacking, waveSup: a.waveSup, cool: a.cool, launch: a.launch || 0 })),
+    cam: { x: cam.x, y: cam.y, z: cam.z }
+  };
+}
+function resolveRefs(v, byId) {
+  if (v === null || typeof v !== 'object') return v;
+  if (v.$r !== undefined) return byId.get(v.$r) || null;
+  if (Array.isArray(v)) { for (let i = 0; i < v.length; i++) v[i] = resolveRefs(v[i], byId); return v; }
+  for (const k in v) v[k] = resolveRefs(v[k], byId);
+  return v;
+}
+function loadGameData(data) {
+  if (!data || data.format !== SAVE_FORMAT) throw new Error('Speicherstand ist nicht kompatibel');
+  G = { t: data.t, nid: data.nid, ents: [], units: [], blds: [], res: [], proj: [], fx: [], P: data.P, sel: [], vis: new Uint8Array(NN), explored: new Uint8Array(NN),
+    fogT: 0, over: false, paused: false, speed: data.speed || 1, diff: data.diff || 'normal', ais: [], alerts: {}, pings: [], reveal: false,
+    autoplay: false, endT: 0, rocks: data.rocks, hint: data.hint || 0, frame: 0, home: data.home, bases: data.bases };
+  blocked.fill(0);
+  for (const [x, y] of G.rocks) blocked[cidx(x, y)] = 1;
+  const ex = data.explored || '';
+  for (let i = 0; i < NN && i < ex.length; i++) G.explored[i] = ex.charCodeAt(i) === 49 ? 1 : 0;
+  const byId = new Map();
+  for (const e of data.ents) byId.set(e.id, e);
+  for (const e of data.ents) {
+    if (e.order && e.order.site && e.order.site.$r !== undefined && !byId.has(e.order.site.$r)) e.order = null;
+    for (const k in e) e[k] = resolveRefs(e[k], byId);
+    if (e.k === 'u') { e.d = UT[e.type]; e.path = null; G.units.push(e); }
+    else if (e.k === 'b') { e.d = BT[e.type]; G.blds.push(e); }
+    else { e.d = { name: e.type === 'gas' ? 'Plasma-Geysir' : 'Kristallfeld' }; G.res.push(e); }
+    if (!e.d) continue;
+    G.ents.push(e);
+  }
+  // Befehle mit verschwundenen Zielen bereinigen
+  for (const u of G.units) {
+    const o = u.order; if (!o) continue;
+    if ((o.t === 'attack' || o.t === 'harvest' || o.t === 'repair') && !o.tgt) u.order = null;
+    if (u.order && u.order.resume && u.order.resume.t === 'attack' && !u.order.resume.tgt) u.order.resume = null;
+  }
+  for (const r of G.res) setCells(r.bx, r.by, r.w, r.h, 3);
+  for (const b of G.blds) setCells(b.bx, b.by, b.w, b.h, 2);
+  for (const d of data.ais || []) { const a = new AI(d.o, d.diff); Object.assign(a, d); a.cfg = AICFG[d.diff] || AICFG.normal; G.ais.push(a); }
+  G.P[1].carry = AICFG[G.diff].carry;
+  tallySupply();
+  updateFog();
+  return data;
+}
+function storeGet(key) { try { const s = localStorage.getItem(key); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+function storeSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); return true; } catch (e) { return false; } }
+function storeDel(key) { try { localStorage.removeItem(key); } catch (e) { } }
+function saveGame(slot) {
+  if (!G || G.over || G.autoplay) return false;
+  const ok = storeSet(SAVE_KEYS[slot], serializeGame());
+  updateSaveUI();
+  return ok;
+}
+function saveInfo(slot) {
+  const d = storeGet(SAVE_KEYS[slot]);
+  if (!d || d.format !== SAVE_FORMAT) return null;
+  const P = d.P && d.P[0];
+  return { data: d, text: (P ? FAC[P.fac].name + ' · ' : '') + ({ easy: 'Leicht', normal: 'Normal', hard: 'Schwer' }[d.diff] || '') + ' · Spielzeit ' + fmtTime(d.t) + ' · ' + new Date(d.at).toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) };
 }
 
 /* =============================== RENDERING =============================== */
@@ -2752,6 +2851,9 @@ $('facSel').querySelectorAll('button').forEach(b => b.addEventListener('click', 
 $('btnStart').onclick = () => { audioInit(); startGame(); };
 $('btnHelp').onclick = () => { showOv('ovHelp', true); };
 $('btnHelp2').onclick = () => { showOv('ovHelp', true); };
+$('btnSave').onclick = () => { if (saveGame('manual')) { toast('Spiel gespeichert', 'good'); sfx('done'); } else toast('Speichern nicht möglich (Browser-Speicher blockiert)', 'bad'); };
+$('btnContinue').onclick = () => { audioInit(); if (UI.latestSave) startGame(UI.latestSave); };
+$('btnLoad').onclick = () => { audioInit(); if (UI.otherSave) startGame(UI.otherSave); };
 $('btnHelpBack').onclick = () => { showOv('ovHelp', false); };
 $('btnMenu').onclick = () => togglePause(true);
 $('btnResume').onclick = () => togglePause(false);
@@ -2780,23 +2882,44 @@ function togglePause(force) {
   segSet('spdSel2', 's', G.speed);
   showOv('ovPause', p);
 }
-document.addEventListener('visibilitychange', () => { if (document.hidden && G && UI.running && !G.over) togglePause(true); });
-function startGame() {
-  newGame({ fac: UI.opts.fac, diff: UI.opts.diff, speed: UI.opts.speed });
+document.addEventListener('visibilitychange', () => { if (document.hidden && G && UI.running && !G.over) { autoSave(); togglePause(true); } });
+window.addEventListener('pagehide', () => autoSave());
+function startGame(saved) {
+  if (saved) {
+    try { loadGameData(saved); } catch (e) { console.error(e); toast('Speicherstand konnte nicht geladen werden', 'bad'); return; }
+  } else newGame({ fac: UI.opts.fac, diff: UI.opts.diff, speed: UI.opts.speed });
   genTerrain();
+  UI.autoT = G.t;
   UI.placing = null; UI.cmdMode = null; UI.menu = 'main'; UI.box = null; UI.endShown = false; UI.sig = ''; UI.dirty = true;
   document.body.classList.add('ingame');
   showOv('ovStart', false); showOv('ovEnd', false); showOv('ovPause', false);
   resize();
   cam.z = clamp(Math.min(VW, VH) < 500 ? .85 : 1, minZoom(), 1.8);
-  const hq = G.blds.find(b => b.owner === ME && b.type === 'hq');
-  centerOn(hq.x, hq.y);
+  const hq = G.blds.find(b => b.owner === ME && b.type === 'hq') || G.blds.find(b => b.owner === ME) || G.units.find(u => u.owner === ME);
+  if (saved && saved.cam) { cam.z = saved.cam.z; cam.x = saved.cam.x; cam.y = saved.cam.y; clampCam(); }
+  else if (hq) centerOn(hq.x, hq.y);
   $('toasts').innerHTML = '';
   UI.running = true;
+  segSet('spdSel2', 's', G.speed);
   updateTop(); refreshPanel(true); updateHint(); updateMode();
-  toast('Mission: Zerstöre alle Gebäude des ' + FAC[G.P[1].fac].name + 's', '');
+  if (saved) toast('Spielstand geladen · ' + fmtTime(G.t), 'good');
+  else toast('Mission: Zerstöre alle Gebäude des ' + FAC[G.P[1].fac].name + 's', '');
 }
+function updateSaveUI() {
+  const a = saveInfo('auto'), m = saveInfo('manual');
+  $('contBox').style.display = (a || m) ? '' : 'none';
+  const latest = a && m ? (a.data.at >= m.data.at ? a : m) : (a || m);
+  if (latest) $('contInfo').textContent = (latest === a ? 'Automatisch gespeichert: ' : 'Gespeichert: ') + latest.text;
+  const showLoad = a && m;
+  $('btnLoad').style.display = showLoad ? '' : 'none'; $('loadInfo').style.display = showLoad ? '' : 'none';
+  if (showLoad) { const other = latest === a ? m : a; $('btnLoad').textContent = other === m ? 'Manuellen Spielstand laden' : 'Automatischen Spielstand laden'; $('loadInfo').textContent = other.text; UI.otherSave = other.data; }
+  UI.latestSave = latest ? latest.data : null;
+  $('saveInfo').textContent = m ? 'Letzter Spielstand: ' + m.text : 'Noch kein Spielstand gespeichert';
+}
+function autoSave() { if (G && UI.running && !G.over && !G.autoplay) saveGame('auto'); }
 function toMenu() {
+  autoSave();
+  updateSaveUI();
   UI.running = false; G.paused = true;
   document.body.classList.remove('ingame');
   showOv('ovStart', true);
@@ -2804,6 +2927,7 @@ function toMenu() {
 function onGameOver(win) { UI.endPending = { win, at: performance.now() + 2600 }; }
 function showEnd() {
   const win = UI.endPending.win; UI.endPending = null; UI.endShown = true;
+  storeDel(SAVE_KEYS.auto); updateSaveUI();
   sfx(win ? 'win' : 'lose');
   $('endT').textContent = win ? 'SIEG' : 'NIEDERLAGE';
   $('endT').className = 'endt ' + (win ? 'win' : 'lose');
@@ -2834,15 +2958,32 @@ function frame(ts) {
   if (fr % 4 === 0) renderMini();
   if (fr % 6 === 0) { updateTop(); refreshPanel(); if (UI.placing) updateMode(); }
   if (fr % 30 === 0) updateHint();
+  if (!G.paused && !G.over && G.t - (UI.autoT || 0) >= 60) { UI.autoT = G.t; autoSave(); }
   if (UI.endPending && performance.now() > UI.endPending.at) showEnd();
 }
 window.addEventListener('resize', () => { if (G) resize(); });
 window.addEventListener('orientationchange', () => setTimeout(() => { if (G) resize(); }, 250));
+// Version & Update-Prüfung
+$('verStart').textContent = 'VERSION ' + VERSION; $('verPause').textContent = 'NOVA FRONT · VERSION ' + VERSION;
+function cmpVer(a, b) { const x = a.split('.').map(Number), y = b.split('.').map(Number); for (let i = 0; i < 3; i++) { if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) - (y[i] || 0); } return 0; }
+function checkUpdate() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(j => {
+    if (!j || !j.version || cmpVer(j.version, VERSION) <= 0) return;
+    $('updT').textContent = 'Version ' + j.version + ' verfügbar';
+    $('upd').classList.add('show');
+    $('verStart').textContent = 'VERSION ' + VERSION + ' · NEU: ' + j.version;
+  }).catch(() => { });
+}
+$('updGo').onclick = () => { autoSave(); location.reload(); };
+$('updX').onclick = () => $('upd').classList.remove('show');
+checkUpdate(); setInterval(checkUpdate, 10 * 60 * 1000);
+updateSaveUI();
 // Bilder im Startmenü
 try { $('facImg0').src = iconURL('u', 'walker', 0); $('facImg1').src = iconURL('u', 'waechter', 1); } catch (e) { }
 requestAnimationFrame(frame);
 // Testschnittstelle
-window.NF = { get G() { return G; }, newGame, simStep, genTerrain, startGame, UI, cam, centerOn, resize, render, renderMini, refreshPanel };
+window.NF = { get G() { return G; }, serializeGame, loadGameData, saveGame, saveInfo, newGame, simStep, genTerrain, startGame, UI, cam, centerOn, resize, render, renderMini, refreshPanel };
 
 </script>
 </body>
